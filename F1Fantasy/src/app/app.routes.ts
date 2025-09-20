@@ -9,7 +9,17 @@ export const routes: Routes = [
         (m) => m.HomeComponent
       );
     },
-  }]
+  },
+  {
+    path: 'about',
+    pathMatch: 'full',
+    loadComponent: async () => {
+      return import('./routing/about/about.component').then(
+        (m) => m.AboutComponent
+      );
+    },
+  }
+]
 
 // export const routes: Routes = [
 //   {

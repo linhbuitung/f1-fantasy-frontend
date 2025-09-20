@@ -1,7 +1,9 @@
 <main class="main">
-  <div class="content">
-
-      <router-outlet />
-
+  <app-nav-bar></app-nav-bar>
+  <div *ngIf="showContent" class="content">
+    <router-outlet />
+  </div>
+  <div *ngIf="!showContent">
+    <router-outlet />
   </div>
 </main>
