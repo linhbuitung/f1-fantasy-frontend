@@ -4,18 +4,26 @@ import { environment } from '../../../environments/environment';
 import { LoginDto } from '../dtos/login.dtos';
 import { RegisterDto } from '../dtos/register.dtos';
 import { BehaviorSubject } from 'rxjs';
+import {UserProfileDto} from '../dtos/user-profile.dto';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadProfile(); // Fetch profile on service init
+  }
 
   private loggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.loggedIn.asObservable();
 
-  // Call this after login/logout
+  private userProfile = new BehaviorSubject<UserProfileDto | null>(null);
+  userProfile$ = this.userProfile.asObservable();
+
+
   setLoggedIn(status: boolean) {
     this.loggedIn.next(status);
   }
+
   login(credentials: LoginDto) {
     return this.http.post(
       `${environment.apiUrl}/login`,
@@ -40,4 +48,18 @@ export class AuthService {
     );
   }
 
+  loadProfile() {
+    this.http.get<UserProfileDto>(`${environment.apiUrl}/user/me`, { withCredentials: true })
+      .subscribe({
+        next: (profile) => {
+          this.userProfile.next(profile);
+          this.setLoggedIn(true);
+        },
+        error: (err) => {
+          console.log(err);
+          this.userProfile.next(null);
+          this.setLoggedIn(false);
+        }
+      });
+  }
 }

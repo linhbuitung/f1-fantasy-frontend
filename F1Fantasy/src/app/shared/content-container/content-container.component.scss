@@ -1,0 +1,47 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  margin-top: 1rem;
+  width: 73%;
+  min-height: 80vh;
+  background-color: var(--pure-white);
+  padding: 2rem;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  flex: 1 1 auto; // Add this if parent is flex
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+  .content {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .content {
+    width: 95%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0;
+  }
+}
