@@ -1,9 +1,6 @@
 <main class="main">
   <app-nav-bar></app-nav-bar>
-  <div *ngIf="showContent" class="content">
-    <router-outlet />
-  </div>
-  <div *ngIf="!showContent">
+  <div class="main-content">  
     <router-outlet />
   </div>
 </main>

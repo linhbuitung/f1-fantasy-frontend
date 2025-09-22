@@ -7,15 +7,20 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadProfile(); // Fetch profile on service init
+  }
 
   private loggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.loggedIn.asObservable();
 
-  // Call this after login/logout
+  private userProfile = new BehaviorSubject<{ username: string } | null>(null);
+  userProfile$ = this.userProfile.asObservable();
+
   setLoggedIn(status: boolean) {
     this.loggedIn.next(status);
   }
+
   login(credentials: LoginDto) {
     return this.http.post(
       `${environment.apiUrl}/login`,
@@ -40,4 +45,17 @@ export class AuthService {
     );
   }
 
+  loadProfile() {
+    this.http.get<{ username: string }>(`${environment.apiUrl}/user/me`, { withCredentials: true })
+      .subscribe({
+        next: (profile) => {
+          this.userProfile.next(profile);
+          this.setLoggedIn(true);
+        },
+        error: () => {
+          this.userProfile.next(null);
+          this.setLoggedIn(false);
+        }
+      });
+  }
 }
