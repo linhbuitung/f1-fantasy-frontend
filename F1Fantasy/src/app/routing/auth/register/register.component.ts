@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { passwordValidator } from '../../../core/utils/custom-validators';
 import { RegisterDto } from '../../../core/dtos/register.dtos';
 import { ContentContainerComponent } from '../../../shared/content-container/content-container.component';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -44,12 +43,19 @@ export class RegisterComponent {
         this.router.navigateByUrl('/');
       },
       error: (err) => {
+        console.log(err);
         this.serverError = this.getErrorMessage(err);
       }
     });
   }
 
   private getErrorMessage(err: any): string {
+    if (err?.error?.errors) {
+      // Flatten all error arrays into a single string
+      return Object.values(err.error.errors)
+        .flat()
+        .join(' ');
+    }
     if (err?.error?.message) return err.error.message;
     if (err?.message) return err.message;
     return 'Registration failed. Please try again.';

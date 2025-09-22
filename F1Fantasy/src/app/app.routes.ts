@@ -27,6 +27,15 @@ export const routes: Routes = [
         (m) => m.RegisterComponent
       );
     },
+  },
+  {
+    path: 'login',
+    pathMatch: 'full',
+    loadComponent: async () => {
+      return import('./routing/auth/login/login.component').then(
+        (m) => m.LoginComponent
+      );
+    },
   }
 ]
 

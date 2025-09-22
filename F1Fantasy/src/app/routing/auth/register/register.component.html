@@ -23,11 +23,11 @@
             </div>
             <div *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].touched || registerForm.controls['password'].dirty)" class="alert alert-danger">
               <div *ngIf="registerForm.controls['password'].errors?.['required']">Password is required.</div>
-              <div *ngIf="registerForm.controls['password'].errors?.['invalidPassword']">Password contains invalid characters.</div>
+              <div *ngIf="registerForm.controls['password'].errors?.['invalidPassword']">'Password can only contain a-z, A-Z, 0-9, !&#64;#$%^&*?'.</div>
               <div *ngIf="registerForm.controls['password'].errors?.['minlength']">Password is too short (at least 6 characters).</div>
               <div *ngIf="registerForm.controls['password'].errors?.['noUppercase']">Password must have at least one uppercase letter.</div>
               <div *ngIf="registerForm.controls['password'].errors?.['noDigit']">Password must have at least one digit.</div>
-              <div *ngIf="registerForm.controls['password'].errors?.['noNonAlphanumeric']">Password must have at least one non-alphanumeric character.</div>
+              <div *ngIf="registerForm.controls['password'].errors?.['noNonAlphanumeric']">Password must have at least one non-alphanumeric character | in !&#64;#$%^&*?'.</div>
             </div>
           </div>
 
