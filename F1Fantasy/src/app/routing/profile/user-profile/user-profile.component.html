@@ -1,0 +1,61 @@
+<app-content-container>
+  <div class="profile" *ngIf="profile as p">
+    <h2>{{ p.displayName || p.email }}</h2>
+    <div class="profile-fields">
+      <div class="profile-row">
+        <span class="profile-label">Display Name</span>
+        <span class="profile-value">{{ p.displayName || '-' }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Email</span>
+        <span class="profile-value">{{ p.email }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Email Confirmed</span>
+        <span class="profile-value">{{ p.emailConfirmed ? 'Yes' : 'No' }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Date of Birth</span>
+        <span class="profile-value">{{ p.dateOfBirth || '-' }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Accept Notification</span>
+        <span class="profile-value">{{ p.acceptNotification ? 'Yes' : 'No' }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Consecutive Active Days</span>
+        <span class="profile-value">{{ p.consecutiveActiveDays }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Last Active At</span>
+        <span class="profile-value">{{ p.lastActiveAt | date:'medium' }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Ask AI Credits</span>
+        <span class="profile-value">{{ p.askAiCredits }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">From Country</span>
+        <span class="profile-value">{{ p.countryName || '-' }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Favorite Constructor</span>
+        <span class="profile-value">{{ p.constructorName || '-' }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Favorite Driver</span>
+        <span class="profile-value">{{ p.driverName || '-' }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="currentUserId === p.id">
+      <div class="justify-content-center mt-3 d-flex gap-2">
+        <button class="btn btn-outline-primary" [routerLink]="['/profile', p.id, 'edit']">
+          Edit Details
+        </button>
+        <button class="btn btn-outline-secondary" [routerLink]="['/profile', p.id, 'reset-password']">
+          Change Password
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</app-content-container>

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {profileOwnerGuard} from './core/guards/profile-owner.guard';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,34 @@ export const routes: Routes = [
     loadComponent: async () => {
       return import('./routing/auth/login/login.component').then(
         (m) => m.LoginComponent
+      );
+    },
+  },
+  {
+    path: 'profile/:id',
+    pathMatch: 'full',
+    loadComponent: async () => {
+      return import('./routing/profile/user-profile/user-profile.component').then(
+        (m) => m.UserProfileComponent
+      );
+    },
+  },
+  {
+    path: 'profile/:id/reset-password',
+    pathMatch: 'full',
+    loadComponent: async () => {
+      return import('./routing/profile/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent
+      );
+    },
+  },
+  {
+    path: 'profile/:id/edit',
+    canActivate: [profileOwnerGuard],
+    pathMatch: 'full',
+    loadComponent: async () => {
+      return import('./routing/profile/edit-user/edit-user.component').then(
+        (m) => m.EditUserComponent
       );
     },
   }

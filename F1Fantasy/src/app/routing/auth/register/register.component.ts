@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { passwordValidator } from '../../../core/utils/custom-validators';
-import { RegisterDto } from '../../../core/dtos/register.dtos';
+import { RegisterDto } from '../../../core/services/auth/dtos/register.dtos';
 import { ContentContainerComponent } from '../../../shared/content-container/content-container.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -40,6 +40,7 @@ export class RegisterComponent {
     const payload: RegisterDto = this.registerForm.value;
     this.authService.register(payload).subscribe({
       next: () => {
+        this.authService.loadProfile();
         this.router.navigateByUrl('/');
       },
       error: (err) => {

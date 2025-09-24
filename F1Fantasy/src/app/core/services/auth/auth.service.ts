@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { LoginDto } from '../dtos/login.dtos';
-import { RegisterDto } from '../dtos/register.dtos';
-import { BehaviorSubject } from 'rxjs';
-import {UserProfileDto} from '../dtos/user-profile.dto';
+import { environment } from '../../../../environments/environment';
+import { LoginDto } from './dtos/login.dtos';
+import { RegisterDto } from './dtos/register.dtos';
+import {BehaviorSubject, tap} from 'rxjs';
+import {UserGetDto} from '../user/dtos/user.get.dto';
 
 
 @Injectable({ providedIn: 'root' })
@@ -16,7 +16,7 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.loggedIn.asObservable();
 
-  private userProfile = new BehaviorSubject<UserProfileDto | null>(null);
+  private userProfile = new BehaviorSubject<UserGetDto | null>(null);
   userProfile$ = this.userProfile.asObservable();
 
 
@@ -45,11 +45,16 @@ export class AuthService {
       `${environment.apiUrl}/logout`,
       {},
       { withCredentials: true }
+    ).pipe(
+      tap(() => {
+        this.userProfile.next(null);
+        this.setLoggedIn(false);
+      })
     );
   }
 
   loadProfile() {
-    this.http.get<UserProfileDto>(`${environment.apiUrl}/user/me`, { withCredentials: true })
+    this.http.get<UserGetDto>(`${environment.apiUrl}/user/me`, { withCredentials: true })
       .subscribe({
         next: (profile) => {
           this.userProfile.next(profile);

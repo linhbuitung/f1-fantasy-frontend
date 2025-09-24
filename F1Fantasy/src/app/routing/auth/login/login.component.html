@@ -23,7 +23,7 @@
             </div>
             <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)" class="alert alert-danger">
               <div *ngIf="loginForm.controls['password'].errors?.['required']">Password is required.</div>
-              <div *ngIf="loginForm.controls['password'].errors?.['invalidPassword']">'Password can only contain a-z, A-Z, 0-9, !&#64;#$%^&*?'.</div>
+              <div *ngIf="loginForm.controls['password'].errors?.['invalidPassword']">Password can only contain a-z, A-Z, 0-9, !&#64;#$%^&*?'.</div>
               <div *ngIf="loginForm.controls['password'].errors?.['minlength']">Password is too short (at least 6 characters).</div>
               <div *ngIf="loginForm.controls['password'].errors?.['noUppercase']">Password must have at least one uppercase letter.</div>
               <div *ngIf="loginForm.controls['password'].errors?.['noDigit']">Password must have at least one digit.</div>
