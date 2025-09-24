@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../../core/auth/auth.service';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+import { AuthService } from '../../core/services/auth/auth.service';
 import { AsyncPipe, NgIf } from '@angular/common';
+import {UserGetDto} from '../../core/services/user/dtos/user.get.dto';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,9 +12,18 @@ import { AsyncPipe, NgIf } from '@angular/common';
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
-  isLoggedIn$: typeof this.authService.isLoggedIn$;
+  isLoggedIn$: Observable<boolean>;
+  userProfile$: Observable<UserGetDto | null>;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.userProfile$ = this.authService.userProfile$;
+  }
+
+  onLogout() {
+    this.authService.logout().subscribe(() => {
+      this.authService.loadProfile();
+      this.router.navigateByUrl('/');
+    });
   }
 }

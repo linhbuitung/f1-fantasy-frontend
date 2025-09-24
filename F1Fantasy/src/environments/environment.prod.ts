@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://temporary-endpoint.com/api'
+  apiUrl: process.env["API_URL"] || 'https://temporary-endpoint.com/api'
 };

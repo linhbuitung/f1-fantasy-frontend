@@ -1,7 +1,8 @@
-export interface UserProfileDto {
+export interface UserGetDto {
   id: number;
   displayName: string | null;
   email: string;
+  emailConfirmed: boolean;
   dateOfBirth: string | null;
   acceptNotification: boolean;
   consecutiveActiveDays: number;
@@ -11,6 +12,6 @@ export interface UserProfileDto {
   constructorName: string | null;
   driverId: number | null;
   driverName: string | null;
-  countryId: number | null;
+  countryId: string | null;
   countryName: string | null;
 }
