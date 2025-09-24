@@ -5,7 +5,7 @@ const envConfigFile = `
 export const environment = {
   production: true,
   // name should match Netlify env key/keys
-  API_URL: '${process.env["API_URL"]}'
+  API_URL: '${process.env["API_URL"]}/api'
 };
 `;
 fs.writeFileSync(targetPath, envConfigFile);
