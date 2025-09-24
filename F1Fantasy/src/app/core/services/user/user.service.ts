@@ -11,7 +11,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUserById(id: string): Observable<UserGetDto> {
-    return this.http.get<UserGetDto>(`${environment.apiUrl}/user/${id}`, { withCredentials: true });
+    return this.http.get<UserGetDto>(`${environment.API_URL}/user/${id}`, { withCredentials: true });
   }
 
   // getAllUsers(): Observable<UserListItemDto[]> {
@@ -19,21 +19,21 @@ export class UserService {
   // }
 
   updateUser(id: string, data: UserUpdateDto): Observable<UserGetDto> {
-    return this.http.put<UserGetDto>(`${environment.apiUrl}/user/${id}/update`, data, { withCredentials: true });
+    return this.http.put<UserGetDto>(`${environment.API_URL}/user/${id}/update`, data, { withCredentials: true });
   }
 
   findUsersByDisplayName(name: string): Observable<UserGetDto[]> {
-    return this.http.get<UserGetDto[]>(`${environment.apiUrl}/user/search`, {
+    return this.http.get<UserGetDto[]>(`${environment.API_URL}/user/search`, {
       params: { displayName: name },
       withCredentials: true
     });
   }
 
   sendResetCode(email: string) {
-    return this.http.post(`${environment.apiUrl}/forgot-password`, { email }, { withCredentials: true });
+    return this.http.post(`${environment.API_URL}/forgot-password`, { email }, { withCredentials: true });
   }
 
   resetPassword(data: UserResetPasswordDto) {
-    return this.http.post(`${environment.apiUrl}/user/reset-password`, data, { withCredentials: true });
+    return this.http.post(`${environment.API_URL}/user/reset-password`, data, { withCredentials: true });
   }
 }

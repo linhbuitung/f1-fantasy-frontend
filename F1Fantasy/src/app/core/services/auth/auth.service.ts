@@ -26,7 +26,7 @@ export class AuthService {
 
   login(credentials: LoginDto) {
     return this.http.post(
-      `${environment.apiUrl}/login`,
+      `${environment.API_URL}/login`,
       credentials,
       { withCredentials: true }
     );
@@ -34,7 +34,7 @@ export class AuthService {
 
   register(data: RegisterDto) {
     return this.http.post(
-      `${environment.apiUrl}/register`,
+      `${environment.API_URL}/register`,
       data,
       { withCredentials: true }
     );
@@ -42,7 +42,7 @@ export class AuthService {
 
   logout() {
     return this.http.post(
-      `${environment.apiUrl}/logout`,
+      `${environment.API_URL}/logout`,
       {},
       { withCredentials: true }
     ).pipe(
@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   loadProfile() {
-    this.http.get<UserGetDto>(`${environment.apiUrl}/user/me`, { withCredentials: true })
+    this.http.get<UserGetDto>(`${environment.API_URL}/user/me`, { withCredentials: true })
       .subscribe({
         next: (profile) => {
           this.userProfile.next(profile);

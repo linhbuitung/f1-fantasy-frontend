@@ -8,6 +8,6 @@ import {CountryGetDto} from './dtos/country.get.dto';
 export class CountryService {
   constructor(private http: HttpClient) {}
   getAllCountries(): Observable<CountryGetDto[]> {
-    return this.http.get<CountryGetDto[]>(`${environment.apiUrl}/static-data/countries`, { withCredentials: true });
+    return this.http.get<CountryGetDto[]>(`${environment.API_URL}/static-data/countries`, { withCredentials: true });
   }
 }

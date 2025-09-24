@@ -7,6 +7,6 @@ import {DriverGetDto} from './dtos/driver.get.dto';
 export class DriverService {
   constructor(private http: HttpClient) {}
   getAllDrivers(): Observable<DriverGetDto[]> {
-    return this.http.get<DriverGetDto[]>(`${environment.apiUrl}/static-data/drivers`, { withCredentials: true });
+    return this.http.get<DriverGetDto[]>(`${environment.API_URL}/static-data/drivers`, { withCredentials: true });
   }
 }

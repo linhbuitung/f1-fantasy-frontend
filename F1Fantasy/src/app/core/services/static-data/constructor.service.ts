@@ -8,6 +8,6 @@ import {ConstructorGetDto} from './dtos/constructor.get.dto';
 export class ConstructorService {
   constructor(private http: HttpClient) {}
   getAllConstructors(): Observable<ConstructorGetDto[]> {
-    return this.http.get<ConstructorGetDto[]>(`${environment.apiUrl}/static-data/constructors`, { withCredentials: true });
+    return this.http.get<ConstructorGetDto[]>(`${environment.API_URL}/static-data/constructors`, { withCredentials: true });
   }
 }
