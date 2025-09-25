@@ -40,7 +40,7 @@ export class EditUserComponent implements OnInit {
     private router: Router
   ) {
     this.editForm = this.fb.group({
-      displayName: [''],
+      displayName: ['', Validators.maxLength(20)],
       dateOfBirth: [''],
       acceptNotification: [false],
       driverId: [null],

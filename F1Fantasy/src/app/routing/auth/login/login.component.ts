@@ -5,7 +5,7 @@ import {NgIf} from "@angular/common";
 import {AuthService} from '../../../core/services/auth/auth.service';
 import {Router} from '@angular/router';
 import {passwordValidator} from '../../../core/utils/custom-validators';
-import {RegisterDto} from '../../../core/services/auth/dtos/register.dtos';
+import {LoginDto} from '../../../core/services/auth/dtos/login.dtos';
 
 @Component({
   selector: 'app-login',
@@ -41,21 +41,22 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) return;
-    const payload: RegisterDto = this.loginForm.value;
+    const payload: LoginDto = this.loginForm.value;
     this.authService.login(payload).subscribe({
       next: () => {
         this.authService.loadProfile();
         this.router.navigateByUrl('/');
       },
       error: (err) => {
-        console.log(err);
         this.serverError = this.getErrorMessage(err);
       }
     });
   }
 
   private getErrorMessage(err: any): string {
+    if(err?.status === 401) return 'Wrong email or password';
     if (err?.error?.errors) {
+      console.log(err?.error?.errors);
       // Flatten all error arrays into a single string
       return Object.values(err.error.errors)
         .flat()
@@ -63,6 +64,6 @@ export class LoginComponent {
     }
     if (err?.error?.message) return err.error.message;
     if (err?.message) return err.message;
-    return 'Registration failed. Please try again.';
+    return 'Login failed. Please try again.';
   }
 }

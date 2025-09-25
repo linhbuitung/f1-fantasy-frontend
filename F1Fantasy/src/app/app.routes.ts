@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {profileOwnerGuard} from './core/guards/profile-owner.guard';
+import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -65,6 +66,80 @@ export const routes: Routes = [
         (m) => m.EditUserComponent
       );
     },
+  },
+  {
+    path: 'fantasy',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'status',
+        pathMatch: 'full',
+        loadComponent: async () => {
+          return import('./routing/fantasy/status/status.component').then(
+            (m) => m.StatusComponent
+          );
+        },
+      },
+      {
+        path: 'lineup',
+        pathMatch: 'full',
+        loadComponent: async () => {
+          return import('./routing/fantasy/lineup/lineup.component').then(
+            (m) => m.LineupComponent
+          );
+        },
+      },
+      {
+        path: 'transfers',
+        pathMatch: 'full',
+        loadComponent: async () => {
+          return import('./routing/fantasy/transfers/transfers.component').then(
+            (m) => m.TransfersComponent
+          );
+        },
+      },
+      {
+        path: 'leagues',
+        pathMatch: 'full',
+        loadComponent: async () => {
+          return import('./routing/fantasy/leagues/leagues.component').then(
+            (m) => m.LeaguesComponent
+          );
+        },
+      },
+      {
+        path: 'how-to-play',
+        pathMatch: 'full',
+        loadComponent: async () => {
+          return import('./routing/fantasy/how-to-play/how-to-play.component').then(
+            (m) => m.HowToPlayComponent
+          );
+        },
+      },
+      {
+        path: 'rules',
+        pathMatch: 'full',
+        loadComponent: async () => {
+          return import('./routing/fantasy/rules/rules.component').then(
+            (m) => m.RulesComponent
+          );
+        },
+      },
+      {
+        path: 'ask-ai',
+        pathMatch: 'full',
+        loadComponent: async () => {
+          return import('./routing/fantasy/ask-ai/ask-ai.component').then(
+            (m) => m.AskAiComponent
+          );
+        },
+      },
+      {
+        path: '',
+        redirectTo: 'status',
+        pathMatch: 'full'
+      }
+    ]
   }
 ]
 

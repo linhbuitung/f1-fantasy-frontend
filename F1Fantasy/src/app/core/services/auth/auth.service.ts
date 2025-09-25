@@ -29,6 +29,18 @@ export class AuthService {
       `${environment.API_URL}/login`,
       credentials,
       { withCredentials: true }
+    ).pipe(
+      tap({
+        next: () => {
+          this.setLoggedIn(true);
+          this.loadProfile();
+        },
+        error: () => {
+          // Do not set loggedIn or loadProfile on error
+          this.setLoggedIn(false);
+          this.userProfile.next(null);
+        }
+      })
     );
   }
 
@@ -37,6 +49,17 @@ export class AuthService {
       `${environment.API_URL}/register`,
       data,
       { withCredentials: true }
+    ).pipe(
+      tap({
+        next: () => {
+          this.setLoggedIn(true);
+          this.loadProfile();
+        },
+        error: () => {
+          this.setLoggedIn(false);
+          this.userProfile.next(null);
+        }
+      })
     );
   }
 
@@ -54,14 +77,17 @@ export class AuthService {
   }
 
   loadProfile() {
+    // Only fetch if it's logged in and userProfile is null
+    if(!this.loggedIn.value) {
+      return;
+    }
     this.http.get<UserGetDto>(`${environment.API_URL}/user/me`, { withCredentials: true })
       .subscribe({
         next: (profile) => {
           this.userProfile.next(profile);
           this.setLoggedIn(true);
         },
-        error: (err) => {
-          console.log(err);
+        error: () => {
           this.userProfile.next(null);
           this.setLoggedIn(false);
         }
