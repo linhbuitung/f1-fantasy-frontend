@@ -17,7 +17,11 @@
             <li class="nav-item">
                 <a class="nav-link"
                 routerLink="/fantasy"
-                routerLinkActive="active">Fantasy</a>
+                routerLinkActive="active"
+                 [class.disabled]="!(isLoggedIn$ | async)"
+                 [attr.tabindex]="(isLoggedIn$ | async) ? null : -1"
+                 [attr.aria-disabled]="!(isLoggedIn$ | async) ? 'true' : null"
+                 [style.pointer-events]="(isLoggedIn$ | async) ? 'auto' : 'none'">Fantasy</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
@@ -49,9 +53,9 @@
                     Register
                 </button>
             </ng-template>
-            <button class="btn btn-danger donate-btn">
-                Donate to us
-            </button>
+            <a class="btn btn-danger donate-btn" target="_blank" href="https://ko-fi.com/H2H51LTFJC">
+                Buy me a coffee
+            </a>
         </div>
     </div>
   </div>

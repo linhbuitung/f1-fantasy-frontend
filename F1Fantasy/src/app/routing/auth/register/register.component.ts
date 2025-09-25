@@ -44,13 +44,14 @@ export class RegisterComponent {
         this.router.navigateByUrl('/');
       },
       error: (err) => {
-        console.log(err);
         this.serverError = this.getErrorMessage(err);
       }
     });
   }
 
   private getErrorMessage(err: any): string {
+    // if code = 401 then return Wrong email or password
+    if (err?.status === 401) return 'Wrong email or password';
     if (err?.error?.errors) {
       // Flatten all error arrays into a single string
       return Object.values(err.error.errors)

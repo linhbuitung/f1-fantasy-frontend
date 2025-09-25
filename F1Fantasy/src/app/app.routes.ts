@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {profileOwnerGuard} from './core/guards/profile-owner.guard';
+import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -68,6 +69,7 @@ export const routes: Routes = [
   },
   {
     path: 'fantasy',
+    canActivate: [authGuard],
     children: [
       {
         path: 'status',

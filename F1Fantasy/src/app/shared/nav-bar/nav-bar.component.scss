@@ -62,6 +62,13 @@ a.logo img {
   transition: background 0.2s;
 }
 
+.nav-link.disabled {
+  color: var(--f1-grey) !important;
+  background: none !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+}
+
 .user-btn {
     border: 2px solid var(--f1-primary-red);
     color: var(--f1-black);

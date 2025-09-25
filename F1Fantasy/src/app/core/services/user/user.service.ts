@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { UserGetDto } from './dtos/user.get.dto';
 import { UserUpdateDto } from './dtos/user.update.dto';
-import { Observable } from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {UserResetPasswordDto} from './dtos/reset-password.dto';
-
+import {AuthService} from '../auth/auth.service';
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getUserById(id: string): Observable<UserGetDto> {
     return this.http.get<UserGetDto>(`${environment.API_URL}/user/${id}`, { withCredentials: true });
@@ -19,7 +19,15 @@ export class UserService {
   // }
 
   updateUser(id: string, data: UserUpdateDto): Observable<UserGetDto> {
-    return this.http.put<UserGetDto>(`${environment.API_URL}/user/${id}/update`, data, { withCredentials: true });
+    return this.http.put<UserGetDto>(`${environment.API_URL}/user/${id}/update`,
+      data,
+      { withCredentials: true })
+      .pipe(tap({
+        next: () => {
+          this.authService.loadProfile();
+        }
+      })
+    );
   }
 
   findUsersByDisplayName(name: string): Observable<UserGetDto[]> {
