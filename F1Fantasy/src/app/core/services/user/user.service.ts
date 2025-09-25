@@ -34,6 +34,6 @@ export class UserService {
   }
 
   resetPassword(data: UserResetPasswordDto) {
-    return this.http.post(`${environment.API_URL}/user/reset-password`, data, { withCredentials: true });
+    return this.http.post(`${environment.API_URL}/reset-password`, data, { withCredentials: true });
   }
 }

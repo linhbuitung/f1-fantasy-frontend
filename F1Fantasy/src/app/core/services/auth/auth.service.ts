@@ -54,6 +54,10 @@ export class AuthService {
   }
 
   loadProfile() {
+    // Only fetch if it's logged in
+    if(!this.loggedIn.value) {
+      return;
+    }
     this.http.get<UserGetDto>(`${environment.API_URL}/user/me`, { withCredentials: true })
       .subscribe({
         next: (profile) => {

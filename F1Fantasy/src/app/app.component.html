@@ -1,6 +1,9 @@
 <main class="main">
   <app-nav-bar></app-nav-bar>
-  <div class="main-content">  
+  <ng-container *ngIf="router.url.startsWith('/fantasy')">
+    <app-fantasy-nav></app-fantasy-nav>
+  </ng-container>
+  <div class="main-content">
     <router-outlet />
   </div>
 </main>
