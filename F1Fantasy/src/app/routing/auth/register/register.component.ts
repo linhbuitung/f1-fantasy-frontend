@@ -40,9 +40,19 @@ export class RegisterComponent {
     const payload: RegisterDto = this.registerForm.value;
     this.authService.register(payload).subscribe({
       next: () => {
-        this.authService.loadProfile();
-        this.router.navigateByUrl('/');
-      },
+      // Automatically log in after successful registration
+      this.authService.login({
+        email: payload.email,
+        password: payload.password
+      }).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/');
+        },
+        error: (err) => {
+          this.serverError = 'Registration succeeded, but login failed. Please try logging in.';
+        }
+      });
+    },
       error: (err) => {
         this.serverError = this.getErrorMessage(err);
       }

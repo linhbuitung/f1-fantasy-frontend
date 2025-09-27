@@ -1,1 +1,109 @@
-<p>lineup works!</p>
+<app-content-container>
+  <div class="fantasy-lineup">
+    <div class="row gx-4 gy-4">
+      <!-- Left: Lineup grid -->
+      <div class="col-lg-7 col-12">
+        <div class="lineup-section">
+          <div class="lineup-header bg-primary-red text-white mb-3">
+            Race week: {{ lineup?.raceWeek }} - {{ lineup?.raceName }} - {{ lineup?.raceDate | date:'d/M/yyyy' }}
+          </div>
+          <div class="lineup-lock bg-black text-white mb-3">
+            Lock at: {{ lineup?.lockTime }}
+          </div>
+          <div class="lineup-card">
+            <!-- First row: 3 drivers -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let driver of lineup?.drivers?.slice(0,3)">
+                <div class="avatar driver-avatar">
+                  <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.name" class="team-img" />
+                  <ng-template #defaultDriver>
+                    <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                  </ng-template>
+                </div>
+                <span class="driver-name">{{ driver.name }}</span>
+                <span class="driver-score">{{ driver.point }}</span>
+                <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
+              </div>
+            </div>
+            <!-- Second row: 2 drivers -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let driver of lineup?.drivers?.slice(3,5)">
+                <div class="avatar driver-avatar">
+                  <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.name" class="team-img" />
+                  <ng-template #defaultDriver>
+                    <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                  </ng-template>
+                </div>
+                <span class="driver-name">{{ driver.name }}</span>
+                <span class="driver-score">{{ driver.point }}</span>
+                <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
+              </div>
+            </div>
+            <!-- Last row: 2 constructors -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let constructor of lineup?.constructors">
+                <div class="avatar constructor-avatar">
+                  <img *ngIf="constructor.imgUrl; else defaultConstructor" [src]="constructor.imgUrl" [alt]="constructor.name" class="team-img" />
+                  <ng-template #defaultConstructor>
+                    <img src="assets/steering-wheel.svg" alt="Default constructor" class="team-img" />
+                  </ng-template>
+                </div>
+                <span class="constructor-name">{{ constructor.name }}</span>
+                <span class="constructor-score">{{ constructor.point }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Panels -->
+      <div class="col-lg-5 col-12">
+        <div class="row gy-3">
+          <!-- Powerups panel -->
+          <div class="col-12">
+            <div class="lineup-panel bg-primary-red text-white">
+              <div class="panel-title">Powerups</div>
+              <div class="powerups-row">
+                <div class="powerup-card" *ngFor="let powerup of powerups">
+                  <div class="powerup-icon">
+                    <i class="bi bi-arrow-repeat"></i>
+                  </div>
+                  <div class="powerup-name">{{ powerup.name }}</div>
+                  <div class="powerup-status" [ngClass]="{
+                    'used': powerup.status === 'used',
+                    'unavailable': powerup.status === 'unavailable',
+                    'enabled': powerup.status === 'enabled'
+                  }">
+                    {{ powerup.status | titlecase }}
+                  </div>
+                  <button *ngIf="powerup.status === 'enabled'" class="btn btn-outline-light btn-sm mt-1">Use</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Transfers & Finance panel -->
+          <div class="col-md-6 col-12">
+            <div class="lineup-panel bg-primary-red text-white">
+              <div class="panel-title">Transfers & Finance</div>
+              <div class="panel-row">Total transfers: {{ lineup?.totalTransfers }}</div>
+              <div class="panel-row">Gameweek transfers: {{ lineup?.gameweekTransfers }}</div>
+              <hr class="panel-divider" />
+              <div class="panel-row">Lineup value: {{ lineup?.lineupValue }}$</div>
+              <div class="panel-row">In the bank: {{ lineup?.bank }} $</div>
+            </div>
+          </div>
+          <!-- Game info panel -->
+          <div class="col-md-6 col-12">
+            <div class="lineup-panel bg-primary-red text-white">
+              <div class="panel-title">Game info</div>
+              <div class="panel-row">Overall points: {{ lineup?.overallPoints }}</div>
+              <div class="panel-row">Overall rank: {{ lineup?.overallRank }}</div>
+              <hr class="panel-divider" />
+              <div class="panel-row">Players number: {{ lineup?.playersNumber }}</div>
+              <div class="panel-row">Gameweek points: {{ lineup?.gameweekPoints }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-content-container>

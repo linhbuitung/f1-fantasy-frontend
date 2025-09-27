@@ -137,3 +137,16 @@ fa-user{
   color: var(--f1-white);
   border-color: var(--f1-light-red);
 }
+
+.button-container{
+  margin-right: 1rem;
+}
+
+@media (max-width: 600px) {
+  .button-container
+  {
+    margin-right: 0rem;
+    flex-direction:column;
+    align-items: flex-start !important;
+  }
+}

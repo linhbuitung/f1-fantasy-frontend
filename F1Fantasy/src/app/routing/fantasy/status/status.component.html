@@ -1,1 +1,114 @@
-<p>status works!</p>
+<app-content-container>
+  <div class="fantasy-status">
+    <ng-container *ngIf="!noActiveSeason; else noSeason">
+      <div class="row gx-4 gy-4">
+        <!-- Left: Team of the week -->
+        <div class="col-lg-7 col-12">
+          <div class="status-section">
+            <div class="status-header bg-black text-white mb-3">Race week: {{ teamOfWeek?.round }} - {{ teamOfWeek?.raceName }}</div>
+            <div class="status-subheader bg-primary-red text-white mb-3">Team of the week</div>
+            <div class="team-of-week-card">
+              <!-- First row: 2 drivers -->
+              <div class="team-row team-row-names">
+                <div class="team-member" *ngFor="let driver of teamOfWeek?.drivers?.slice(0,2)">
+                  <div class="avatar driver-avatar">
+                    <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.name" class="team-img" />
+                    <ng-template #defaultDriver>
+                      <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="driver-name">{{ driver.name }}</span>
+                  <span class="driver-score">{{ driver.pointGained }}</span>
+                </div>
+              </div>
+              <!-- Second row: 3 drivers -->
+              <div class="team-row team-row-names">
+                <div class="team-member" *ngFor="let driver of teamOfWeek?.drivers?.slice(2,5)">
+                  <div class="avatar driver-avatar">
+                    <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.name" class="team-img" />
+                    <ng-template #defaultDriver>
+                      <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="driver-name">{{ driver.name }}</span>
+                  <span class="driver-score">{{ driver.pointGained }}</span>
+                </div>
+              </div>
+              <!-- Separator -->
+              <div class="team-separator my-3"></div>
+              <!-- Last row: 2 constructors -->
+              <div class="team-row team-row-names">
+                <div class="team-member" *ngFor="let constructor of teamOfWeek?.constructors">
+                  <div class="avatar constructor-avatar">
+                    <img *ngIf="constructor.imgUrl; else defaultConstructor" [src]="constructor.imgUrl" [alt]="constructor.name" class="team-img" />
+                    <ng-template #defaultConstructor>
+                      <img src="assets/steering-wheel.svg" alt="Default constructor" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="constructor-name">{{ constructor.name }}</span>
+                  <span class="constructor-score">{{ constructor.pointGained }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right: Info panels -->
+        <div class="col-lg-5 col-12">
+          <div class="row gy-3">
+            <div class="col-12">
+              <div class="status-header bg-black text-white mb-3">Latest Finished Race
+                <div class=" btn-updated float-end">{{latestRace?.calculated ? 'Calculated' : 'Not Yet Calculated'}}</div>
+              </div>
+            </div>
+            <div class="row gx-4 gy-4 info-row-parent">
+              <div class="col-md-6 col-12">
+                <div class="info-card general-season-info-card bg-primary-red text-white">
+                  <div class="info-title">Info</div>
+                  <div class="info-row">Highest point: {{ info?.highestPoint }}</div>
+                  <div class="info-row">Transfers Made: {{ info?.totalTransferMade }}</div>
+                  <div class="info-row">Most Picked: {{ info?.mostPickedDriver }}</div>
+                  <div class="info-row">Average Points: {{ info?.averagePoints }}</div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="info-card next-race-info-card bg-primary-red text-white">
+                  <div class="info-title">Next Week</div>
+                  <div class="next-gp">{{ currentRace?.raceName }}</div>
+                  <img *ngIf="currentRace?.circuit?.imgUrl; else defaultCircuit" [src]="currentRace?.circuit?.imgUrl" [alt]="currentRace?.circuit?.circuitName" class="circuit-img" />
+                  <ng-template #defaultCircuit>
+                    <img src="assets/circuit.svg" alt="Default circuit" class="circuit-img" />
+                  </ng-template>
+                  <div class="next-gp-date">{{ currentRace?.raceDate | date:'d/M/yyyy' }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="season-card bg-grey">
+                <div class="season-title">Your season stats</div>
+                <div class="season-points">{{ userStats?.totalPointsGained ?? 'Loading...' }} pts</div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="season-card bg-black text-white">
+                <div class="season-title">Your best race week</div>
+                <div class="best-week-row">
+                  <span>{{ userStats?.bestRaceWeek?.raceName ?? '-' }}</span>
+                  <span>{{ userStats?.bestRaceWeek?.raceDate | date:'d/M/yyyy' }}</span>
+                </div>
+                <div class="season-points">{{ userStats?.bestRaceWeek?.pointsGained ?? '-' }} pts</div>
+              </div>
+  <!--            <div class="season-footer">-->
+  <!--              Free transfers: {{ seasonStats.freeTransfers }} &nbsp; Additional: {{ seasonStats.additionalTransfers }}-->
+  <!--            </div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noSeason>
+        <div class="alert alert-danger text-center" style="margin-top: 2rem; font-size: 1.3rem;">
+          There is no active season. Please check back later!
+        </div>
+    </ng-template>
+  </div>
+</app-content-container>

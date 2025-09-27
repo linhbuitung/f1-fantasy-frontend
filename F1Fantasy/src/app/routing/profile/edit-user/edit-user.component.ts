@@ -9,6 +9,9 @@ import { UserGetDto } from '../../../core/services/user/dtos/user.get.dto';
 import { UserUpdateDto } from '../../../core/services/user/dtos/user.update.dto';
 import {ContentContainerComponent} from '../../../shared/content-container/content-container.component';
 import {NgForOf, NgIf} from '@angular/common';
+import { DriverGetDto } from '../../../core/services/static-data/dtos/driver.get.dto';
+import { CountryGetDto } from '../../../core/services/static-data/dtos/country.get.dto';
+import { ConstructorGetDto } from '../../../core/services/static-data/dtos/constructor.get.dto';
 
 @Component({
   selector: 'app-edit-user',
@@ -25,9 +28,9 @@ import {NgForOf, NgIf} from '@angular/common';
 export class EditUserComponent implements OnInit {
   editForm: FormGroup;
   user: UserGetDto | null = null;
-  drivers: any[] = [];
-  countries: any[] = [];
-  constructors: any[] = [];
+  drivers: DriverGetDto[] = [];
+  countries: CountryGetDto[] = [];
+  constructors: ConstructorGetDto[] = [];
   serverError: string | null = null;
 
   constructor(
@@ -64,7 +67,9 @@ export class EditUserComponent implements OnInit {
         });
       });
     }
-    this.driverService.getAllDrivers().subscribe(list => this.drivers = list);
+    this.driverService.getAllDrivers().subscribe(list => {
+      this.drivers = list.sort((a, b) => a.givenName.localeCompare(b.givenName));
+    });
     this.countryService.getAllCountries().subscribe(list => this.countries = list);
     this.constructorService.getAllConstructors().subscribe(list => this.constructors = list);
   }
