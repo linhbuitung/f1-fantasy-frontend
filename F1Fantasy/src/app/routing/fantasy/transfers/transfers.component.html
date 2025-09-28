@@ -1,1 +1,175 @@
-<p>transfers works!</p>
+<app-content-container>
+  <div class="fantasy-lineup">
+    <div class="row gx-4 gy-4">
+      <!-- Left: Team panel (lineup grid) -->
+      <div class="col-lg-7 col-12">
+        <div class="lineup-section">
+          <div class="lineup-header bg-primary-red text-white mb-3">
+            Race week: {{ currentRace?.round }} - {{ currentRace?.raceName }} - {{ currentRace?.raceDate |
+            date:'d/M/yyyy' }}
+          </div>
+          <div class="lineup-lock bg-black text-white mb-3">
+            Lock at: {{ currentRace?.deadlineDate | date:'shortTime' }} {{ currentRace?.deadlineDate | date:'d/M/yyyy'
+            }}
+          </div>
+          <div class="d-flex gap-1 mb-3 flex-wrap">
+            <div class="info-chip bg-danger text-white">
+              Drivers selected: {{ lineup?.drivers?.length || 0 }}/5
+            </div>
+            <div class="info-chip bg-black text-white">
+              Budget left: {{ lineupLimit - lineupValue | number:'1.2-2' }}$
+            </div>
+            <div class="info-chip bg-black text-white">
+              Free transfers left: {{ (transfersMade - freeTransfers) < 0 ? (freeTransfers - transfersMade) : (transfersMade - freeTransfers) }}
+            </div>
+            <div class="info-chip bg-danger text-white">
+              Constructor selected: {{ lineup?.constructors?.length || 0 }}/2
+            </div>
+          </div>
+          <div class="lineup-card">
+            <!-- First row: 2 drivers -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let idx of [0,1]">
+                <ng-container *ngIf="lineupToUpdate?.drivers?.[idx] as driver; else unpickedDriver">
+                  <div class="avatar driver-avatar">
+                    <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.familyName"
+                      class="team-img" />
+                    <ng-template #defaultDriver>
+                      <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
+                  <span class="driver-price">{{ driver.price }}$</span>
+                  <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver)">Remove</button>
+                  <button
+                    class="btn captain-btn"
+                    [disabled]="driver.isCaptain"
+                    (click)="setCaptain(driver.id)">
+                    {{ driver.isCaptain ? 'Captain' : 'Set Captain' }}
+                  </button>
+                </ng-container>
+                <ng-template #unpickedDriver>
+                  <div class="avatar driver-avatar">
+                    <img src="assets/driver-icon.svg" alt="Unpicked driver" class="team-img" />
+                  </div>
+                  <span class="driver-name text-muted">Unpicked</span>
+                  <span class="driver-price text-muted">-</span>
+                </ng-template>
+              </div>
+            </div>
+            <!-- Second row: 3 drivers -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let idx of [2,3,4]">
+                <ng-container *ngIf="lineupToUpdate?.drivers?.[idx] as driver; else unpickedDriver">
+                  <div class="avatar driver-avatar">
+                    <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.familyName"
+                      class="team-img" />
+                    <ng-template #defaultDriver>
+                      <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
+                  <span class="driver-price">{{ driver.price }}$</span>
+                  <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver)">Remove</button>
+                  <button
+                    class="btn captain-btn"
+                    [disabled]="driver.isCaptain"
+                    (click)="setCaptain(driver.id)">
+                    {{ driver.isCaptain ? 'Captain' : 'Set Captain' }}
+                  </button>
+                </ng-container>
+                <ng-template #unpickedDriver>
+                  <div class="avatar driver-avatar">
+                    <img src="assets/driver-icon.svg" alt="Unpicked driver" class="team-img" />
+                  </div>
+                  <span class="driver-name text-muted">Unpicked</span>
+                  <span class="driver-price text-muted">-</span>
+                </ng-template>
+              </div>
+            </div>
+            <!-- Separator -->
+            <div class="team-separator my-3"></div>
+            <!-- Last row: 2 constructors -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let idx of [0,1]">
+                <ng-container *ngIf="lineupToUpdate?.constructors?.[idx] as constructor; else unpickedConstructor">
+                  <div class="avatar constructor-avatar">
+                    <img *ngIf="constructor.imgUrl; else defaultConstructor" [src]="constructor.imgUrl"
+                      [alt]="constructor.name" class="team-img" />
+                    <ng-template #defaultConstructor>
+                      <img src="assets/steering-wheel.svg" alt="Default constructor" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="constructor-name">{{ constructor.name }}</span>
+                  <span class="constructor-price">{{ constructor.price }}$</span>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveConstructor(constructor)">Remove</button>
+                </ng-container>
+                <ng-template #unpickedConstructor>
+                  <div class="avatar constructor-avatar">
+                    <img src="assets/steering-wheel.svg" alt="Unpicked constructor" class="team-img" />
+                  </div>
+                  <span class="constructor-name text-muted">Unpicked</span>
+                  <span class="constructor-price text-muted">-</span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-3">
+            <button class="transfer-btn reset" (click)="onReset()">Reset</button>
+            <button class="transfer-btn make" (click)="onMakeTransfer()">Make transfer</button>
+          </div>
+          <div *ngIf="transferSuccess" class="alert alert-success mt-3 d-flex justify-content-between align-items-center">
+            Transfer made successfully!
+            <button type="button" class="btn btn-outline-secondary btn-sm ms-2" (click)="dismissTransferSuccess()">Dismiss</button>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Pickable items panel -->
+      <div class="col-lg-5 col-12">
+        <div class="row gy-3">
+          <div class="col-6">
+            <div class="lineup-panel bg-primary-red text-white">
+              <div class="panel-title">Drivers</div>
+              <div class="pickable-list pickable-driver-list">
+                <div class="pickable-item" *ngFor="let driver of pickableItems?.drivers" [hidden]="isDriverPicked(driver)">
+                  <div class="avatar driver-avatar">
+                    <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.familyName"
+                      class="team-img" />
+                    <ng-template #defaultDriver>
+                      <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
+                  <span class="driver-price">{{ driver.price }}$</span>
+                  <button class="btn pick-btn btn-outline-primary btn-sm mt-1" (click)="onPickDriver(driver)">Pick</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="lineup-panel bg-primary-red text-white">
+              <div class="panel-title">Constructors</div>
+              <div class="pickable-list pickable-constructor-list">
+                <div class="pickable-item" *ngFor="let constructor of pickableItems?.constructors" [hidden]="isConstructorPicked(constructor)">
+                  <div class="avatar constructor-avatar">
+                    <img *ngIf="constructor.imgUrl; else defaultConstructor" [src]="constructor.imgUrl"
+                      [alt]="constructor.name" class="team-img" />
+                    <ng-template #defaultConstructor>
+                      <img src="assets/steering-wheel.svg" alt="Default constructor" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="constructor-name">{{ constructor.name }}</span>
+                  <span class="constructor-price">{{ constructor.price }}$</span>
+                  <button class="btn pick-btn btn-outline-primary btn-sm mt-1"
+                    (click)="onPickConstructor(constructor)">Pick</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-content-container>

@@ -44,7 +44,6 @@ export class LoginComponent {
     const payload: LoginDto = this.loginForm.value;
     this.authService.login(payload).subscribe({
       next: () => {
-        this.authService.loadProfile();
         this.router.navigateByUrl('/');
       },
       error: (err) => {

@@ -26,7 +26,7 @@
       <div class="form-group row">
         <label for="driverId" class="col-sm-4 col-form-label">Favorite Driver</label>
         <div class="col-sm-8">
-          <select id="driverId" formControlName="driverId" class="form-control">
+          <select id="driverId" formControlName="driverId" class="form-control" size="7">
             <option [ngValue]="null">-- Select Driver --</option>
             <option *ngFor="let d of drivers" [ngValue]="d.id">
               {{ d.givenName }} {{ d.familyName }}
@@ -37,7 +37,7 @@
       <div class="form-group row">
         <label for="constructorId" class="col-sm-4 col-form-label">Favorite Constructor</label>
         <div class="col-sm-8">
-          <select id="constructorId" formControlName="constructorId" class="form-control">
+          <select id="constructorId" formControlName="constructorId" class="form-control" size="7">
             <option [ngValue]="null">-- Select Constructor --</option>
             <option *ngFor="let c of constructors" [ngValue]="c.id">{{ c.name }}</option>
           </select>
@@ -46,7 +46,7 @@
       <div class="form-group row">
         <label for="countryId" class="col-sm-4 col-form-label">Country</label>
         <div class="col-sm-8">
-          <select id="countryId" formControlName="countryId" class="form-control">
+          <select id="countryId" formControlName="countryId" class="form-control" size="7">
             <option [ngValue]="null">-- Select Country --</option>
             <option *ngFor="let c of countries" [ngValue]="c.id">{{ c.shortName }}</option>
           </select>

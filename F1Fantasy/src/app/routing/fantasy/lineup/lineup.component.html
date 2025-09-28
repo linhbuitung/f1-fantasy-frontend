@@ -1,1 +1,157 @@
-<p>lineup works!</p>
+<app-content-container>
+  <div class="fantasy-lineup">
+    <div class="row gx-4 gy-4">
+      <!-- Left: Lineup grid -->
+      <div class="col-lg-7 col-12">
+        <div class="lineup-section">
+          <div class="lineup-header bg-primary-red text-white mb-3">
+            Race week: {{ currentRace?.round }} - {{ currentRace?.raceName }} - {{ currentRace?.raceDate | date:'d/M/yyyy' }}
+          </div>
+          <div class="lineup-lock bg-black text-white mb-3">
+            Lock after: {{ currentRace?.deadlineDate | date:'d/M/yyyy' }}
+          </div>
+          <div class="lineup-card">
+            <!-- First row: 2 drivers -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let idx of [0,1]">
+                <ng-container *ngIf="lineup?.drivers?.[idx] as driver; else unpickedDriver">
+                  <div class="avatar driver-avatar">
+                    <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.familyName"
+                      class="team-img" />
+                    <ng-template #defaultDriver>
+                      <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                    </ng-template>
+                    <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
+                  </div>
+                  <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
+                  <span class="driver-price">{{ driver.price }}$</span>
+                </ng-container>
+                <ng-template #unpickedDriver>
+                  <div class="avatar driver-avatar">
+                    <img src="assets/driver-icon.svg" alt="Unpicked driver" class="team-img" />
+                  </div>
+                  <span class="driver-name text-muted">Unpicked</span>
+                  <span class="driver-price text-muted">-</span>
+                </ng-template>
+              </div>
+            </div>
+            <!-- Second row: 3 drivers -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let idx of [2,3,4]">
+                <ng-container *ngIf="lineup?.drivers?.[idx] as driver; else unpickedDriver">
+                  <div class="avatar driver-avatar">
+                    <img *ngIf="driver.imgUrl; else defaultDriver" [src]="driver.imgUrl" [alt]="driver.familyName"
+                      class="team-img" />
+                    <ng-template #defaultDriver>
+                      <img src="assets/driver-icon.svg" alt="Default driver" class="team-img" />
+                    </ng-template>
+                    <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
+                  </div>
+                  <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
+                  <span class="driver-price">{{ driver.price }}$</span>
+                </ng-container>
+                <ng-template #unpickedDriver>
+                  <div class="avatar driver-avatar">
+                    <img src="assets/driver-icon.svg" alt="Unpicked driver" class="team-img" />
+                  </div>
+                  <span class="driver-name text-muted">Unpicked</span>
+                  <span class="driver-price text-muted">-</span>
+                </ng-template>
+              </div>
+            </div>
+            <!-- Separator -->
+            <div class="team-separator my-3"></div>
+            <!-- Last row: 2 constructors -->
+            <div class="lineup-row">
+              <div class="lineup-member" *ngFor="let idx of [0,1]">
+                <ng-container *ngIf="lineup?.constructors?.[idx] as constructor; else unpickedConstructor">
+                  <div class="avatar constructor-avatar">
+                    <img *ngIf="constructor.imgUrl; else defaultConstructor" [src]="constructor.imgUrl" [alt]="constructor.name"
+                      class="team-img" />
+                    <ng-template #defaultConstructor>
+                      <img src="assets/steering-wheel.svg" alt="Default constructor" class="team-img" />
+                    </ng-template>
+                  </div>
+                  <span class="constructor-name">{{ constructor.name }}</span>
+                  <span class="constructor-price">{{ constructor.price }}$</span>
+                </ng-container>
+                <ng-template #unpickedConstructor>
+                  <div class="avatar constructor-avatar">
+                    <img src="assets/steering-wheel.svg" alt="Unpicked constructor" class="team-img" />
+                  </div>
+                  <span class="constructor-name text-muted">Unpicked</span>
+                  <span class="constructor-price text-muted">-</span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Panels -->
+      <div class="col-lg-5 col-12">
+        <div class="row gy-3">
+          <!-- Powerups panel -->
+          <div class="col-12">
+            <div class="lineup-panel bg-primary-red text-white">
+              <div class="panel-title">Powerups</div>
+              <div class="powerups-row">
+                <div class="powerup-card" *ngFor="let powerup of powerups">
+                  <div class="powerup-top">
+                    <div class="powerup-icon" *ngIf="powerup.imgUrl === 'null'">
+                      <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                    <div *ngIf="powerup.imgUrl !== 'null'" class="powerup-img">
+                      <img [src]="powerup.imgUrl" [alt]="powerup.type" />
+                    </div>
+                    <div class="powerup-name">{{ powerup.type }}</div>
+                  </div>
+                  <div class="powerup-bottom">
+                    <div class="powerup-status" [ngClass]="{
+                      'used': powerup.status === 'Used',
+                      'using': powerup.status === 'Using',
+                      'available': powerup.status === 'Available'
+                    }">
+                      {{ powerup.status | titlecase }}
+                    </div>
+                    <button *ngIf="powerup.status === 'Available'" class="btn btn-use btn-sm"
+                      (click)="addPowerToLineup(powerup)">Use</button>
+                    <button *ngIf="powerup.status === 'Using'" class="btn btn-remove  btn-outline-danger btn-sm"
+                      (click)="removePowerFromLineup(powerup)">Remove</button>
+                    <button *ngIf="powerup.status === 'Used'" class="btn btn-secondary btn-sm" disabled>Used</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Transfers & Finance panel -->
+          <div class="col-md-6 col-12">
+            <div class="lineup-panel bg-primary-red text-white">
+              <div class="panel-title">Transfers & Finance</div>
+              <div class="panel-row">Total transfers made in the season: {{ userStats?.totalTransfersMade }}</div>
+              <div class="panel-row">Gameweek transfers: {{ lineup?.transfersMade }}</div>
+              <hr class="panel-divider" />
+              <div class="panel-row">
+                Lineup value: {{ lineupValue }}$
+              </div>
+              <div *ngIf="lineupValue > lineupLimit" class="alert alert-warning mt-2">
+                Current lineup crossed the limit ({{ lineupLimit }}$) and will not gain any point for next Race.
+              </div>
+              <div class="panel-row">In the bank: {{ lineupLimit - lineupValue }}$</div>
+            </div>
+          </div>
+          <!-- Game info panel -->
+          <div class="col-md-6 col-12">
+            <div class="lineup-panel bg-primary-red text-white">
+              <div class="panel-title">Game info</div>
+              <div class="panel-row">Overall points: {{ userStats?.totalPointsGained }}</div>
+              <div class="panel-row">Overall rank: {{ userStats?.overallRank }}</div>
+              <hr class="panel-divider" />
+              <!--<div class="panel-row">Players number: {{ lineup?.playersNumber }}</div>-->
+              <div class="panel-row">Last gameweek points: {{ latestFinishedLineup?.pointsGained }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-content-container>
