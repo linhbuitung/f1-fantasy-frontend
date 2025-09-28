@@ -7,5 +7,7 @@
 
 export interface UserGeneralSeasonStatisticDto {
   totalPointsGained: number;
+  totalTransfersMade: number;
+  overallRank: number;
   bestRaceWeek: BestRaceWeekOfAnUserDto;
 }
