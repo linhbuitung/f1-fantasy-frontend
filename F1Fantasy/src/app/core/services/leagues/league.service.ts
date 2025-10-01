@@ -7,6 +7,8 @@ import {LeagueCreateDto} from './dtos/league.create.dto';
 import {JoinRequestGetDto} from './dtos/join-request.get.dto';
 import {LeagueUpdateDto} from './dtos/league.update.dto';
 import {JoinRequestUpdateDto} from './dtos/join-request.update.dto';
+import {LeagueSearchResultDto} from './dtos/league-search-result.dto';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class LeagueService {
@@ -68,6 +70,18 @@ export class LeagueService {
     return this.http.delete<void>(
       `${environment.API_URL}/user/${userId}/league/${leagueId}`,
       { withCredentials: true }
+    );
+  }
+
+  SearchLeagues(query: string, pageNum: number = 1, pageSize: number = 10): Observable<LeagueSearchResultDto> {
+    const params = new HttpParams()
+      .set('query', query)
+      .set('pageNum', pageNum)
+      .set('pageSize', pageSize);
+
+    return this.http.get<LeagueSearchResultDto>(
+      `${environment.API_URL}/league/full-text-search`,
+      { params, withCredentials: true }
     );
   }
 }

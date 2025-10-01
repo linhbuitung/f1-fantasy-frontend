@@ -1,0 +1,86 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.find-league {
+  width:100%;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  font-size: 1rem;
+  border: 2px solid var(--f1-primary-red);
+  color: var(--f1-primary-red);
+  background: var(--f1-white);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-back:hover,
+.btn-back:focus {
+  background: var(--f1-primary-red);
+  color: var(--f1-white);
+  border-color: var(--f1-primary-red);
+}
+
+.btn-primary-red {
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  min-width: 120px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-primary-red:disabled {
+  background: var(--f1-grey);
+  color: var(--f1-white);
+  opacity: 0.7;
+}
+
+.btn-join {
+  border: 2px solid var(--f1-primary-red);
+  color: var(--f1-primary-red);
+  background: var(--f1-white);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  min-width: 110px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-join:hover,
+.btn-join:focus {
+  background: var(--f1-primary-red);
+  color: var(--f1-white);
+  border-color: var(--f1-primary-red);
+}
+
+.card {
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1.5px solid var(--f1-grey);
+}
+
+@media (max-width: 700px) {
+  .find-league {
+    padding: 1rem 0.2rem;
+    max-width: 100%;
+  }
+  .card {
+    border-radius: 0.5rem;
+  }
+}
