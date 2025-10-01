@@ -100,12 +100,35 @@ export const routes: Routes = [
       },
       {
         path: 'leagues',
-        pathMatch: 'full',
-        loadComponent: async () => {
-          return import('./routing/fantasy/leagues/leagues.component').then(
-            (m) => m.LeaguesComponent
-          );
-        },
+        children: [
+          {
+            path: "",
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/leagues-landing-page/leagues-landing-page.component').then(
+                (m) => m.LeaguesLandingPageComponent
+              );
+            }
+          },
+          {
+            path: "create",
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/league-create/league-create.component').then(
+                (m) => m.LeagueCreateComponent
+              );
+            }
+          },
+          {
+            path: ':leagueId/manage',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/league-manage/league-manage.component').then(
+                (m) => m.LeagueManageComponent
+              );
+            }
+          }
+        ]
       },
       {
         path: 'how-to-play',

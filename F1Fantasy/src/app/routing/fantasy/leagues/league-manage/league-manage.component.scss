@@ -1,0 +1,174 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.league-manage {
+  width: 60%;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.league-manage h2{
+  text-align: center;
+}
+.card-body{
+  text-align: center;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  font-size: 1rem;
+  border: 2px solid var(--f1-primary-red);
+  color: var(--f1-primary-red);
+  background: var(--f1-white);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-back:hover,
+.btn-back:focus {
+  background: var(--f1-primary-red);
+  color: var(--f1-white);
+  border-color: var(--f1-primary-red);
+}
+
+.card {
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1.5px solid var(--f1-grey);
+}
+
+.card-header {
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 1rem 1rem 0 0;
+  background-color: var(--f1-dark-red);
+}
+
+.btn-section{
+  margin-top: 1rem;
+}
+.btn-primary-red, .btn-update {
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  min-width: 120px;
+  transition: background 0.2s, color 0.2s;
+  margin-right:1rem;
+}
+
+.btn-primary-red:disabled, .btn-update:disabled {
+  background: var(--f1-grey);
+  color: var(--f1-white);
+  opacity: 0.7;
+}
+
+.delete-section {
+
+}
+.btn-update:hover{
+  background: var(--f1-light-red);
+  color: var(--f1-white);
+}
+
+.btn-success, .btn-danger {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  min-width: 80px;
+}
+
+.btn-danger {
+  background: var(--f1-danger, #dc3545);
+  color: var(--f1-white);
+  border: 2px solid var(--f1-danger, #dc3545);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  min-width: 90px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-danger:hover,
+.btn-danger:focus {
+  background: var(--f1-dark-red, #b52a37);
+  color: var(--f1-white);
+  border-color: var(--f1-dark-red, #b52a37);
+}
+
+.btn-outline-secondary {
+  border: 2px solid var(--f1-grey, #adb5bd);
+  color: var(--f1-black, #222);
+  background: var(--f1-white);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  min-width: 90px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background: var(--f1-grey, #adb5bd);
+  color: var(--f1-white);
+  border-color: var(--f1-grey, #adb5bd);
+}
+
+.table {
+  margin-bottom: 0;
+  background: var(--f1-white);
+  border-radius: 0 0 1rem 1rem;
+  overflow: hidden;
+}
+
+th, td {
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+.btn-delete {
+  border: 2px solid var(--f1-danger, #dc3545);
+  color: var(--f1-danger, #dc3545);
+  background: var(--f1-white);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  min-width: 120px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  margin-left: 1rem;
+}
+.btn-delete:hover,
+.btn-delete:focus {
+  background: var(--f1-danger, #dc3545);
+  color: var(--f1-white);
+  border-color: var(--f1-danger, #dc3545);
+}
+
+.delete-confirm-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--f1-danger, #dc3545);
+}
+
+@media (max-width: 700px) {
+  .league-manage {
+    padding: 1rem 0.2rem;
+    max-width: 100%;
+  }
+  .card {
+    border-radius: 0.5rem;
+  }
+  .card-header {
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+}

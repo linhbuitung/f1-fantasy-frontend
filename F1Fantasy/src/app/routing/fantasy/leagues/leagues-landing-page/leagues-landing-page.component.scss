@@ -1,0 +1,118 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.leagues-main {
+  width: 100%;
+  margin: 0;
+}
+
+.leagues-actions {
+  justify-content: flex-start;
+}
+
+.btn-manage {
+  border: 2px solid var(--f1-primary-red);
+  color: var(--f1-black);
+  background: var(--f1-white);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  min-width: 90px;
+}
+
+.btn-manage:hover,
+.btn-manage:focus {
+  background: var(--f1-black);
+  color: var(--f1-white);
+  border-color: var(--f1-primary-red);
+}
+
+.leagues-action-btn {
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  border: none;
+  transition: background 0.2s;
+}
+
+.leagues-action-btn:hover {
+  background: #c82333;
+  color: #fff;
+}
+
+.leagues-list{
+  width: 80%;
+}
+.league-card {
+  background: var(--f1-dark-red);
+  border-radius: 0.7rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.league-card-header {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.8rem 1.2rem;
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  border-radius: 0.7rem 0.7rem 0 0;
+}
+
+.league-table {
+  background: var(--f1-light-red);
+  color: var(--f1-white);
+  padding: 0.5rem 1.2rem 1rem 1.2rem;
+}
+
+.league-table-header {
+  font-weight: 600;
+  border-bottom: 2px solid var(--f1-white);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.league-table-row {
+  border-bottom: 1px solid var(--f1-white);
+  align-items: center;
+  min-height: 2.2rem;
+  padding: 0.3rem 0;
+}
+
+.league-table-row:last-child {
+  border-bottom: none;
+}
+
+.league-col {
+  flex: 1 1 0;
+  text-align: left;
+  padding-right: 1rem;
+}
+
+.league-col.league-options {
+  flex: 0 0 120px;
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .leagues-main {
+    padding: 1rem 0.2rem;
+  }
+  .league-card-header, .league-table {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .league-col.league-options {
+    flex: 0 0 80px;
+  }
+}
