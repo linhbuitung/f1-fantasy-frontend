@@ -20,7 +20,15 @@
               Budget left: {{ lineupLimit - lineupValue | number:'1.2-2' }}$
             </div>
             <div class="info-chip bg-black text-white">
-              Free transfers left: {{ (transfersMade - freeTransfers) < 0 ? (freeTransfers - transfersMade) : (transfersMade - freeTransfers) }}
+              <ng-container *ngIf="overTransferCount === 0; else overTransfer">
+                Free transfers left: {{ freeTransfers - transfersMade }}
+              </ng-container>
+              <ng-template #overTransfer>
+                Exceeding transfers: {{ overTransferCount }}
+                <span class="text-danger ms-2">
+                ({{ overTransferPenalty }} pts penalty)
+              </span>
+              </ng-template>
             </div>
             <div class="info-chip bg-danger text-white">
               Constructor selected: {{ lineup?.constructors?.length || 0 }}/2

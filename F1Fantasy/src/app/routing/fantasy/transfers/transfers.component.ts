@@ -168,4 +168,12 @@ export class TransfersComponent implements OnInit {
   dismissTransferSuccess() {
     this.transferSuccess = false;
   }
+
+  get overTransferCount(): number {
+    return Math.max(0, this.transfersMade - this.freeTransfers);
+  }
+
+  get overTransferPenalty(): number {
+    return this.overTransferCount * environment.PENALTY_PER_EXCEDDING_ITEM;
+  }
 }
