@@ -49,8 +49,7 @@ export class TransfersComponent implements OnInit {
               this.lineup = data;
               this.lineupToUpdate = JSON.parse(JSON.stringify(data));
               this.calculateLineupValue();
-              this.updateTransfersMade();
-            },
+              this.updateInitialTransfersMade(data.transfersMade);            },
           });
 
         this.pickableItemsService.getPickableItems().subscribe({
@@ -60,9 +59,14 @@ export class TransfersComponent implements OnInit {
     });
   }
 
+  updateInitialTransfersMade(transfers: number) {
+    this.transfersMade = transfers;
+  }
+
+
   updateTransfersMade() {
     if (this.lineup && this.lineupToUpdate) {
-      this.transfersMade = this.calculateTransfersMade(this.lineup, this.lineupToUpdate);
+      this.transfersMade = this.calculateTransfersMade(this.lineup, this.lineupToUpdate) + this.lineup.transfersMade;
     }
   }
 
@@ -87,36 +91,46 @@ export class TransfersComponent implements OnInit {
       (id) => !newConstructorIds.includes(id)
     );
     const constructorTransfers = replacedConstructors.length;
-
     return driverTransfers + constructorTransfers;
   }
 
-  onPickDriver(driver: any) {
+  onPickDriver(driver: any, event?: Event) {
     if (!this.lineupToUpdate || this.lineupToUpdate.drivers.length >= 5) return;
     this.lineupToUpdate.drivers.push(driver);
     this.updateTransfersMade();
     this.calculateLineupValue();
+    if (event && event.target instanceof HTMLButtonElement) {
+      event.target.blur();
+    }
   }
 
-  onPickConstructor(constructor: any) {
+  onPickConstructor(constructor: any, event?: Event) {
     if (!this.lineupToUpdate || this.lineupToUpdate.constructors.length >= 2) return;
     this.lineupToUpdate.constructors.push(constructor);
     this.updateTransfersMade();
     this.calculateLineupValue();
+    if (event && event.target instanceof HTMLButtonElement) {
+      event.target.blur();
+    }
   }
 
-  onRemoveDriver(driver: any) {
+  onRemoveDriver(driver: any, event?: Event) {
     if (!this.lineupToUpdate) return;
     this.lineupToUpdate.drivers = this.lineupToUpdate.drivers.filter(d => d.id !== driver.id);
     this.updateTransfersMade();
     this.calculateLineupValue();
+    if (event && event.target instanceof HTMLButtonElement) {
+      event.target.blur();
+    }
   }
-
-  onRemoveConstructor(constructor: any) {
+  onRemoveConstructor(constructor: any, event?: Event) {
     if (!this.lineupToUpdate) return;
     this.lineupToUpdate.constructors = this.lineupToUpdate.constructors.filter(c => c.id !== constructor.id);
     this.updateTransfersMade();
     this.calculateLineupValue();
+    if (event && event.target instanceof HTMLButtonElement) {
+      event.target.blur();
+    }
   }
 
   onReset() {
@@ -138,9 +152,10 @@ export class TransfersComponent implements OnInit {
       next: (updatedLineup) => {
         this.lineup = updatedLineup;
         this.lineupToUpdate = JSON.parse(JSON.stringify(updatedLineup));
-        this.updateTransfersMade();
+        this.updateInitialTransfersMade(updatedLineup.transfersMade);
         this.calculateLineupValue();
         this.transferSuccess = true;
+        console.log("after making transfer, transfersMade:", this.transfersMade, "freeTransfers:", this.freeTransfers);
       }
     });
   }
@@ -175,5 +190,13 @@ export class TransfersComponent implements OnInit {
 
   get overTransferPenalty(): number {
     return this.overTransferCount * environment.PENALTY_PER_EXCEDDING_ITEM;
+  }
+
+  get isDriverLineupFull(): boolean {
+    return (this.lineupToUpdate?.drivers?.length ?? 0) >= 5;
+  }
+
+  get isConstructorLineupFull(): boolean {
+    return (this.lineupToUpdate?.constructors?.length ?? 0) >= 2;
   }
 }

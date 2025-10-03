@@ -49,7 +49,7 @@
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
                   <span class="driver-price">{{ driver.price }}$</span>
                   <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
-                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver)">Remove</button>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver, $event)">Remove</button>
                   <button
                     class="btn captain-btn"
                     [disabled]="driver.isCaptain"
@@ -80,7 +80,7 @@
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
                   <span class="driver-price">{{ driver.price }}$</span>
                   <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
-                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver)">Remove</button>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver, $event)">Remove</button>
                   <button
                     class="btn captain-btn"
                     [disabled]="driver.isCaptain"
@@ -112,7 +112,7 @@
                   </div>
                   <span class="constructor-name">{{ constructor.name }}</span>
                   <span class="constructor-price">{{ constructor.price }}$</span>
-                  <button class="btn btn-remove btn-sm" (click)="onRemoveConstructor(constructor)">Remove</button>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveConstructor(constructor, $event)">Remove</button>
                 </ng-container>
                 <ng-template #unpickedConstructor>
                   <div class="avatar constructor-avatar">
@@ -151,7 +151,9 @@
                   </div>
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
                   <span class="driver-price">{{ driver.price }}$</span>
-                  <button class="btn pick-btn btn-outline-primary btn-sm mt-1" (click)="onPickDriver(driver)">Pick</button>
+                  <button class="btn pick-btn btn-outline-primary btn-sm mt-1"
+                          (click)="onPickDriver(driver, $event)"
+                          [disabled]="isDriverLineupFull">Pick</button>
                 </div>
               </div>
             </div>
@@ -171,7 +173,8 @@
                   <span class="constructor-name">{{ constructor.name }}</span>
                   <span class="constructor-price">{{ constructor.price }}$</span>
                   <button class="btn pick-btn btn-outline-primary btn-sm mt-1"
-                    (click)="onPickConstructor(constructor)">Pick</button>
+                    (click)="onPickConstructor(constructor, $event)"
+                          [disabled]="isConstructorLineupFull">Pick</button>
                 </div>
               </div>
             </div>
