@@ -9,8 +9,7 @@
             date:'d/M/yyyy' }}
           </div>
           <div class="lineup-lock bg-black text-white mb-3">
-            Lock at: {{ currentRace?.deadlineDate | date:'shortTime' }} {{ currentRace?.deadlineDate | date:'d/M/yyyy'
-            }}
+            Lock at: {{ currentRace?.deadlineDate |  date:'medium' }}
           </div>
           <div class="d-flex gap-1 mb-3 flex-wrap">
             <div class="info-chip bg-danger text-white">

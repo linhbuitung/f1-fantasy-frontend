@@ -4,4 +4,5 @@ export interface UserInLeagueDto {
   email: string;
   displayName?: string | null;
   countryName?: string | null;
+  totalPoints: number;
 }

@@ -138,6 +138,15 @@ export const routes: Routes = [
                 (m) => m.LeagueFindComponent
               );
             }
+          },
+          {
+            path: ':leagueId/view',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/league-view/league-view.component').then(
+                (m) => m.LeagueViewComponent
+              );
+            }
           }
         ]
       },

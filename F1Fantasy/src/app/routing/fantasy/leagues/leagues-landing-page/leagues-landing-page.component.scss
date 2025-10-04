@@ -34,7 +34,22 @@
   color: var(--f1-white);
   border-color: var(--f1-primary-red);
 }
-
+.btn-view{
+  border: 2px solid var(--f1-dark-red);
+  color: var(--f1-white);
+  background: var(--f1-dark-red);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  min-width: 70px;
+}
+.btn-view:hover,
+.btn-view:focus {
+  background: var(--f1-white);
+  color: var(--f1-black);
+  border-color: var(--f1-white);
+}
 .leagues-action-btn {
   font-weight: 600;
   border-radius: 0.5rem;

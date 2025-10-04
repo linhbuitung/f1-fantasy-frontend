@@ -156,6 +156,7 @@ export class LeagueManageComponent implements OnInit {
     }).subscribe({
       next: () => {
         this.loadJoinRequests();
+        this.loadLeaguePlayers(this.playersPageNum - 1);
       }
     });
   }

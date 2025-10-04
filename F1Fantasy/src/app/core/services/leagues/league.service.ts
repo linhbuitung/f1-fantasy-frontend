@@ -91,4 +91,26 @@ export class LeagueService {
       { withCredentials: true }
     );
   }
+
+  getJoinRequestForUserInLeague(userId: number, leagueId: number): Observable<JoinRequestGetDto | null> {
+    return this.http.get<JoinRequestGetDto | null>(
+      `${environment.API_URL}/user/${userId}/league/${leagueId}/join-request`,
+      { withCredentials: true }
+    );
+  }
+
+  joinLeague(userId: number, leagueId: number): Observable<JoinRequestGetDto> {
+    return this.http.post<JoinRequestGetDto>(
+      `${environment.API_URL}/user/${userId}/league/${leagueId}/join`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  leaveLeague(userId: number, leagueId: number): Observable<void> {
+    return this.http.delete<void>(
+      `${environment.API_URL}/user/${userId}/league/${leagueId}/leave`,
+      { withCredentials: true }
+    );
+  }
 }

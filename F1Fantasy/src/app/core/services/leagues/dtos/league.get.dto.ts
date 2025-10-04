@@ -10,6 +10,7 @@ export interface LeagueGetDto {
   type: LeagueType;
   name: string;
   description?: string | null;
+  totalPlayersNum: number;
   owner: UserInLeagueDto;
   users?: UserInLeagueDto[] | null;
 }

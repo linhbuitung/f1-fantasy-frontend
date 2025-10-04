@@ -16,7 +16,10 @@
   max-width: 1200px;
   margin: 0 auto;
 }
-.league-manage-left,
+.league-manage-left {
+  width: 80%;
+  min-width: 0;
+}
 .league-manage-right {
   width: 100%;
   min-width: 0;
@@ -173,7 +176,10 @@ th, td {
     flex-direction: column;
     gap: 1.5rem;
   }
-
+  .league-manage-left {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 

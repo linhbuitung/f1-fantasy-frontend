@@ -44,7 +44,6 @@ export class LeagueFindComponent implements OnInit {
       if (this.currentUserId) {
         this.leagueService.getOwnedLeagues(this.currentUserId).subscribe(leagues => {
           this.ownedLeagues = leagues;
-          console.log('Owned leagues:', this.ownedLeagues);
         });
         this.leagueService.getJoinedLeagues(this.currentUserId).subscribe(leagues => {
           this.joinedLeagues = leagues;
