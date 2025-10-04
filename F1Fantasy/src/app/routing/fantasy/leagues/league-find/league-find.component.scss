@@ -75,6 +75,16 @@
   border: 1.5px solid var(--f1-grey);
 }
 
+.user-own .user-join {
+  background: var(--f1-light-red);
+  color: var(--f1-white);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  padding: 0.3em 0.8em;
+  margin-left: 0.5em;
+}
+
 @media (max-width: 700px) {
   .find-league {
     padding: 1rem 0.2rem;

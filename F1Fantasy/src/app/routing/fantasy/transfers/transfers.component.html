@@ -132,6 +132,11 @@
             Transfer made successfully!
             <button type="button" class="btn btn-outline-secondary btn-sm ms-2" (click)="dismissTransferSuccess()">Dismiss</button>
           </div>
+
+          <div *ngIf="!transferSuccess && transferError" class="alert alert-danger mt-3 d-flex justify-content-between align-items-center">
+            {{transferError}}
+            <button type="button" class="btn btn-outline-secondary btn-sm ms-2" (click)="dismissTransferError()">Dismiss</button>
+          </div>
         </div>
       </div>
       <!-- Right: Pickable items panel -->

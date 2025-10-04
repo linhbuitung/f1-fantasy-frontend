@@ -8,6 +8,9 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ContentContainerComponent } from '../../../../shared/content-container/content-container.component';
 import { CommonModule } from '@angular/common';
 import {ConfirmModalComponent} from '../../../../shared/confirm-modal/confirm-modal.component';
+import {UserInLeagueDto} from '../../../../core/services/leagues/dtos/user-in-league.get.dto';
+import {environment} from '../../../../../environments/environment';
+import {AuthService} from '../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-league-manage',
@@ -17,6 +20,7 @@ import {ConfirmModalComponent} from '../../../../shared/confirm-modal/confirm-mo
   styleUrl: './league-manage.component.scss'
 })
 export class LeagueManageComponent implements OnInit {
+  currentUserId: number | null = null;
   league: LeagueGetDto | null = null;
   joinRequests: JoinRequestGetDto[] = [];
   updateForm: FormGroup;
@@ -27,12 +31,18 @@ export class LeagueManageComponent implements OnInit {
   ownerId: number = 0;
   showDeleteConfirm = false;
   deleting = false;
+  leaguePlayers: UserInLeagueDto[] = [];
+  playersTotal = 0;
+  playersPageNum = 1;
+  playersPageSize = environment.PAGE_SIZE;
+  loadingPlayers = false;
 
   constructor(
     private route: ActivatedRoute,
     private leagueService: LeagueService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.updateForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(200)]],
@@ -41,31 +51,64 @@ export class LeagueManageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.userProfile$.subscribe(user => {
+      this.currentUserId = user?.id ?? null;});
     this.leagueId = Number(this.route.snapshot.paramMap.get('leagueId'));
+
     this.loadLeague();
   }
 
-  loadLeague() {
-    this.leagueService.getLeagueWithPlayersById(this.leagueId).subscribe(league => {
-      this.league = league;
-      this.ownerId = league.owner.id;
-      this.updateForm.patchValue({
-        name: league.name,
-        description: league.description ?? '',
-      });
-      this.loadJoinRequests();
+  loadLeague(pageNum: number = 1) {
+    this.leagueService.getLeagueWithPlayersByIdPaged(this.leagueId, pageNum, this.playersPageSize).subscribe({
+      next: (league: LeagueGetDto) => {
+        this.league = league;
+        this.ownerId = league.owner.id;
+        this.updateForm.patchValue({
+          name: league.name,
+          description: league.description ?? '',
+        });
+        if(this.ownerId != this.currentUserId) {
+          this.router.navigateByUrl('/fantasy/leagues');
+          return;
+        }
+        this.leaguePlayers = league.users || [];
+        this.playersTotal = league.users?.length ?? 0; // Adjust if backend returns total count
+        this.loadingPlayers = false;
+
+        this.loadJoinRequests();
+      },
+      error: () => {
+        this.leaguePlayers = [];
+        this.loadingPlayers = false;
+      }
+    });
+  }
+
+  loadLeaguePlayers(pageNum: number = 1) {
+    this.loadingPlayers = true;
+    this.leagueService.getLeagueWithPlayersByIdPaged(this.leagueId, pageNum, this.playersPageSize).subscribe({
+      next: (league) => {
+        this.leaguePlayers = league.users || [];
+        this.playersTotal = league.users?.length ?? 0; // Adjust if backend returns total count
+        this.loadingPlayers = false;
+      },
+      error: () => {
+        this.leaguePlayers = [];
+        this.loadingPlayers = false;
+      }
     });
   }
 
   loadJoinRequests() {
-    if (!this.ownerId) return;
+    if (!this.ownerId && this.ownerId != this.currentUserId) return;
     this.leagueService.getJoinRequestsByLeagueIdAndOwnerId(this.leagueId, this.ownerId).subscribe(requests => {
       this.joinRequests = requests;
     });
   }
 
+
   onDeleteLeague() {
-    if (!this.league || !this.ownerId) return;
+    if (!this.league || !this.ownerId || this.ownerId != this.currentUserId) return;
     this.deleting = true;
     this.leagueService.DeletePrivateLeague(this.ownerId, this.league.id).subscribe({
       next: () => {
@@ -81,7 +124,7 @@ export class LeagueManageComponent implements OnInit {
   }
 
   onUpdate() {
-    if (!this.league || this.updateForm.invalid) return;
+    if (!this.league || this.updateForm.invalid || this.ownerId != this.currentUserId) return;
     this.submitting = true;
     this.serverError = null;
     this.successMessage = null;
@@ -105,6 +148,7 @@ export class LeagueManageComponent implements OnInit {
   }
 
   handleJoinRequest(request: JoinRequestGetDto, isAccepted: boolean) {
+    if (!this.ownerId || this.ownerId != this.currentUserId) return;
     this.leagueService.handleJoinRequest(this.ownerId, this.leagueId, {
       leagueId: this.leagueId,
       userId: request.userId,
@@ -115,4 +159,19 @@ export class LeagueManageComponent implements OnInit {
       }
     });
   }
+
+
+
+  onPlayersPageChange(page: number) {
+    this.playersPageNum = page;
+    this.loadLeaguePlayers(page);
+  }
+
+  onKickPlayer(user: UserInLeagueDto) {
+    if (!this.league || this.ownerId != this.currentUserId) return;
+    this.leagueService.kickUserFromLeague(this.currentUserId,this.league.id, user.id).subscribe({
+      next: () => this.loadLeaguePlayers(this.playersPageNum)
+    });
+  }
+
 }

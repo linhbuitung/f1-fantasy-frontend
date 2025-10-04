@@ -13,11 +13,11 @@ import {HttpParams} from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class LeagueService {
   constructor(private http: HttpClient) {}
-
-  getLeagueWithPlayersById(leagueId: number): Observable<LeagueGetDto> {
+  getLeagueWithPlayersByIdPaged(leagueId: number, pageNum: number = 1, pageSize: number = 10): Observable<LeagueGetDto> {
+    const params = { pageNum, pageSize };
     return this.http.get<LeagueGetDto>(
       `${environment.API_URL}/league/${leagueId}`,
-      { withCredentials: true }
+      { params, withCredentials: true }
     );
   }
 
@@ -82,6 +82,13 @@ export class LeagueService {
     return this.http.get<LeagueSearchResultDto>(
       `${environment.API_URL}/league/full-text-search`,
       { params, withCredentials: true }
+    );
+  }
+
+  kickUserFromLeague( userId: number, leagueId: number, playerId: number): Observable<void> {
+    return this.http.delete<void>(
+      `${environment.API_URL}/user/${userId}/league/${leagueId}/kick/${playerId}`,
+      { withCredentials: true }
     );
   }
 }

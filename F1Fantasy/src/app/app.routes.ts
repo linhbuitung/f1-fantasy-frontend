@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import {profileOwnerGuard} from './core/guards/profile-owner.guard';
 import {authGuard} from './core/guards/auth.guard';
+import {leagueOwnerGuard} from './core/guards/league-owner.guard';
 
 export const routes: Routes = [
   {
@@ -121,6 +122,7 @@ export const routes: Routes = [
           },
           {
             path: ':leagueId/manage',
+            canActivate: [leagueOwnerGuard],
             pathMatch: 'full',
             loadComponent: async () => {
               return import('./routing/fantasy/leagues/league-manage/league-manage.component').then(

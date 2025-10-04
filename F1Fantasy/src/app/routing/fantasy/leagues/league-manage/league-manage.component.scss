@@ -8,17 +8,24 @@
   height: 100%;
 }
 
-.league-manage {
-  width: 60%;
+.league-manage-grid {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 0;
 }
-
-.league-manage h2{
+.league-manage-left,
+.league-manage-right {
+  width: 100%;
+  min-width: 0;
+}
+.league-manage-left h2{
   text-align: center;
 }
 .card-body{
-  text-align: center;
+  text-align: start;
 }
 
 .btn-back {
@@ -57,6 +64,7 @@
 
 .btn-section{
   margin-top: 1rem;
+  text-align: center;
 }
 .btn-primary-red, .btn-update {
   background: var(--f1-dark-red);
@@ -160,6 +168,15 @@ th, td {
   color: var(--f1-danger, #dc3545);
 }
 
+@media (max-width: 1000px) {
+  .league-manage-grid {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+}
+
+
 @media (max-width: 700px) {
   .league-manage {
     padding: 1rem 0.2rem;
@@ -171,4 +188,17 @@ th, td {
   .card-header {
     border-radius: 0.5rem 0.5rem 0 0;
   }
+}
+
+
+.table {
+  margin-bottom: 0;
+  background: var(--f1-white);
+  border-radius: 0 0 1rem 1rem;
+  overflow: hidden;
+}
+
+th, td {
+  vertical-align: middle !important;
+  text-align: center;
 }

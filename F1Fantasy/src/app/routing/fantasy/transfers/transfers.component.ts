@@ -27,6 +27,7 @@ export class TransfersComponent implements OnInit {
   freeTransfers: number = environment.FREE_TRANSFERS_PER_RACE;
   transfersMade: number = 0;
   transferSuccess: boolean = false;
+  transferError: string | null = null;
 
   constructor(
     private authService: AuthService,
@@ -155,7 +156,10 @@ export class TransfersComponent implements OnInit {
         this.updateInitialTransfersMade(updatedLineup.transfersMade);
         this.calculateLineupValue();
         this.transferSuccess = true;
-        console.log("after making transfer, transfersMade:", this.transfersMade, "freeTransfers:", this.freeTransfers);
+      },
+      error: (err) => {
+        this.transferSuccess = false;
+        this.transferError = 'Failed to make transfers: ' + err.error?.message || 'Unknown error';
       }
     });
   }
@@ -184,12 +188,16 @@ export class TransfersComponent implements OnInit {
     this.transferSuccess = false;
   }
 
+  dismissTransferError(){
+    this.transferError = null;
+  }
+
   get overTransferCount(): number {
     return Math.max(0, this.transfersMade - this.freeTransfers);
   }
 
   get overTransferPenalty(): number {
-    return this.overTransferCount * environment.PENALTY_PER_EXCEDDING_ITEM;
+    return this.overTransferCount * environment.PENALTY_PER_EXCEEDING_ITEM;
   }
 
   get isDriverLineupFull(): boolean {

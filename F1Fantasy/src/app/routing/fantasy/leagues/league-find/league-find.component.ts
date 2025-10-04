@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { LeagueService } from '../../../../core/services/leagues/league.service';
 import { LeagueGetDto } from '../../../../core/services/leagues/dtos/league.get.dto';
 import { LeagueSearchResultDto } from '../../../../core/services/leagues/dtos/league-search-result.dto';
@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ContentContainerComponent } from '../../../../shared/content-container/content-container.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import {AuthService} from '../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-league-find',
@@ -14,7 +15,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './league-find.component.html',
   styleUrl: './league-find.component.scss'
 })
-export class LeagueFindComponent {
+export class LeagueFindComponent implements OnInit {
   searchForm: FormGroup;
   results: LeagueGetDto[] = [];
   total = 0;
@@ -23,14 +24,32 @@ export class LeagueFindComponent {
   loading = false;
   submitted = false;
   error: string | null = null;
-  public Math = Math;
+  ownedLeagues: LeagueGetDto[] = [];
+  joinedLeagues: LeagueGetDto[] = [];
+  currentUserId: number | null = null;
 
   constructor(
     private leagueService: LeagueService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService
   ) {
     this.searchForm = this.fb.group({
       query: ['', [Validators.required, Validators.minLength(2)]]
+    });
+  }
+
+  ngOnInit() {
+    this.authService.userProfile$.subscribe(user => {
+      this.currentUserId = user?.id ?? null;
+      if (this.currentUserId) {
+        this.leagueService.getOwnedLeagues(this.currentUserId).subscribe(leagues => {
+          this.ownedLeagues = leagues;
+          console.log('Owned leagues:', this.ownedLeagues);
+        });
+        this.leagueService.getJoinedLeagues(this.currentUserId).subscribe(leagues => {
+          this.joinedLeagues = leagues;
+        });
+      }
     });
   }
 
@@ -57,4 +76,14 @@ export class LeagueFindComponent {
   onPageChange(page: number) {
     this.onSearch(page);
   }
+
+  isOwnedByCurrentUser(league: LeagueGetDto): boolean {
+    return !!this.ownedLeagues.find(l => l.id === league.id);
+  }
+
+  isJoinedByCurrentUser(league: LeagueGetDto): boolean {
+    return !!this.joinedLeagues.find(l => l.id === league.id);
+  }
+
+  protected readonly Math = Math;
 }
