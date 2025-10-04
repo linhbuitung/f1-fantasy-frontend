@@ -1,0 +1,120 @@
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1050;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+}
+
+.modal-dialog {
+  max-width: 400px;
+  width: 95vw;
+  margin: auto;
+}
+
+.modal-content {
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+  background: var(--pure-white);
+  border: 2px solid var(--f1-dark-red);
+  overflow: hidden;
+}
+
+.modal-header {
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+}
+
+.modal-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--f1-white);
+  opacity: 0.8;
+  transition: color 0.2s;
+}
+.btn-close:hover {
+  color: var(--f1-black);
+  opacity: 1;
+}
+
+.modal-body {
+  padding: 1.2rem 1.5rem;
+  font-size: 1.05rem;
+  color: var(--f1-black);
+  text-align: center;
+}
+
+.modal-footer {
+  background: var(--f1-white);
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn {
+  min-width: 100px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn-danger {
+  background: var(--f1-danger, #dc3545);
+  color: var(--f1-white);
+  border: 2px solid var(--f1-danger, #dc3545);
+}
+.btn-danger:hover,
+.btn-danger:focus {
+  background: var(--f1-dark-red, #b52a37);
+  color: var(--f1-white);
+  border-color: var(--f1-dark-red, #b52a37);
+}
+
+.btn-outline-secondary {
+  border: 2px solid var(--f1-grey, #adb5bd);
+  color: var(--f1-black, #222);
+  background: var(--f1-white);
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background: var(--f1-grey, #adb5bd);
+  color: var(--f1-white);
+  border-color: var(--f1-grey, #adb5bd);
+}
+
+@media (max-width: 600px) {
+  .modal-dialog {
+    max-width: 98vw;
+    min-width: 0;
+    padding: 0 0.5rem;
+  }
+  .modal-content {
+    padding: 0.2rem;
+  }
+  .modal-header, .modal-footer, .modal-body {
+    padding: 0.7rem 0.7rem;
+  }
+  .btn {
+    min-width: 80px;
+    font-size: 0.97rem;
+    padding: 0.4rem 0.7rem;
+  }
+}

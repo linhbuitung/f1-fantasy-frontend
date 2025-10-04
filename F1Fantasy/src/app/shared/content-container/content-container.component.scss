@@ -9,7 +9,6 @@
 }
 
 .content {
-  margin-top: 1rem;
   width: 73%;
   min-height: 80vh;
   background-color: var(--pure-white);
@@ -19,8 +18,7 @@
   flex: 1 1 auto; // Add this if parent is flex
   display: flex;
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 1rem 0 ;
 }
 /* Responsive breakpoints */
 @media (max-width: 1200px) {

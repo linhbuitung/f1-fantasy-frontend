@@ -1,0 +1,59 @@
+<app-content-container>
+  <div class="league-create">
+    <div class="d-flex justify-content-start mb-2">
+      <button class="btn btn-outline-primary btn-back" routerLink="/fantasy/leagues">
+        <i class="fa-solid fa-arrow-left"></i>
+        Return
+      </button>
+    </div>
+    <h2>Create a Private League</h2>
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+          <div class="form-group row">
+            <label for="name" class="col-sm-4 col-form-label">League Name</label>
+            <div class="col-sm-8">
+              <input id="name" type="text" formControlName="name" class="form-control" maxlength="200" />
+            </div>
+            <div *ngIf="createForm.controls['name'].invalid && (createForm.controls['name'].touched || createForm.controls['name'].dirty)" class="alert alert-danger">
+              <div *ngIf="createForm.controls['name'].errors?.['required']">League name is required.</div>
+              <div *ngIf="createForm.controls['name'].errors?.['maxlength']">League name is too long.</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="maxPlayersNum" class="col-sm-4 col-form-label">Max Players</label>
+            <div class="col-sm-8">
+              <input id="maxPlayersNum" type="number" formControlName="maxPlayersNum" class="form-control" min="2" max="1000" />
+            </div>
+            <div *ngIf="createForm.controls['maxPlayersNum'].invalid && (createForm.controls['maxPlayersNum'].touched || createForm.controls['maxPlayersNum'].dirty)" class="alert alert-danger">
+              <div *ngIf="createForm.controls['maxPlayersNum'].errors?.['required']">Max players is required.</div>
+              <div *ngIf="createForm.controls['maxPlayersNum'].errors?.['min']">Minimum is 2.</div>
+              <div *ngIf="createForm.controls['maxPlayersNum'].errors?.['max']">Maximum is 100.</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="description" class="col-sm-4 col-form-label">Description</label>
+            <div class="col-sm-8">
+              <textarea id="description" formControlName="description" class="form-control" maxlength="500" rows="3"></textarea>
+            </div>
+            <div *ngIf="createForm.controls['description'].invalid && (createForm.controls['description'].touched || createForm.controls['description'].dirty)" class="alert alert-danger">
+              <div *ngIf="createForm.controls['description'].errors?.['maxlength']">Description is too long.</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-create btn-primary-red mt-3" [disabled]="!createForm.valid || submitting">
+            {{ submitting ? 'Creating...' : 'Create League' }}
+          </button>
+        </form>
+        <div *ngIf="serverError" class="alert alert-danger server-errors mt-3">
+          {{ serverError }}
+        </div>
+        <div *ngIf="successMessage" class="alert alert-success mt-3">
+          {{ successMessage }}
+        </div>
+      </div>
+    </div>
+  </div>
+</app-content-container>

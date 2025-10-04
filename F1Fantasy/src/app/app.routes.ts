@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import {profileOwnerGuard} from './core/guards/profile-owner.guard';
 import {authGuard} from './core/guards/auth.guard';
+import {leagueOwnerGuard} from './core/guards/league-owner.guard';
 
 export const routes: Routes = [
   {
@@ -100,12 +101,54 @@ export const routes: Routes = [
       },
       {
         path: 'leagues',
-        pathMatch: 'full',
-        loadComponent: async () => {
-          return import('./routing/fantasy/leagues/leagues.component').then(
-            (m) => m.LeaguesComponent
-          );
-        },
+        children: [
+          {
+            path: "",
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/leagues-landing-page/leagues-landing-page.component').then(
+                (m) => m.LeaguesLandingPageComponent
+              );
+            }
+          },
+          {
+            path: "create",
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/league-create/league-create.component').then(
+                (m) => m.LeagueCreateComponent
+              );
+            }
+          },
+          {
+            path: ':leagueId/manage',
+            canActivate: [leagueOwnerGuard],
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/league-manage/league-manage.component').then(
+                (m) => m.LeagueManageComponent
+              );
+            }
+          },
+          {
+            path: 'find',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/league-find/league-find.component').then(
+                (m) => m.LeagueFindComponent
+              );
+            }
+          },
+          {
+            path: ':leagueId/view',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/leagues/league-view/league-view.component').then(
+                (m) => m.LeagueViewComponent
+              );
+            }
+          }
+        ]
       },
       {
         path: 'how-to-play',

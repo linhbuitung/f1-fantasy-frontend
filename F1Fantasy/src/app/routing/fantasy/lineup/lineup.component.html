@@ -8,7 +8,7 @@
             Race week: {{ currentRace?.round }} - {{ currentRace?.raceName }} - {{ currentRace?.raceDate | date:'d/M/yyyy' }}
           </div>
           <div class="lineup-lock bg-black text-white mb-3">
-            Lock after: {{ currentRace?.deadlineDate | date:'d/M/yyyy' }}
+            Lock after: {{ currentRace?.deadlineDate |  date:'medium' }}
           </div>
           <div class="lineup-card">
             <!-- First row: 2 drivers -->

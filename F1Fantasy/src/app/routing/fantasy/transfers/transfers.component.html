@@ -9,8 +9,7 @@
             date:'d/M/yyyy' }}
           </div>
           <div class="lineup-lock bg-black text-white mb-3">
-            Lock at: {{ currentRace?.deadlineDate | date:'shortTime' }} {{ currentRace?.deadlineDate | date:'d/M/yyyy'
-            }}
+            Lock at: {{ currentRace?.deadlineDate |  date:'medium' }}
           </div>
           <div class="d-flex gap-1 mb-3 flex-wrap">
             <div class="info-chip bg-danger text-white">
@@ -20,7 +19,15 @@
               Budget left: {{ lineupLimit - lineupValue | number:'1.2-2' }}$
             </div>
             <div class="info-chip bg-black text-white">
-              Free transfers left: {{ (transfersMade - freeTransfers) < 0 ? (freeTransfers - transfersMade) : (transfersMade - freeTransfers) }}
+              <ng-container *ngIf="overTransferCount === 0; else overTransfer">
+                Free transfers left: {{ freeTransfers - transfersMade }}
+              </ng-container>
+              <ng-template #overTransfer>
+                Exceeding transfers: {{ overTransferCount }}
+                <span class="text-danger ms-2">
+                ({{ overTransferPenalty }} pts penalty)
+              </span>
+              </ng-template>
             </div>
             <div class="info-chip bg-danger text-white">
               Constructor selected: {{ lineup?.constructors?.length || 0 }}/2
@@ -41,7 +48,7 @@
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
                   <span class="driver-price">{{ driver.price }}$</span>
                   <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
-                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver)">Remove</button>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver, $event)">Remove</button>
                   <button
                     class="btn captain-btn"
                     [disabled]="driver.isCaptain"
@@ -72,7 +79,7 @@
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
                   <span class="driver-price">{{ driver.price }}$</span>
                   <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
-                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver)">Remove</button>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver, $event)">Remove</button>
                   <button
                     class="btn captain-btn"
                     [disabled]="driver.isCaptain"
@@ -104,7 +111,7 @@
                   </div>
                   <span class="constructor-name">{{ constructor.name }}</span>
                   <span class="constructor-price">{{ constructor.price }}$</span>
-                  <button class="btn btn-remove btn-sm" (click)="onRemoveConstructor(constructor)">Remove</button>
+                  <button class="btn btn-remove btn-sm" (click)="onRemoveConstructor(constructor, $event)">Remove</button>
                 </ng-container>
                 <ng-template #unpickedConstructor>
                   <div class="avatar constructor-avatar">
@@ -123,6 +130,11 @@
           <div *ngIf="transferSuccess" class="alert alert-success mt-3 d-flex justify-content-between align-items-center">
             Transfer made successfully!
             <button type="button" class="btn btn-outline-secondary btn-sm ms-2" (click)="dismissTransferSuccess()">Dismiss</button>
+          </div>
+
+          <div *ngIf="!transferSuccess && transferError" class="alert alert-danger mt-3 d-flex justify-content-between align-items-center">
+            {{transferError}}
+            <button type="button" class="btn btn-outline-secondary btn-sm ms-2" (click)="dismissTransferError()">Dismiss</button>
           </div>
         </div>
       </div>
@@ -143,7 +155,9 @@
                   </div>
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
                   <span class="driver-price">{{ driver.price }}$</span>
-                  <button class="btn pick-btn btn-outline-primary btn-sm mt-1" (click)="onPickDriver(driver)">Pick</button>
+                  <button class="btn pick-btn btn-outline-primary btn-sm mt-1"
+                          (click)="onPickDriver(driver, $event)"
+                          [disabled]="isDriverLineupFull">Pick</button>
                 </div>
               </div>
             </div>
@@ -163,7 +177,8 @@
                   <span class="constructor-name">{{ constructor.name }}</span>
                   <span class="constructor-price">{{ constructor.price }}$</span>
                   <button class="btn pick-btn btn-outline-primary btn-sm mt-1"
-                    (click)="onPickConstructor(constructor)">Pick</button>
+                    (click)="onPickConstructor(constructor, $event)"
+                          [disabled]="isConstructorLineupFull">Pick</button>
                 </div>
               </div>
             </div>

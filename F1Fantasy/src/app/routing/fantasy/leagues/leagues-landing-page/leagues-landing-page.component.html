@@ -1,0 +1,83 @@
+<app-content-container>
+  <div class="leagues-main">
+    <div class="leagues-actions d-flex gap-3 mb-4">
+      <button
+        class="btn btn-primary-red leagues-action-btn"
+        routerLink="create"
+        [disabled]="!canCreateLeague">
+        {{ canCreateLeague ? 'Create a league' : 'Max number of leagues created' }}
+      </button>
+      <button
+        class="btn btn-primary-red leagues-action-btn"
+        routerLink="find"
+        [disabled]="!canJoinLeague">
+        {{ canJoinLeague ? 'Join a league' : 'Max number of leagues joined' }}
+      </button>
+    </div>
+
+    <div class="leagues-list">
+      <!-- Owned leagues -->
+      <div class="league-card mb-4">
+        <div class="league-card-header bg-primary-red text-white">
+          Owned leagues
+        </div>
+        <div class="league-table">
+          <div class="league-table-header d-flex">
+            <div class="league-col league-name">League</div>
+            <div class="league-col league-rank">Max Players</div>
+            <div class="league-col league-options">Options</div>
+          </div>
+          <div class="league-table-row d-flex" *ngFor="let league of ownedLeagues">
+            <div class="league-col league-name">{{ league.name }}</div>
+            <div class="league-col league-rank">{{ league.maxPlayersNum }}</div>
+            <div class="league-col league-options">
+              <button class="btn btn-outline-primary btn-manage btn-sm" routerLink="{{league.id}}/manage">Manage</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Joined Public (General) leagues -->
+      <div class="league-card mb-4">
+        <div class="league-card-header bg-primary-red text-white">
+          Joined Public Leagues
+        </div>
+        <div class="league-table">
+          <div class="league-table-header d-flex">
+            <div class="league-col league-name">League</div>
+            <div class="league-col league-rank">Max Players</div>
+            <div class="league-col league-options">Options</div>
+          </div>
+          <div class="league-table-row d-flex" *ngFor="let league of joinedPublicLeagues">
+            <div class="league-col league-name">{{ league.name }}</div>
+            <div class="league-col league-rank">{{ league.maxPlayersNum }}</div>
+            <div class="league-col league-options">
+              <button class="btn btn-view btn-outline-secondary btn-sm"  routerLink="{{league.id}}/view">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Joined Private leagues -->
+      <div class="league-card mb-4">
+        <div class="league-card-header bg-primary-red text-white">
+          Joined Private Leagues
+        </div>
+        <div class="league-table">
+          <div class="league-table-header d-flex">
+            <div class="league-col league-name">League</div>
+            <div class="league-col league-rank">Max Players</div>
+            <div class="league-col league-options">Options</div>
+          </div>
+          <div class="league-table-row d-flex" *ngFor="let league of joinedPrivateLeagues">
+            <div class="league-col league-name">{{ league.name }}</div>
+            <div class="league-col league-rank">{{ league.maxPlayersNum }}</div>
+            <div class="league-col league-options">
+              <button class="btn btn-view btn-outline-secondary btn-sm" routerLink="{{league.id}}/view">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-content-container>

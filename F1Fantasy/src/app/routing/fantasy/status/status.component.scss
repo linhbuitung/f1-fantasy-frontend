@@ -110,7 +110,21 @@
   margin: 0.5rem auto 1rem auto;
 }
 
-
+.driver-name, .constructor-name{
+  font-weight: 600;
+  color: var(--f1-black);
+  text-align: center;
+  width: 90%;
+  margin-bottom: 0.2rem;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  /* Set a fixed height for alignment */
+  min-height: 2.3em; // Adjust as needed for 1-2 lines
+  max-height: 2.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .driver-score, .constructor-score {
   background: var(--f1-grey);
   color: var(--f1-black);
