@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-white custom-navbar">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/">
-      <img src="assets/woof1-logo.svg" alt="WooF1 Logo" style="height: 40px;" />
+      <img ngSrc="assets/woof1-logo.svg" alt="WooF1 Logo" style="height: 40px;" height="94" width="375"/>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -36,14 +36,34 @@
         </ul>
         <div class="d-flex align-items-center gap-3 button-container">
             <ng-container *ngIf="userProfile$ | async as profile; else showAuth">
-                <button class="btn btn-outline-danger user-btn" [routerLink]="['/profile', profile.id]">
-                    <i class="fa-solid fa-user"></i>
-                      {{ profile.displayName || profile.email }}
-                  </button>
-                <button class="btn logout-btn" (click)="onLogout()">
-                  <i class="fa-solid fa-right-from-bracket"></i>
-                  Logout
+              <div class="position-relative d-inline-block me-2">
+                <button
+                  #notifBtn
+                  class="btn user-notif-btn"
+                  (click)="toggleNotif()"
+                  type="button"
+                  aria-haspopup="true"
+                  [attr.aria-expanded]="showNotif ? 'true' : 'false'"
+                >
+                  <i class="fa-solid fa-bell"></i>
+                  <ng-container *ngIf="unreadCount$ | async as c">
+                    <span class="notif-badge" *ngIf="c > 0">{{ c }}</span>
+                  </ng-container>
                 </button>
+
+                <!-- bind computed style; use ngStyle so we can switch to fixed viewport coords -->
+                <div class="notif-dropdown" *ngIf="showNotif" [ngStyle]="notifDropdownStyle">
+                  <app-notification-list></app-notification-list>
+                </div>
+              </div>
+              <button class="btn btn-outline-danger user-btn" [routerLink]="['/profile', profile.id]">
+                  <i class="fa-solid fa-user"></i>
+                    {{ profile.displayName || profile.email }}
+                </button>
+              <button class="btn logout-btn" (click)="onLogout()">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+              </button>
             </ng-container>
             <ng-template #showAuth>
                 <button class="btn login-btn" routerLink="/login">
