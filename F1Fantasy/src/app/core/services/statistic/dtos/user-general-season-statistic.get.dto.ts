@@ -1,7 +1,7 @@
 ﻿export interface BestRaceWeekOfAnUserDto {
   fantasyLineupId: number;
   raceName: string;
-  pointsGained: number;
+  totalAmount: number;
   raceDate: string;
 }
 

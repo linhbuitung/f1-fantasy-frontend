@@ -1,0 +1,39 @@
+<div class="notifications-panel">
+  <div class="notifications-header d-flex align-items-center justify-content-between">
+    <div class="title">Notifications</div>
+    <div class="actions d-flex gap-2 align-items-center">
+      <button class="btn btn-sm btn-outline-secondary" (click)="markAll()" [disabled]="loadingMarkAll">
+        <ng-container *ngIf="!loadingMarkAll">Mark all read</ng-container>
+        <ng-container *ngIf="loadingMarkAll">
+          <span class="spinner-border spinner-border-sm"></span>
+        </ng-container>
+      </button>
+    </div>
+  </div>
+
+  <div class="notifications-list">
+    <div *ngFor="let n of notifications$ | async; trackBy: trackById"
+         class="notification-item"
+         [class.unread]="!n.readAt"
+         (click)="open(n)"
+         role="button"
+         tabindex="0">
+      <div class="row">
+        <div class="col-9">
+          <div class="notif-header">{{ n.header }}</div>
+          <div class="notif-content text-muted">{{ n.content }}</div>
+        </div>
+        <div class="col-3 text-end">
+          <div class="notif-time">{{ n.createdAt | date:'short' }}</div>
+          <button type="button" class="btn btn-sm btn-outline-primary mt-2" (click)="markRead(n); $event.stopPropagation()">
+            Read
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="(notifications$ | async)?.length === 0" class="empty text-center text-muted p-3">
+      No notifications
+    </div>
+  </div>
+</div>

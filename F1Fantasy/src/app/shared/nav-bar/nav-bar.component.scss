@@ -145,8 +145,34 @@ fa-user{
 @media (max-width: 600px) {
   .button-container
   {
-    margin-right: 0rem;
+    margin-right: 0;
     flex-direction:column;
     align-items: flex-start !important;
   }
+}
+
+.position-relative { position: relative; }
+.user-notif-btn {
+  border: 2px solid var(--f1-primary-red);
+  background: var(--f1-white);
+  color: var(--f1-primary-red);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+}
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--f1-primary-red);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.notif-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  z-index: 1200;
 }
