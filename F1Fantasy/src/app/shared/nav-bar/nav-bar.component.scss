@@ -142,6 +142,11 @@ fa-user{
   margin-right: 1rem;
 }
 
+.button-container > * {
+  height: 100%;
+
+}
+
 @media (max-width: 600px) {
   .button-container
   {
@@ -158,6 +163,7 @@ fa-user{
   color: var(--f1-primary-red);
   border-radius: 6px;
   padding: 0.4rem 0.6rem;
+  height: 100%
 }
 .notif-badge {
   position: absolute;

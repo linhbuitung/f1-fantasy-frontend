@@ -207,4 +207,14 @@ export class TransfersComponent implements OnInit {
   get isConstructorLineupFull(): boolean {
     return (this.lineupToUpdate?.constructors?.length ?? 0) >= 2;
   }
+
+  get isRaceLocked(): boolean {
+    if (!this.currentRace?.deadlineDate) return false;
+    try {
+      const deadline = new Date(this.currentRace.deadlineDate);
+      return Date.now() >= deadline.getTime();
+    } catch {
+      return false;
+    }
+  }
 }

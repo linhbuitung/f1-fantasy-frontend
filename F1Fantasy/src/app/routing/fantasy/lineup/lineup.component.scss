@@ -348,3 +348,28 @@
     font-size: 0.9rem;
   }
 }
+
+
+.lock-note {
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: rgba(0,0,0,0.12);
+  color: var(--f1-white);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.4rem;
+}
+
+.powerup-card .btn:disabled,
+.powerup-card .btn[disabled] {
+  background: var(--f1-grey) !important;
+  color: var(--f1-white) !important;
+  border-color: var(--f1-grey) !important;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* small responsive tweak */
+@media (max-width: 700px) {
+  .powerups-row { gap: 0.6rem; }
+  .powerup-card { width: 100%; }
+}
