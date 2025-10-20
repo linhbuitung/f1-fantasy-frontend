@@ -101,6 +101,7 @@ export const routes: Routes = [
       },
       {
         path: 'leagues',
+        canActivate: [authGuard],
         children: [
           {
             path: "",
@@ -170,12 +171,18 @@ export const routes: Routes = [
       },
       {
         path: 'ask-ai',
-        pathMatch: 'full',
-        loadComponent: async () => {
-          return import('./routing/fantasy/ask-ai/ask-ai.component').then(
-            (m) => m.AskAiComponent
-          );
-        },
+        canActivate: [authGuard],
+        children: [
+          {
+            path: "",
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/ask-ai/ask-ai-landing-page/ask-ai-landing-page.component').then(
+                (m) => m.AskAiLandingPageComponent
+              );
+            },
+          }
+        ]
       },
       {
         path: '',
