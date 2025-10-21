@@ -1,0 +1,104 @@
+<app-content-container>
+  <div class="create-main-race">
+
+    <div class="card">
+
+      <div class="card-header text-white">
+        Create Qualifying + Main Race Prediction
+        <div class="info-chip bg-danger text-white">
+          <i class="fa-solid fa-bolt me-1"></i>
+          Guesses left: {{ predictionsLeft }}
+        </div>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Circuit</label>
+              <select class="form-control" formControlName="circuitId">
+                <option [ngValue]="null">-- Select circuit --</option>
+                <option *ngFor="let c of pickableCircuits" [ngValue]="c.id">{{ c.circuitName }} ({{ c.code }})</option>
+              </select>
+              <div *ngIf="form.controls['circuitId'].invalid && form.controls['circuitId'].touched" class="alert alert-danger mt-2">
+                Circuit is required.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Qualifying date</label>
+              <input type="datetime-local" class="form-control" formControlName="qualifyingDate" />
+              <div *ngIf="form.controls['qualifyingDate'].errors?.['required'] && form.controls['qualifyingDate'].touched" class="alert alert-danger mt-2">Required.</div>
+              <div *ngIf="form.controls['qualifyingDate'].errors?.['notInFuture'] && form.controls['qualifyingDate'].touched" class="alert alert-danger mt-2">Qualifying date must be in the future.</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Race date</label>
+              <input type="datetime-local" class="form-control" formControlName="raceDate" />
+              <div *ngIf="form.controls['raceDate'].errors?.['required'] && form.controls['raceDate'].touched" class="alert alert-danger mt-2">Required.</div>
+              <div *ngIf="form.controls['raceDate'].errors?.['notInFuture'] && form.controls['raceDate'].touched" class="alert alert-danger mt-2">Race date must be in the future.</div>
+              <div *ngIf="form.errors?.['raceNotAfterQualifying'] && (form.controls['raceDate'].touched || form.controls['qualifyingDate'].touched)" class="alert alert-danger mt-2">
+                Race date must be after qualifying date.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Laps</label>
+              <input type="number" class="form-control" formControlName="laps" min="1" />
+              <div *ngIf="form.controls['laps'].invalid && form.controls['laps'].touched" class="alert alert-danger mt-2">
+                Laps must be an integer of at least 1.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Rain</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" formControlName="rain" id="rainMain" />
+                <label class="form-check-label" for="rainMain">Rain</label>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <h5 class="mt-3">Entries</h5>
+          <div *ngIf="entriesControl.errors?.['duplicatePair']" class="alert alert-danger">
+            Duplicate driver-constructor pair: {{ entriesControl.errors?.['duplicatePair'] }} — each driver+constructor may only appear once.
+          </div>
+          <div formArrayName="entries">
+            <div class="entry-row mb-2" *ngFor="let entry of entriesControl.controls; let i = index" [formGroupName]="i" >
+              <div class="row g-2 align-items-end">
+                <div class="col-md-4">
+                  <label class="form-label">Driver</label>
+                  <select class="form-control" formControlName="driverId">
+                    <option [ngValue]="null">-- Select driver --</option>
+                    <option *ngFor="let d of pickableDrivers" [ngValue]="d.id">{{ d.givenName }} {{ d.familyName }}</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Constructor</label>
+                  <select class="form-control" formControlName="constructorId">
+                    <option [ngValue]="null">-- Select constructor --</option>
+                    <option *ngFor="let c of pickableConstructors" [ngValue]="c.id">{{ c.name }}</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Qual pos <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" formControlName="qualificationPosition" min="1" />
+                </div>
+                <div class="col-md-2 d-flex justify-content-center align-items-end">
+                  <button type="button" class="btn btn-outline-secondary btn-sm" (click)="removeEntry(i)" [disabled]="entriesControl.length <= 1">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="form.errors?.['noQualPosition'] && (form.touched || form.dirty)" class="alert alert-danger mt-2">
+            Every entry must have qualification position.
+          </div>
+          <div class="mt-3 d-flex gap-2">
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="addEntry()">Add entry</button>
+            <button type="submit" class="btn btn-submit-prediction" [disabled]="form.invalid || submitting || predictionsLeft <= 0">
+              {{ submitting ? 'Saving...' : 'Create Prediction' }}
+            </button>
+            <a class="btn btn-outline-secondary" routerLink="/fantasy/ask-ai">Cancel</a>
+          </div>
+          <div *ngIf="serverError" class="alert alert-danger mt-3">{{ serverError }}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</app-content-container>

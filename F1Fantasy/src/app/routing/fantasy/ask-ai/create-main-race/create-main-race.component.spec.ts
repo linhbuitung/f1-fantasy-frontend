@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AskAiComponent } from './ask-ai.component';
+import { CreateMainRaceComponent } from './create-main-race.component';
 
-describe('AskAiComponent', () => {
-  let component: AskAiComponent;
-  let fixture: ComponentFixture<AskAiComponent>;
+describe('CreateMainRaceComponent', () => {
+  let component: CreateMainRaceComponent;
+  let fixture: ComponentFixture<CreateMainRaceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AskAiComponent]
+      imports: [CreateMainRaceComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AskAiComponent);
+    fixture = TestBed.createComponent(CreateMainRaceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -93,4 +93,18 @@ export class AuthService {
         }
       });
   }
+
+  reloadProfile() {
+    this.http.get<UserGetDto>(`${environment.API_URL}/user/me`, { withCredentials: true })
+      .subscribe({
+        next: (profile) => {
+          this.userProfile.next(profile);
+          this.setLoggedIn(true);
+        },
+        error: () => {
+          this.userProfile.next(null);
+          this.setLoggedIn(false);
+        }
+      });
+  }
 }

@@ -81,19 +81,38 @@ export class LineupComponent implements OnInit {
   this.coreGameplayService.AddPowerToCurrentLineupOfUser(this.currentUserId, powerup.id).subscribe({
     next: () => this.reloadPowerups(),
   });
-}
+  }
 
-removePowerFromLineup(powerup: PowerupForUserDto) {
-  if (!this.currentUserId) return;
-  this.coreGameplayService.RemovePowerFromCurrentLineupOfUser(this.currentUserId, powerup.id).subscribe({
-    next: () => this.reloadPowerups(),
-  });
-}
+  removePowerFromLineup(powerup: PowerupForUserDto) {
+    if (!this.currentUserId) return;
+    this.coreGameplayService.RemovePowerFromCurrentLineupOfUser(this.currentUserId, powerup.id).subscribe({
+      next: () => this.reloadPowerups(),
+    });
+  }
 
-reloadPowerups() {
-  if (!this.currentUserId) return;
-  this.coreGameplayService.GetAllPowerupsWithStatusByUserId(this.currentUserId).subscribe({
-    next: (data) => this.powerups = data,
-  });
-}
+  reloadPowerups() {
+    if (!this.currentUserId) return;
+    this.coreGameplayService.GetAllPowerupsWithStatusByUserId(this.currentUserId).subscribe({
+      next: (data) => this.powerups = data,
+    });
+  }
+
+  get isRaceLocked(): boolean {
+    if (!this.currentRace?.deadlineDate) return false;
+    try {
+      const deadline = new Date(this.currentRace.deadlineDate);
+      return Date.now() >= deadline.getTime();
+    } catch {
+      return false;
+    }
+  }
+
+  get formattedDeadline(): string | null {
+    if (!this.currentRace?.deadlineDate) return null;
+    try {
+      return new Date(this.currentRace.deadlineDate).toLocaleString();
+    } catch {
+      return null;
+    }
+  }
 }

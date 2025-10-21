@@ -62,9 +62,9 @@ export class NotificationService {
 
     // optimistic update locally
     const current = this.notificationsSubject.value;
-    const updated = current.map(n => n.id === id ? { ...n, readAt: new Date().toISOString() } : n);
-    this.notificationsSubject.next(updated);
-    this.unreadCountSubject.next(updated.filter(n => !n.readAt).length);
+    const remaining = current.filter(n => n.id !== id);
+    this.notificationsSubject.next(remaining);
+    this.unreadCountSubject.next(remaining.length);
 
     return this.http.patch<NotificationGetDto>(
       `${environment.API_URL}/user/${uid}/notification/${id}/read`,
@@ -81,8 +81,7 @@ export class NotificationService {
     }
 
     // optimistic local update
-    const updated = this.notificationsSubject.value.map(n => ({ ...n, readAt: new Date().toISOString() }));
-    this.notificationsSubject.next(updated);
+    this.notificationsSubject.next([]);
     this.unreadCountSubject.next(0);
 
     return this.http.patch<void>(

@@ -8,7 +8,7 @@
             Race week: {{ currentRace?.round }} - {{ currentRace?.raceName }} - {{ currentRace?.raceDate | date:'d/M/yyyy' }}
           </div>
           <div class="lineup-lock bg-black text-white mb-3">
-            Lock after: {{ currentRace?.deadlineDate |  date:'medium' }}
+            Lock after: {{ currentRace?.deadlineDate |  date:'short' }}
           </div>
           <div class="lineup-card">
             <!-- First row: 2 drivers -->
@@ -93,7 +93,10 @@
           <!-- Powerups panel -->
           <div class="col-12">
             <div class="lineup-panel bg-primary-red text-white">
-              <div class="panel-title">Powerups</div>
+              <div class="panel-title d-flex align-items-center justify-content-between">
+                <span>Powerups</span>
+                <span *ngIf="isRaceLocked" class="lock-note">Locked · Deadline: {{ currentRace?.deadlineDate |  date:'short' }}</span>
+              </div>
               <div class="powerups-row">
                 <div class="powerup-card" *ngFor="let powerup of powerups">
                   <div class="powerup-top">
@@ -113,9 +116,9 @@
                     }">
                       {{ powerup.status | titlecase }}
                     </div>
-                    <button *ngIf="powerup.status === 'Available'" class="btn btn-use btn-sm"
+                    <button *ngIf="powerup.status === 'Available'" [disabled]="isRaceLocked" class="btn btn-use btn-sm"
                       (click)="addPowerToLineup(powerup)">Use</button>
-                    <button *ngIf="powerup.status === 'Using'" class="btn btn-remove  btn-outline-danger btn-sm"
+                    <button *ngIf="powerup.status === 'Using'" [disabled]="isRaceLocked" class="btn btn-remove  btn-outline-danger btn-sm"
                       (click)="removePowerFromLineup(powerup)">Remove</button>
                     <button *ngIf="powerup.status === 'Used'" class="btn btn-secondary btn-sm" disabled>Used</button>
                   </div>

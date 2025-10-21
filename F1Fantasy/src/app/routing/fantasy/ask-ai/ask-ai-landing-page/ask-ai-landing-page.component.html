@@ -1,0 +1,173 @@
+<app-content-container>
+  <div class="row gx-4 gy-4 ask-ai-grid">
+    <!-- Left: detail -->
+    <div class="col-lg-7 col-12">
+      <div class="card mb-3">
+        <div class="card-header text-white d-flex justify-content-between align-items-center gap-1">
+          <div class="d-flex align-items-center justify-content-center gap-3">
+            <div class="fw-bold">Prediction detail</div>
+            <!-- New: guesses left chip -->
+            <div class="info-chip bg-danger text-white ms-2">
+              <i class="fa-solid fa-bolt me-1"></i>
+              Guesses left: {{ predictionsLeft }}
+            </div>
+          </div>
+
+          <div class="d-flex align-items-end gap-3 justify-content-center check-detail" *ngIf="selected">
+            <button class="btn btn-check-detail btn-sm"  [routerLink]="['/fantasy/ask-ai/prediction', selected.id]" >
+                Check prediction details
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <ng-container *ngIf="selected; else empty">
+            <div class="mb-2"><strong>Circuit:</strong> {{ selected.circuit.circuitName }}</div>
+            <div class="mb-2"><strong>Predicted on:</strong> {{ selected.datePredicted | date:'d/M/yyyy' }}</div>
+            <div class="mb-2"><strong>Qualifying date:</strong> {{ selected.qualifyingDate | date:'d/M/yyyy' }}</div>
+            <div class="mb-2"><strong>Race date:</strong> {{ selected.raceDate ? (selected.raceDate | date:'d/M/yyyy') : 'N/A' }}</div>
+            <div class="mb-2"><strong>Race laps:</strong> {{ selected.laps ? selected.laps : 'N/A' }}</div>
+            <div class="mb-2 main-race-predicted-row"><strong>Main race predicted:</strong>
+              <span class="badge" [ngClass]="hasMainRace(selected) ? 'bg-success' : 'bg-secondary'">
+                {{ hasMainRace(selected) ? 'Yes' : 'No' }}
+              </span>
+            </div>
+
+            <hr />
+
+            <!-- If main race not predicted allow quick add -->
+            <div *ngIf="!hasMainRace(selected)" class="mb-3">
+              <button class="btn btn-predict-main-race btn-sm"  (click)="toggleAddMainForm()">
+                {{ showAddMainForm ? 'Cancel' : 'Predict main race' }}
+              </button>
+            </div>
+
+            <div *ngIf="showAddMainForm" class="mb-3">
+              <div *ngIf="addMainError" class="alert alert-danger">{{ addMainError }}</div>
+
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <label class="form-label">Laps</label>
+                  <input type="number" class="form-control" [(ngModel)]="addMainModel.laps" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Race date</label>
+                  <input type="datetime-local" class="form-control" [(ngModel)]="addMainModel.raceDate" />
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="addMainModel.rain" id="rainCheck" />
+                    <label class="form-check-label" for="rainCheck">Rain</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- show client-side validation messages -->
+              <div *ngIf="addMainValidationErrors.length" class="mt-2">
+                <div *ngFor="let e of addMainValidationErrors" class="text-danger small">{{ e }}</div>
+              </div>
+
+              <div class="mt-3">
+                <button class="btn btn-submit-main-race" (click)="submitAddMain()" [disabled]="addingMainLoading || !isAddMainValid || predictionsLeft <= 0">
+                  <ng-container *ngIf="addingMainLoading; else submitLabel">
+                    Saving...
+                  </ng-container>
+                  <ng-template #submitLabel>Submit main race</ng-template>
+                </button>
+              </div>
+            </div>
+
+            <div class="entries-list">
+              <h6>Driver entries</h6>
+              <div *ngFor="let d of sortedDriverPredictions" class="list-group-item-driver-entry d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="fw-semibold">
+                    {{ d.driver.givenName }} {{ d.driver.familyName }}
+                    <!-- Crash indicator: show only when main race exists and driver was marked crashed -->
+                    <span *ngIf="hasMainRace(selected) && d.crashed" class="crash-badge ms-2" title="Crashed in main race">
+                      <i class="fa-solid fa-triangle-exclamation me-1"></i> DNF
+                    </span>
+                  </div>
+                  <div class="small text-muted">{{ d.constructor.name }}</div>
+                </div>
+                <div class="text-end">
+                  <div>Qualification: {{ d.gridPosition ?? '-' }}</div>
+                  <div>Final: {{ d.finalPosition ?? (hasMainRace(selected) ? '-' : 'N/A') }}</div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #empty>
+            <div class="text-muted">Select a prediction on the right to view details.</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: list -->
+    <div class="col-lg-5 col-12">
+      <div class="card mb-3">
+        <div class="card-header bg-primary-red text-white d-flex justify-content-between align-items-center">
+          <div>Previous predictions</div>
+          <div class="create-split-group d-inline-block" (click)="$event.stopPropagation()">
+            <button
+              type="button"
+              class="btn btn-predict btn-sm split-toggle"
+              (click)="toggleCreateMenu($event)"
+              [attr.aria-expanded]="showCreateMenu"
+              aria-haspopup="true"
+              title="More create options">
+              Make new prediction
+            </button>
+
+            <div class="create-menu card shadow-sm" *ngIf="showCreateMenu">
+              <a class="create-item"
+                 [routerLink]="['/fantasy/ask-ai/create/main']"
+                 (click)="showCreateMenu = false">
+                <i class="fa-solid fa-flag-checkered me-2"></i>
+                New - Qualifying + Main
+              </a>
+              <a class="create-item"
+                 [routerLink]="['/fantasy/ask-ai/create/qualifying']"
+                 (click)="showCreateMenu = false">
+                <i class="fa-solid fa-stopwatch me-2"></i>
+                New - Qualifying only
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div *ngIf="loadingList" class="p-3">Loading...</div>
+          <ul class="list-group list-group-flush" *ngIf="!loadingList">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center prediction-row"
+              *ngFor="let p of predictions"
+              (click)="selectPrediction(p.id)"
+              [class.active]="selected?.id === p.id">
+              <div>
+                <div class="fw-semibold">{{ p.circuit.circuitName }}</div>
+                <div class="small text-muted">Predicted at: {{ p.datePredicted | date:'d/M/yyyy' }}</div>
+              </div>
+              <div class="text-end">
+                <div class="small">Qualifying: {{ p.qualifyingDate | date:'d/M/yyyy' }}</div>
+                <div class="small" *ngIf="hasMainRace(p)">Race: {{ p.raceDate | date:'d/M/yyyy' }}</div>
+                <div>
+                  <span class="badge" [ngClass]="hasMainRace(p) ? 'bg-success' : 'bg-secondary'">
+                    {{ hasMainRace(p) ? 'Main' : 'Q only' }}
+                  </span>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <div class="p-3 d-flex justify-content-between align-items-center">
+            <button class="btn btn-outline-secondary btn-sm" (click)="prevPage()" [disabled]="pageNum <= 1">Prev</button>
+            <div>Page {{ pageNum }}</div>
+            <button class="btn btn-outline-secondary btn-sm" (click)="nextPage()" [disabled]="!hasMore">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-content-container>

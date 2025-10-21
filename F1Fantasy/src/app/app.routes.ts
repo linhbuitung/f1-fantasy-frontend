@@ -101,6 +101,7 @@ export const routes: Routes = [
       },
       {
         path: 'leagues',
+        canActivate: [authGuard],
         children: [
           {
             path: "",
@@ -170,12 +171,45 @@ export const routes: Routes = [
       },
       {
         path: 'ask-ai',
-        pathMatch: 'full',
-        loadComponent: async () => {
-          return import('./routing/fantasy/ask-ai/ask-ai.component').then(
-            (m) => m.AskAiComponent
-          );
-        },
+        canActivate: [authGuard],
+        children: [
+          {
+            path: "",
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/ask-ai/ask-ai-landing-page/ask-ai-landing-page.component').then(
+                (m) => m.AskAiLandingPageComponent
+              );
+            },
+          },
+          {
+            path: 'prediction/:id',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/ask-ai/prediction-detail/prediction-detail.component').then(
+                (m) => m.PredictionDetailComponent
+              );
+            }
+          },
+          {
+            path: 'create/qualifying',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/ask-ai/create-qualifying/create-qualifying.component').then(
+                (m) => m.CreateQualifyingComponent
+              );
+            }
+          },
+          {
+            path: 'create/main',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/ask-ai/create-main-race/create-main-race.component').then(
+                (m) => m.CreateMainRaceComponent
+              );
+            }
+          }
+        ]
       },
       {
         path: '',
