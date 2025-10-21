@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {AskAiService} from '../../../../core/services/ask-ai/ask-ai.service';
 import {AuthService} from '../../../../core/services/auth/auth.service';
 import {ContentContainerComponent} from '../../../../shared/content-container/content-container.component';
@@ -27,17 +27,19 @@ export class AskAiLandingPageComponent implements OnInit {
   loadingList = false;
   loadingDetail = false;
   hasMore = false;
+  showCreateMenu = false;
 
   // New: user credits & inline main-race form state
   predictionsLeft = 0;
   showAddMainForm = false;
   addingMainLoading = false;
-  addMainModel: { laps: number; raceDate: string; rain: boolean } = { laps: 58, raceDate: '', rain: false };
+  addMainModel: { laps: number; raceDate: string; rain: boolean } = { laps: 0, raceDate: '', rain: false };
   addMainError: string | null = null;
 
   constructor(private askAi: AskAiService, private auth: AuthService) {}
 
   ngOnInit(): void {
+    this.auth.reloadProfile();
     this.auth.userProfile$.subscribe((u) => {
       this.currentUserId = u?.id ?? null;
       this.predictionsLeft = u?.askAiCredits ?? 0;
@@ -110,8 +112,55 @@ export class AskAiLandingPageComponent implements OnInit {
     if (this.selected) this.addMainModel.raceDate = this.selected.qualifyingDate ?? this.addMainModel.raceDate;
   }
 
+  get addMainValidationErrors(): string[] {
+    const errs: string[] = [];
+
+    // laps: integer >= 1
+    const laps = Number(this.addMainModel.laps);
+    if (!Number.isFinite(laps) || !Number.isInteger(laps) || laps < 1) {
+      errs.push('Laps must be an integer of at least 1.');
+    }
+
+    // raceDate presence & validity
+    if (!this.addMainModel.raceDate) {
+      errs.push('Race date is required.');
+      return errs; // no further date checks
+    }
+
+    const raceDate = new Date(this.addMainModel.raceDate);
+    if (isNaN(raceDate.getTime())) {
+      errs.push('Race date is invalid.');
+      return errs;
+    }
+
+    // in future
+    if (raceDate.getTime() <= Date.now()) {
+      errs.push('Race date must be in the future.');
+    }
+
+    // if selected prediction has qualifying date, ensure race > qualifying (strictly later)
+    if (this.selected?.qualifyingDate) {
+      const qualDate = new Date(this.selected.qualifyingDate);
+      if (!isNaN(qualDate.getTime()) && raceDate.getTime() <= qualDate.getTime()) {
+        errs.push('Race date must be after the qualifying date.');
+      }
+    }
+
+    return errs;
+  }
+
+  get isAddMainValid(): boolean {
+    return this.addMainValidationErrors.length === 0;
+  }
+
   submitAddMain() {
     if (!this.currentUserId || !this.selected) return;
+    const validation = this.addMainValidationErrors;
+    if (validation.length > 0) {
+      this.addMainError = validation.join(' ');
+      return;
+    }
+
     this.addingMainLoading = true;
     this.addMainError = null;
 
@@ -124,10 +173,10 @@ export class AskAiLandingPageComponent implements OnInit {
     this.askAi.makeMainRacePredictionFromExisting(this.currentUserId, this.selected.id, dto).subscribe({
       next: (updated) => {
         this.selected = updated;
-        // refresh list so badge updates
         this.loadPredictions(this.pageNum);
         this.showAddMainForm = false;
         this.addingMainLoading = false;
+        this.auth.reloadProfile();
       },
       error: (err) => {
         this.addMainError = err?.error?.message || 'Failed to add main race';
@@ -142,5 +191,16 @@ export class AskAiLandingPageComponent implements OnInit {
       const bVal = b.finalPosition ?? Number.POSITIVE_INFINITY;
       return aVal - bVal;
     });
+  }
+
+  toggleCreateMenu(event?: Event) {
+    if (event) event.stopPropagation();
+    this.showCreateMenu = !this.showCreateMenu;
+  }
+
+  @HostListener('document:click')
+  onDocumentClick() {
+    // close menu when user clicks outside
+    if (this.showCreateMenu) this.showCreateMenu = false;
   }
 }

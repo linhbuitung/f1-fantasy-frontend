@@ -7,6 +7,7 @@ export interface PredictionGetDto {
   raceDate?: string | null; // DateTime? -> ISO string or null
   qualifyingDate: string; // ISO string
   rain: boolean;
+  laps?: number | null;
   userId: number;
   isQualifyingCalculated: boolean;
   isRaceCalculated: boolean;

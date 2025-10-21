@@ -1,0 +1,87 @@
+<app-content-container>
+  <div class="prediction-detail">
+    <div class="card">
+      <div class="card-header bg-primary-red text-white d-flex justify-content-between align-items-center">
+        <div>
+          <span class="fw-bold">Prediction Detail</span>
+        </div>
+        <a class="btn btn-back btn-sm" routerLink="/fantasy/ask-ai">Back</a>
+      </div>
+      <div class="card-body">
+        <ng-container *ngIf="!loading && prediction; else loadingOrError">
+          <div class="mb-2"><strong>Circuit:</strong> {{ prediction.circuit.circuitName }}</div>
+          <div class="mb-2"><strong>Predicted on:</strong> {{ prediction.datePredicted | date:'d/M/yyyy' }}</div>
+          <div class="mb-2"><strong>Qualifying date:</strong> {{ prediction.qualifyingDate | date:'short' }}</div>
+          <div class="mb-2"><strong>Race date:</strong> {{ prediction.raceDate ? (prediction.raceDate | date:'short') : 'N/A' }}</div>
+          <div class="mb-2 main-race-predicted-row">
+            <strong>Main race predicted:</strong>
+            <span class="badge" [ngClass]="hasMainRace(prediction) ? 'bg-success' : 'bg-secondary'">
+            {{ hasMainRace(prediction) ? 'Yes' : 'No' }}
+          </span>
+          </div>
+
+          <!-- Predict main race button and form -->
+          <div *ngIf="!hasMainRace(prediction)" class="mb-3">
+            <button class="btn btn-predict-main-race btn-sm" (click)="toggleAddMainForm()">
+              {{ showAddMainForm ? 'Cancel' : 'Predict main race' }}
+            </button>
+          </div>
+
+          <div *ngIf="showAddMainForm" class="mb-3">
+            <div *ngIf="addMainError" class="alert alert-danger">{{ addMainError }}</div>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <label class="form-label">Laps</label>
+                <input type="number" class="form-control" [(ngModel)]="addMainModel.laps" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Race date</label>
+                <input type="datetime-local" class="form-control" [(ngModel)]="addMainModel.raceDate" />
+              </div>
+              <div class="col-md-2 d-flex align-items-end">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="addMainModel.rain" id="rainCheckDetail" />
+                  <label class="form-check-label" for="rainCheckDetail">Rain</label>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="addMainValidationErrors.length" class="mt-2">
+              <div *ngFor="let e of addMainValidationErrors" class="text-danger small">{{ e }}</div>
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-submit-main-race" (click)="submitAddMain()" [disabled]="addingMainLoading || !isAddMainValid">
+                <ng-container *ngIf="addingMainLoading; else submitLabel">
+                  Saving...
+                </ng-container>
+                <ng-template #submitLabel>Submit main race</ng-template>
+              </button>
+            </div>
+          </div>
+          <hr />
+          <div class="entries-list">
+            <h6>Driver entries</h6>
+            <div *ngFor="let d of sortedDriverPredictions" class="list-group-item-driver-entry d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold">
+                  {{ d.driver.givenName }} {{ d.driver.familyName }}
+                  <span *ngIf="hasMainRace(prediction) && d.crashed" class="crash-badge ms-2" title="Crashed in main race">
+                  <i class="fa-solid fa-triangle-exclamation me-1"></i> DNF
+                </span>
+                </div>
+                <div class="small text-muted">{{ d.constructor.name }}</div>
+              </div>
+              <div class="text-end">
+                <div>Qualification: {{ d.gridPosition ?? '-' }}</div>
+                <div>Final: {{ d.finalPosition ?? (hasMainRace(prediction) ? '-' : 'N/A') }}</div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #loadingOrError>
+          <div *ngIf="loading" class="text-muted">Loading...</div>
+          <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</app-content-container>

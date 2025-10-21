@@ -181,6 +181,33 @@ export const routes: Routes = [
                 (m) => m.AskAiLandingPageComponent
               );
             },
+          },
+          {
+            path: 'prediction/:id',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/ask-ai/prediction-detail/prediction-detail.component').then(
+                (m) => m.PredictionDetailComponent
+              );
+            }
+          },
+          {
+            path: 'create/qualifying',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/ask-ai/create-qualifying/create-qualifying.component').then(
+                (m) => m.CreateQualifyingComponent
+              );
+            }
+          },
+          {
+            path: 'create/main',
+            pathMatch: 'full',
+            loadComponent: async () => {
+              return import('./routing/fantasy/ask-ai/create-main-race/create-main-race.component').then(
+                (m) => m.CreateMainRaceComponent
+              );
+            }
           }
         ]
       },
