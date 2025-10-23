@@ -1,1 +1,65 @@
-<p>driver-statistic works!</p>
+<div class="driver-statistics">
+  <div class="row gx-4 gy-4">
+    <!-- Left column: menu -->
+    <div class="col-lg-4 col-12">
+      <div class="card mb-3">
+        <div class="card-header selection-header text-white">Game statistic</div>
+        <div class="card-body">
+          <ul class="list-unstyled left-menu">
+            <li *ngFor="let it of gameStats" (click)="selectMetric(it.key)" [class.active]="selectedKey === it.key" class="menu-item">
+              {{ it.label }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header selection-header text-white">Race statistic</div>
+        <div class="card-body">
+          <ul class="list-unstyled left-menu">
+            <li *ngFor="let it of raceStats" (click)="selectMetric(it.key)" [class.active]="selectedKey === it.key" class="menu-item">
+              {{ it.label }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: content -->
+    <div class="col-lg-8 col-12">
+      <div class="card">
+        <div class="card-header bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="fw-semibold">{{ selectedMetricLabel }}</div>
+            <div class="small text-muted">Current season</div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div *ngIf="loading" class="text-muted">Loading...</div>
+            <div *ngIf="(items$ | async) as items">
+              <div *ngIf="items.length === 0" class="text-muted">No data</div>
+
+              <div *ngFor="let d of items; trackBy: trackById" class="stat-row d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-3">
+                  <img *ngIf="d.imgUrl; else defaultDriver" [src]="d.imgUrl" alt="{{ d.givenName }}" class="team-img" />
+                  <ng-template #defaultDriver>
+                    <img src="assets/driver-icon.svg" alt="Driver" class="team-img" />
+                  </ng-template>
+                  <div>
+                    <div class="fw-semibold">{{ d.givenName }} {{ d.familyName }}</div>
+                    <div class="small text-muted">{{ d.code }} • {{ d.price }}$</div>
+                  </div>
+                </div>
+                <div class="text-end metric-value">
+                  {{ displayMetricValue(d) }}
+                </div>
+              </div>
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
