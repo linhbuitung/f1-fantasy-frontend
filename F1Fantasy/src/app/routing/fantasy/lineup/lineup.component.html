@@ -8,7 +8,12 @@
             Race week: {{ currentRace?.round }} - {{ currentRace?.raceName }} - {{ currentRace?.raceDate | date:'d/M/yyyy' }}
           </div>
           <div class="lineup-lock bg-black text-white mb-3">
-            Lock after: {{ currentRace?.deadlineDate |  date:'short' }}
+            <ng-container *ngIf="isRaceLocked; else unlocked">
+              Locked - lineup is closed for current race
+            </ng-container>
+            <ng-template #unlocked>
+              Lock after: {{ currentRace?.deadlineDate | date:'short' }}
+            </ng-template>
           </div>
           <div class="lineup-card">
             <!-- First row: 2 drivers -->
@@ -95,7 +100,7 @@
             <div class="lineup-panel bg-primary-red text-white">
               <div class="panel-title d-flex align-items-center justify-content-between">
                 <span>Powerups</span>
-                <span *ngIf="isRaceLocked" class="lock-note">Locked · Deadline: {{ currentRace?.deadlineDate |  date:'short' }}</span>
+                <span *ngIf="isRaceLocked" class="lock-note">Locked for current race</span>
               </div>
               <div class="powerups-row">
                 <div class="powerup-card" *ngFor="let powerup of powerups">

@@ -1,101 +1,105 @@
 <app-content-container>
+  <div class="how-to-play">
+    <div class="row gx-4 gy-4">
+      <!-- Sidebar: clickable navigation (no router navigation) -->
+      <aside class="col-lg-4 col-12">
+        <nav class="card sticky-sidebar" aria-label="How to play navigation">
+          <div class="card-header bg-primary-red text-white">
+            How to play
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled toc mb-0">
+              <li (click)="selectSection('build')" [class.active]="selectedSection === 'build'">Build your team</li>
+              <li (click)="selectSection('join')"  [class.active]="selectedSection === 'join'">Join a league</li>
+              <li (click)="selectSection('transfers')" [class.active]="selectedSection === 'transfers'">Make transfers</li>
+              <li (click)="selectSection('powerups')" [class.active]="selectedSection === 'powerups'">Use powerups</li>
+              <li (click)="selectSection('race')" [class.active]="selectedSection === 'race'">Race day & scoring</li>
+              <li (click)="selectSection('track')" [class.active]="selectedSection === 'track'">Track progress</li>
+              <li (click)="selectSection('ai')" [class.active]="selectedSection === 'ai'">AI predictions</li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
 
-  <h1>How to Play WooF1 Fantasy</h1>
+      <!-- Main content: show the clicked section -->
+      <main class="col-lg-8 col-12">
+        <article class="card">
+          <div class="card-header">
+            <div class="fw-bold">How to Play - Tips & Tricks</div>
+          </div>
 
-  <div class="step">
-    <h2>Step 1: Register and Log In</h2>
-    <ul>
-      <li>Create an account using email or social login (OAuth supported).</li>
-      <li>Set up your profile and choose your favorites (1 constructor, 2 drivers).</li>
-    </ul>
+          <div class="card-body">
+            <div *ngIf="selectedSection === 'build'">
+              <h3>Team building</h3>
+              <ul>
+                <li>Balance stars with value picks - don’t spend all budget on one driver. Aim for 2 premium, 2 mid, 1 wildcard.</li>
+                <li>Monitor driver price trends before buying; early momentum often increases price.</li>
+                <li>Choose a captain each race based on weekend form (practice/qualifying). Prefer captains who consistently finish races.</li>
+              </ul>
+              <div class="small text-muted">For exact limits and price rules see the <a [routerLink]="['/fantasy/rules']" fragment="team">Rules</a> page.</div>
+            </div>
+
+            <div *ngIf="selectedSection === 'join'">
+              <h3>Leagues strategy</h3>
+              <ul>
+                <li>Join a mix of players in leagues to compete head-to-head strategy.</li>
+                <li>In private leagues, mirror popular picks only when you need safe points, surprise picks can make a difference.</li>
+                <li>Create leagues with custom rules for more competitive play (use private leagues for experiments).</li>
+              </ul>
+            </div>
+
+            <div *ngIf="selectedSection === 'transfers'">
+              <h3>Transfer tactics</h3>
+              <ul>
+                <li>Use your free transfers accordingly, ot every race needs a transfer.</li>
+                <li>When making multiple transfers, compare expected points vs penalty: sometimes a -10 is worth a +25 gain.</li>
+                <li>Set transfers before the lock deadline; check qualifying results early to spot breakout drivers.</li>
+              </ul>
+              <div class="small text-muted">Full penalty rules and locking times on the <a [routerLink]="['/fantasy/rules']" fragment="transfers">Rules</a> page.</div>
+            </div>
+
+            <div *ngIf="selectedSection === 'powerups'">
+              <h3>Powerup usage</h3>
+              <ul>
+                <li>Save powerups for high-variance races (street circuits, weather) where outcomes are less predictable.</li>
+                <li>Use "DRS Enabled" on a consistent, high-upside driver rather than a risky one.</li>
+                <li>Combine Free Transfer Week with double-transfer rounds to reshuffle your squad safely.</li>
+              </ul>
+              <div class="small text-muted">See exact powerup mechanics on the <a [routerLink]="['/fantasy/rules']" fragment="powerups">Rules</a> page.</div>
+            </div>
+
+            <div *ngIf="selectedSection === 'race'">
+              <h3>Race day decisions</h3>
+              <ul>
+                <li>Remember to confirm captain.</li>
+                <li>Watch weather alerts: these can create huge swings and favour different drivers.</li>
+                <li>When a driver DNFs, remember captain doubling applies to negative points - avoid risky captains.</li>
+              </ul>
+              <div class="small text-muted">Detailed scoring tables are on the <a [routerLink]="['/fantasy/rules']" fragment="scoring">Rules</a> page.</div>
+            </div>
+
+            <div *ngIf="selectedSection === 'track'">
+              <h3>Tracking & analysis</h3>
+              <ul>
+                <li>Use the Status page to spot trending picks and team-of-the-week selections from last race, try to find underrated consistent drivers.</li>
+                <li>Follow driver form over 3–5 races rather than single events to reduce variance in decisions.</li>
+                <li>Check constructor pairings: two strong drivers scoring together boost constructor points significantly.</li>
+              </ul>
+            </div>
+
+            <div *ngIf="selectedSection === 'ai'">
+              <h3>AI & predictions</h3>
+              <ul>
+                <li>Use AI predictions as a secondary signal - combine with your research (weather, practice times).</li>
+                <li>Earn AI uses by daily logins and use them strategically during injury or qualifying surprises.</li>
+              </ul>
+              <div class="small text-muted">AI rules and quotas on the <a [routerLink]="['/fantasy/rules']" fragment="ai">Rules</a> page.</div>
+            </div>
+
+            <p class="note mt-3">Pro tip: plan transfers around the calendar - use powerups and transfers on big double-header events to maximize gains.</p>
+          </div>
+        </article>
+      </main>
+    </div>
   </div>
-
-  <div class="step">
-    <h2>Step 2: Build Your Team</h2>
-    <ul>
-      <li>Select <strong>5 drivers</strong> and <strong>2 constructors</strong> from the current F1 season.</li>
-      <li>Stay within the budget cap of <strong>$100</strong>.</li>
-      <li>Choose a <strong>captain</strong> whose points will be doubled.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h2>Step 3: Join a League</h2>
-    <ul>
-      <li>Search for public leagues or create your own private league.</li>
-      <li>Private leagues require invitations or passwords.</li>
-      <li>Compete with friends or global players.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h2>Step 4: Make Transfers</h2>
-    <ul>
-      <li>Adjust your lineup before each race.</li>
-      <li>You get <strong>2 free transfers</strong> per race week.</li>
-      <li>Extra transfers cost <strong>10 points each</strong>.</li>
-      <li>Transfers lock <strong>1 hour before qualifying</strong>.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h2>Step 5: Use Powerups</h2>
-    <ul>
-      <li>Use one powerup per race to boost your score.</li>
-      <li>Each powerup can be used once per season.</li>
-      <li>Available powerups:
-        <ul>
-          <li><strong>DRS Enabled</strong>: Double points for one driver.</li>
-          <li><strong>Free Transfer Week</strong>: No penalty for extra transfers.</li>
-          <li><strong>Escapist</strong>: Negates negative points from drivers.</li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h2>Step 6: Race Day & Scoring</h2>
-    <ul>
-      <li>After each race, scores are calculated based on:
-        <ul>
-          <li>Driver grid start and final position.</li>
-          <li>Fastest lap and positions gained/lost.</li>
-          <li>Constructor performance.</li>
-          <li>Captain bonus and powerup effects.</li>
-        </ul>
-      </li>
-      <li>Negative scores apply for DNF statuses.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h2>Step 7: Track Progress</h2>
-    <ul>
-      <li>View leaderboards for:
-        <ul>
-          <li>Global rankings.</li>
-          <li>League standings.</li>
-          <li>Driver and constructor stats.</li>
-        </ul>
-      </li>
-      <li>Check your favorite drivers and constructor performance.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h2>Step 8: Use AI Predictions</h2>
-    <ul>
-      <li>Earn AI usage by logging in daily (1 use per 14 consecutive days).</li>
-      <li>Use AI to predict:
-        <ul>
-          <li><strong>Qualifying grid</strong> for the next race.</li>
-          <li><strong>Main race results</strong> based on grid input.</li>
-        </ul>
-      </li>
-      <li>AI uses historical data from <strong>jolpica-f1 API</strong>.</li>
-    </ul>
-  </div>
-
-  <p class="note">Tip: Plan your transfers and powerups strategically to maximize your score each week!</p>
-
 </app-content-container>

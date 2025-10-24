@@ -7,3 +7,106 @@
   width: 100%;
   height: 100%;
 }
+.how-to-play .sticky-sidebar {
+  position: sticky;
+  top: 1rem;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.card-header{
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  font-weight: 700;
+  border-radius: 0.6rem 0.6rem 0 0;
+}
+
+.how-to-play .step h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.how-to-play .note {
+  background: rgba(233, 30, 45, 0.06);
+  border-left: 4px solid var(--f1-primary-red);
+  padding: 0.8rem 1rem;
+  border-radius: 0.45rem;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .how-to-play .sticky-sidebar { position: static; }
+  .how-to-play .toc a { padding: 0.5rem 0; }
+}
+
+
+.how-to-play .toc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.how-to-play .toc li {
+  list-style: none;
+  padding: 0.75rem 0.95rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  color: var(--f1-dark);
+  background: var(--f1-white);
+  border: 1.5px solid transparent;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: background 0.14s ease, color 0.14s ease, transform 0.08s ease,
+  box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+
+/* hover / keyboard focus */
+.how-to-play .toc li:hover,
+.how-to-play .toc li:focus {
+  background: rgba(0,0,0,0.03);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+/* active / selected */
+.how-to-play .toc li.active {
+  background: var(--f1-primary-red);
+  color: var(--f1-white);
+  border-color: var(--f1-primary-red);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+.how-to-play .toc li.active::before {
+  background: var(--f1-white);
+  transform: scale(1.05);
+}
+
+/* visible focus ring for keyboard users */
+.how-to-play .toc li:focus-visible {
+  box-shadow: 0 0 0 4px rgba(233, 30, 45, 0.12);
+}
+
+/* responsive: turn TOC into a horizontal scroll row on smaller screens */
+@media (max-width: 900px) {
+  .how-to-play .toc {
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow: auto;
+    padding: 0.25rem 0.25rem;
+  }
+  .how-to-play .toc li {
+    white-space: nowrap;
+    padding: 0.5rem 0.8rem;
+    min-width: max-content;
+  }
+  .how-to-play .toc li::before {
+    display: none;
+  }
+}

@@ -10,7 +10,7 @@
           </div>
           <div class="lineup-lock bg-black text-white mb-3">
             <ng-container *ngIf="isRaceLocked; else unlocked">
-              Locked — lineup is closed for current race
+              Locked - lineup is closed for current race
             </ng-container>
             <ng-template #unlocked>
               Lock at: {{ currentRace?.deadlineDate | date:'short' }}

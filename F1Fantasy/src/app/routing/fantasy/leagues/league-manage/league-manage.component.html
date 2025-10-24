@@ -128,7 +128,9 @@
                       [disabled]="player.id === league?.owner?.id"
                       title="Kick from league"
                     >
-                      <i class="fa-solid fa-user-slash"></i> Kick
+                      <i class="fa-solid fa-user-slash"></i>
+                      <span *ngIf="player.id === league?.owner?.id">Owner (You)</span>
+                      <span *ngIf="player.id !== league?.owner?.id">Kick</span>
                     </button>
                   </td>
                 </tr>
