@@ -1,1 +1,65 @@
-<p>constructor-statistic works!</p>
+  <div class="constructor-statistics">
+    <div class="row gx-4 gy-4">
+      <div class="col-lg-4 col-12">
+        <div class="card mb-3">
+          <div class="card-header selection-header text-white">Game statistic</div>
+          <div class="card-body">
+            <ul class="list-unstyled left-menu">
+              <li *ngFor="let it of gameStats" (click)="selectMetric(it.key)"
+                  [class.active]="selectedKey === it.key" class="menu-item">
+                {{ it.label }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header selection-header text-white">Race statistic</div>
+          <div class="card-body">
+            <ul class="list-unstyled left-menu">
+              <li *ngFor="let it of raceStats" (click)="selectMetric(it.key)"
+                  [class.active]="selectedKey === it.key" class="menu-item">
+                {{ it.label }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8 col-12">
+        <div class="card">
+          <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="fw-semibold">{{ selectedMetricLabel }}</div>
+              <div class="small text-muted">Current season</div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div *ngIf="loading" class="text-muted mb-2">Loading...</div>
+
+            <div *ngIf="(items$ | async) as items">
+              <div *ngIf="items.length === 0" class="text-muted">No data</div>
+
+              <div *ngFor="let c of items; trackBy: trackById" class="stat-row d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-3">
+                  <img *ngIf="c.imgUrl; else defaultConstructor" [src]="c.imgUrl" [alt]="c.name" class="team-img" />
+                  <ng-template #defaultConstructor>
+                    <img src="assets/steering-wheel.svg" alt="Constructor" class="team-img" />
+                  </ng-template>
+                  <div>
+                    <div class="fw-semibold">{{ c.name }}</div>
+                    <div class="small text-muted">{{ c.code }} • {{ c.price }}$</div>
+                  </div>
+                </div>
+                <div class="text-end metric-value">
+                  {{ displayMetricValue(c) }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
