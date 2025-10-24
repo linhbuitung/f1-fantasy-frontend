@@ -7,3 +7,105 @@
   width: 100%;
   height: 100%;
 }
+
+
+.rules-page { width:100%; margin-top:1rem; }
+
+.sticky-sidebar { position: sticky; top:1rem; border-radius:0.8rem; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+
+.toc { display:flex; flex-direction:column; gap:0.6rem; margin:0; padding:0; }
+
+.toc-item { list-style:none; }
+
+.toc-btn {
+  width:100%;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.7rem 0.9rem;
+  border-radius:0.6rem;
+  border:1px solid transparent;
+  background:var(--f1-white);
+  color:var(--f1-dark);
+  font-weight:600;
+  cursor:pointer;
+  transition: transform .08s, box-shadow .12s, background .12s;
+  outline:none;
+}
+
+.toc-btn:hover, .toc-btn:focus { background: var(--f1-white); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.04); }
+
+.toc-btn[aria-pressed="true"] { background: var(--f1-primary-red); color:var(--f1-white); border-color:var(--f1-primary-red); box-shadow: 0 8px 26px rgba(233,30,45,0.12); }
+
+.toc-btn[aria-pressed="true"]::before { background:var(--f1-white); }
+
+.card { border-radius:1rem; box-shadow:0 2px 8px var(--f1-white); }
+.card-header { font-weight:700; background:var(--f1-white); border-radius:1rem 1rem 0 0; }
+
+.card-header {
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  font-weight: 700;
+  border-radius: 0.6rem 0.6rem 0 0;
+}
+
+.note { background: rgba(233,30,45,0.06); border-left:4px solid var(--f1-primary-red); padding:0.8rem 1rem; border-radius:0.45rem; font-weight:600; }
+
+@media (max-width:900px) {
+  .toc { flex-direction:row; overflow:auto; gap:0.5rem; padding-bottom:0.25rem; }
+  .toc-btn::before { display:none; }
+  .sticky-sidebar { position: static; }
+}
+
+/* Ensure scoring tables use a fixed layout and share column widths so columns line up across tables */
+.scoring-table {
+  width: 100%;
+  table-layout: fixed; /* key: columns respect width rules and align across sibling tables */
+  border-collapse: collapse;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* consistent cell padding / vertical alignment */
+.scoring-table th,
+.scoring-table td {
+  padding: 0.45rem 0.6rem;
+  vertical-align: middle;
+}
+
+/* column width rules applied by column index (first = label, second = points) */
+.scoring-table th:first-child,
+.scoring-table td:first-child {
+  width: 68%; /* label column */
+  text-align: left;
+  padding-left: 0.75rem;
+}
+
+.scoring-table th:last-child,
+.scoring-table td:last-child {
+  width: 32%; /* points column */
+  text-align: center;
+  padding-right: 0.75rem;
+}
+
+/* make long labels wrap nicely */
+.scoring-table td {
+  overflow-wrap: anywhere;
+}
+
+/* Slightly different layout on very small screens: let table size naturally and stack if needed */
+@media (max-width: 600px) {
+  .scoring-table {
+    table-layout: auto;
+  }
+  .scoring-table th:first-child,
+  .scoring-table td:first-child,
+  .scoring-table th:last-child,
+  .scoring-table td:last-child {
+    width: auto;
+    text-align: left;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}

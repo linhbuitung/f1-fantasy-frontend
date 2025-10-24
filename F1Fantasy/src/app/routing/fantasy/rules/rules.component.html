@@ -1,116 +1,217 @@
 <app-content-container>
+  <div class="rules-page">
+    <div class="row gx-4 gy-4">
+      <aside class="col-lg-4 col-12">
+        <nav class="card sticky-sidebar" aria-label="Game rules navigation">
+          <div class="card-header bg-primary-red text-white">Game Rules</div>
+          <div class="card-body p-3">
+            <div class="toc" role="list" aria-label="Rules sections">
+              <div role="listitem" class="toc-item">
+                <button type="button" class="toc-btn" (click)="selectSection('team')" [attr.aria-pressed]="selectedSection === 'team'">Team composition</button>
+              </div>
+              <div role="listitem" class="toc-item">
+                <button type="button" class="toc-btn" (click)="selectSection('transfers')" [attr.aria-pressed]="selectedSection === 'transfers'">Transfer rules</button>
+              </div>
+              <div role="listitem" class="toc-item">
+                <button type="button" class="toc-btn" (click)="selectSection('scoring')" [attr.aria-pressed]="selectedSection === 'scoring'">Scoring system</button>
+              </div>
+              <div role="listitem" class="toc-item">
+                <button type="button" class="toc-btn" (click)="selectSection('powerups')" [attr.aria-pressed]="selectedSection === 'powerups'">Powerups</button>
+              </div>
+              <div role="listitem" class="toc-item">
+                <button type="button" class="toc-btn" (click)="selectSection('leagues')" [attr.aria-pressed]="selectedSection === 'leagues'">League system</button>
+              </div>
+              <div role="listitem" class="toc-item">
+                <button type="button" class="toc-btn" (click)="selectSection('ai')" [attr.aria-pressed]="selectedSection === 'ai'">AI predictions</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </aside>
 
-  <h1>WooF1 Fantasy Game Rules</h1>
+      <main class="col-lg-8 col-12">
+        <article class="card">
+          <div class="card-header">
+            <div class="fw-bold">WooF1 Fantasy - Rules</div>
+          </div>
 
-  <h2>1. Team Composition</h2>
-  <ul>
-    <li>Each player selects <strong>5 drivers</strong> and <strong>2 constructors</strong>.</li>
-    <li>Total team value must not exceed <strong>$100</strong>.</li>
-    <li>Driver and constructor prices may change over time.</li>
-  </ul>
+          <div class="card-body">
+            <!-- Team composition -->
+            <div *ngIf="selectedSection === 'team'">
+              <h3>Team composition</h3>
+              <ul>
+                <li>Select <strong>5 drivers</strong> and <strong>2 constructors</strong>.</li>
+                <li>Total team value must not exceed <strong>$100</strong>.</li>
+                <li>Driver & constructor prices may change over the season.</li>
+                <li>Choose a <strong>captain</strong> - all points for captain are doubled (positive or negative).</li>
+              </ul>
+            </div>
 
-  <h2>2. Transfer Rules</h2>
-  <ul>
-    <li>Each race week allows <strong>2 free transfers</strong>.</li>
-    <li>Additional transfers incur a <strong>10-point deduction</strong> per extra transfer.</li>
-    <li>Transfers are locked <strong>1 hour before qualifying</strong>.</li>
-  </ul>
+            <!-- Transfers -->
+            <div *ngIf="selectedSection === 'transfers'">
+              <h3>Transfer rules</h3>
+              <ul>
+                <li>Each race week allows <strong>2 free transfers</strong>.</li>
+                <li>Additional transfers incur <strong>10 points</strong> deduction per extra transfer.</li>
+                <li>Transfers lock <strong>1 day before qualifying</strong>.</li>
+              </ul>
 
-  <h3>Transfer Penalty Table</h3>
-  <table>
-    <tr><th>Exceeding Transfers</th><th>Deduction</th></tr>
-    <tr><td>1 extra transfer</td><td>-10 points</td></tr>
-    <tr><td>2 extra transfers</td><td>-20 points</td></tr>
-    <tr><td>3 extra transfers</td><td>-30 points</td></tr>
-  </table>
+              <h4 class="mt-3">Transfer penalty table</h4>
+              <div class="table-responsive">
+                <table class="table table-sm mb-0">
+                  <caption class="visually-hidden">Transfer penalty</caption>
+                  <thead><tr><th>Exceeding transfers</th><th>Deduction</th></tr></thead>
+                  <tbody>
+                  <tr><td>1 extra transfer</td><td>-10 points</td></tr>
+                  <tr><td>2 extra transfers</td><td>-20 points</td></tr>
+                  <tr><td>3 extra transfers</td><td>-30 points</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-  <h2>3. Scoring System</h2>
+            <!-- Scoring system -->
+            <div *ngIf="selectedSection === 'scoring'">
+              <h3>Scoring system</h3>
+              <p>Points below are applied per driver / constructor as stated.</p>
 
-  <h3>Driver Grid Start Position</h3>
-  <table>
-    <tr><th>Position</th><th>Points</th></tr>
-    <tr><td>1st (Pole)</td><td>10</td></tr>
-    <tr><td>2nd</td><td>9</td></tr>
-    <tr><td>3rd</td><td>8</td></tr>
-    <tr><td>4th</td><td>7</td></tr>
-    <tr><td>5th</td><td>6</td></tr>
-    <tr><td>6th</td><td>5</td></tr>
-    <tr><td>7th</td><td>4</td></tr>
-    <tr><td>8th</td><td>3</td></tr>
-    <tr><td>9th</td><td>2</td></tr>
-    <tr><td>10th</td><td>1</td></tr>
-    <tr><td>11th and below</td><td>0</td></tr>
-  </table>
+              <div class="scoring-grid">
+                <!-- Grid start -->
+                <section class="scoring-card card mb-3">
+                  <div class="card-header"><strong>Driver grid start position</strong></div>
+                  <div class="card-body p-3">
+                    <div class="table-responsive">
+                      <table class="table table-sm scoring-table mb-0" role="table">
+                        <thead><tr><th>Position</th><th>Points</th></tr></thead>
+                        <tbody>
+                        <tr><td>1st (Pole)</td><td>10</td></tr>
+                        <tr><td>2nd</td><td>9</td></tr>
+                        <tr><td>3rd</td><td>8</td></tr>
+                        <tr><td>4th</td><td>7</td></tr>
+                        <tr><td>5th</td><td>6</td></tr>
+                        <tr><td>6th</td><td>5</td></tr>
+                        <tr><td>7th</td><td>4</td></tr>
+                        <tr><td>8th</td><td>3</td></tr>
+                        <tr><td>9th</td><td>2</td></tr>
+                        <tr><td>10th</td><td>1</td></tr>
+                        <tr><td>11th and below</td><td>0</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
 
-  <h3>Driver Final Race Position</h3>
-  <table>
-    <tr><th>Position</th><th>Points</th></tr>
-    <tr><td>1st</td><td>25</td></tr>
-    <tr><td>2nd</td><td>18</td></tr>
-    <tr><td>3rd</td><td>15</td></tr>
-    <tr><td>4th</td><td>12</td></tr>
-    <tr><td>5th</td><td>10</td></tr>
-    <tr><td>6th</td><td>8</td></tr>
-    <tr><td>7th</td><td>6</td></tr>
-    <tr><td>8th</td><td>4</td></tr>
-    <tr><td>9th</td><td>2</td></tr>
-    <tr><td>10th</td><td>1</td></tr>
-    <tr><td>11th and below</td><td>0</td></tr>
-    <tr><td>DNF (Accident, Disqualified, Withdrew)</td><td>-25</td></tr>
-  </table>
+                <!-- Final race -->
+                <section class="scoring-card card mb-3">
+                  <div class="card-header"><strong>Driver final race position</strong></div>
+                  <div class="card-body p-3">
+                    <div class="table-responsive">
+                      <table class="table table-sm scoring-table mb-0" role="table">
+                        <thead><tr><th>Position</th><th>Points</th></tr></thead>
+                        <tbody>
+                        <tr><td>1st</td><td>25</td></tr>
+                        <tr><td>2nd</td><td>18</td></tr>
+                        <tr><td>3rd</td><td>15</td></tr>
+                        <tr><td>4th</td><td>12</td></tr>
+                        <tr><td>5th</td><td>10</td></tr>
+                        <tr><td>6th</td><td>8</td></tr>
+                        <tr><td>7th</td><td>6</td></tr>
+                        <tr><td>8th</td><td>4</td></tr>
+                        <tr><td>9th</td><td>2</td></tr>
+                        <tr><td>10th</td><td>1</td></tr>
+                        <tr><td>11th and below</td><td>0</td></tr>
+                        <tr><td>DNF (Accident, Disqualified, Withdrew)</td><td>-25</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
 
-  <h3>Driver Additional Points</h3>
-  <table>
-    <tr><th>Event</th><th>Points</th></tr>
-    <tr><td>Each position gained</td><td>+1</td></tr>
-    <tr><td>Each position lost</td><td>-1</td></tr>
-    <tr><td>Fastest lap</td><td>+3</td></tr>
-  </table>
+                <!-- Additional -->
+                <section class="scoring-card card mb-3">
+                  <div class="card-header"><strong>Driver additional points</strong></div>
+                  <div class="card-body p-3">
+                    <div class="table-responsive">
+                      <table class="table table-sm scoring-table mb-0" role="table">
+                        <thead><tr><th>Event</th><th>Points</th></tr></thead>
+                        <tbody>
+                        <tr><td>Each position gained</td><td>+1</td></tr>
+                        <tr><td>Each position lost</td><td>-1</td></tr>
+                        <tr><td>Fastest lap</td><td>+3</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
 
-  <h3>Constructor Performance</h3>
-  <table>
-    <tr><th>Result</th><th>Points</th></tr>
-    <tr><td>Neither driver in top 10</td><td>-10</td></tr>
-    <tr><td>One driver in top 10</td><td>+10</td></tr>
-    <tr><td>Both drivers in top 10</td><td>+15</td></tr>
-    <tr><td>One driver in top 3</td><td>+20</td></tr>
-    <tr><td>Both drivers in top 3</td><td>+30</td></tr>
-  </table>
+                <!-- Constructor -->
+                <section class="scoring-card card mb-3">
+                  <div class="card-header"><strong>Constructor performance</strong></div>
+                  <div class="card-body p-3">
+                    <div class="table-responsive">
+                      <table class="table table-sm scoring-table mb-0" role="table">
+                        <thead><tr><th>Result</th><th>Points</th></tr></thead>
+                        <tbody>
+                        <tr><td>Neither driver in top 10</td><td>-10</td></tr>
+                        <tr><td>One driver in top 10</td><td>+10</td></tr>
+                        <tr><td>Both drivers in top 10</td><td>+15</td></tr>
+                        <tr><td>One driver in top 3</td><td>+20</td></tr>
+                        <tr><td>Both drivers in top 3</td><td>+30</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
 
-  <h3>Captain Bonus</h3>
-  <ul>
-    <li>One driver per race can be selected as <strong>Captain</strong>.</li>
-    <li>All points (positive or negative) for the captain are <strong>doubled</strong>.</li>
-  </ul>
+                <!-- Captain -->
+                <section class="scoring-card card mb-3">
+                  <div class="card-header"><strong>Captain bonus</strong></div>
+                  <div class="card-body p-3">
+                    <ul class="mb-0">
+                      <li>One driver per race can be selected as <strong>Captain</strong>.</li>
+                      <li>All points (positive or negative) for the captain are <strong>doubled</strong>.</li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
+            </div>
 
-  <h2>4. Powerups</h2>
-  <ul>
-    <li>Only one powerup can be used per race.</li>
-    <li>Each powerup can be used once per season.</li>
-  </ul>
+            <!-- Powerups -->
+            <div *ngIf="selectedSection === 'powerups'">
+              <h3>Powerups</h3>
+              <p>Each powerup can be used once per season. An user can use multiple powerups in a single race.</p>
+              <div class="table-responsive">
+                <table class="table table-sm mb-0">
+                  <thead><tr><th>Powerup</th><th>Effect</th></tr></thead>
+                  <tbody>
+                  <tr><td>DRS Enabled</td><td>Double points for one chosen driver</td></tr>
+                  <tr><td>Free Transfer Week</td><td>Negates penalty for extra transfers</td></tr>
+                  <tr><td>Escapist</td><td>Negates negative points from drivers</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-  <h3>Available Powerups</h3>
-  <table>
-    <tr><th>Powerup</th><th>Effect</th></tr>
-    <tr><td>DRS Enabled</td><td>Double points for one chosen driver</td></tr>
-    <tr><td>Free Transfer Week</td><td>Negates penalty for extra transfers</td></tr>
-    <tr><td>Escapist</td><td>Negates negative points from drivers</td></tr>
-  </table>
+            <!-- Leagues -->
+            <div *ngIf="selectedSection === 'leagues'">
+              <h3>League system</h3>
+              <ul>
+                <li><strong>Private leagues</strong>: created by users, others will have to send join requests.</li>
+                <li><strong>Public leagues</strong>: Open to all.</li>
+                <li>Manage teams and view league leaderboards from the Leagues area.</li>
+              </ul>
+            </div>
 
-  <h2>5. League System</h2>
-  <ul>
-    <li><strong>Private Leagues</strong>: Created by users, invite-only, max 5 per user.</li>
-    <li><strong>Public Leagues</strong>: Created by admins, open to all.</li>
-    <li>Leaderboards show total points and race-specific rankings.</li>
-  </ul>
+            <!-- AI -->
+            <div *ngIf="selectedSection === 'ai'">
+              <h3>AI predictions</h3>
+              <p>Earn AI usage by logging in daily for 7 days consecutively. Use AI to predict qualifying grid or race results. AI is trained historical data from 1981 until now, with source: <strong>jolpica-f1 API</strong>.</p>
+            </div>
 
-  <h2>6. AI Predictions</h2>
-  <ul>
-    <li>Earn AI usage by logging in daily (1 use per 14 consecutive days).</li>
-    <li>Use AI to predict qualifying grid or race results.</li>
-    <li>AI uses historical data from <strong>jolpica-f1 API</strong>.</li>
-  </ul>
-
-  <p class="note">Note: All rules are subject to change by admins. Please check this page regularly for updates.</p>
-
+            <p class="note mt-3">Note: Admins can update rules. Check this page for changes.</p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </div>
 </app-content-container>
