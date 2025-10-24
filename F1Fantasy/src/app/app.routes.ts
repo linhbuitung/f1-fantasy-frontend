@@ -257,6 +257,16 @@ export const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'admin',
+    loadComponent: async () => {
+      return import('./shared/admin-container/admin-container.component').then(
+        (m) => m.AdminContainerComponent
+      );
+    },
+    children: [
+    ]
+  },
 ]
 
 // export const routes: Routes = [

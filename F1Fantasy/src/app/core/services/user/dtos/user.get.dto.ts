@@ -14,4 +14,7 @@ export interface UserGetDto {
   driverName: string | null;
   countryId: string | null;
   countryName: string | null;
+  roles: Role[];
 }
+
+export type Role = 'Player' | 'Admin' | 'SuperAdmin';

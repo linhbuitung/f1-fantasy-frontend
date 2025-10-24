@@ -1,0 +1,16 @@
+<app-content-container>
+  <div class="admin-container">
+    <div class="text-white d-flex justify-content-between align-items-center">
+      <div class="fw-bold">Admin</div>
+      <div class="btn-group admin-switch" role="group" aria-label="Admin type">
+        <a routerLink="./imgs" routerLinkActive="active" class="btn btn-switch">Update Images</a>
+        <a routerLink="./public-league" routerLinkActive="active" class="btn btn-switch">Public League</a>
+        <a routerLink="./pickable-items" routerLinkActive="active" class="btn btn-switch">Pickable Items</a>
+      </div>
+    </div>
+
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</app-content-container>

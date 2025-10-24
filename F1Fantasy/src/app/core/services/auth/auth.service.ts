@@ -84,7 +84,7 @@ export class AuthService {
     this.http.get<UserGetDto>(`${environment.API_URL}/user/me`, { withCredentials: true })
       .subscribe({
         next: (profile) => {
-          this.userProfile.next(profile);
+          this.userProfile.next(profile)
           this.setLoggedIn(true);
         },
         error: () => {
