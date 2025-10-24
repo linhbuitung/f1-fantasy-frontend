@@ -1,0 +1,16 @@
+<app-content-container>
+  <div class="statistics-container">
+    <div class="text-white d-flex justify-content-between align-items-center">
+      <div class="fw-bold">Statistics</div>
+      <div class="btn-group stats-switch" role="group" aria-label="Statistics type">
+        <a routerLink="./drivers" routerLinkActive="active" class="btn btn-switch">Drivers</a>
+        <a routerLink="./constructors" routerLinkActive="active" class="btn btn-switch">Constructors</a>
+        <a routerLink="./players" routerLinkActive="active" class="btn btn-switch">Players</a>
+      </div>
+    </div>
+
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</app-content-container>

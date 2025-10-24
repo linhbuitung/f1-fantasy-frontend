@@ -61,9 +61,9 @@ export class CreateQualifyingComponent implements OnInit {
       circuits: this.askAi.getMlPickableCircuitsForQualifying()
     }).subscribe({
       next: ({ drivers, constructors, circuits }) => {
-        this.pickableDrivers = drivers || [];
-        this.pickableConstructors = constructors || [];
-        this.pickableCircuits = circuits || [];
+        this.pickableDrivers = drivers.sort((a, b) => a.givenName.localeCompare(b.givenName)) || [];
+        this.pickableConstructors = constructors.sort((a, b) => a.name.localeCompare(b.name)) || [];
+        this.pickableCircuits = circuits.sort((a, b) => a.circuitName.localeCompare(b.circuitName)) || [];
         // start with a single empty entry
         if ((this.entriesControl.value ?? []).length === 0) {
           this.addEntry();

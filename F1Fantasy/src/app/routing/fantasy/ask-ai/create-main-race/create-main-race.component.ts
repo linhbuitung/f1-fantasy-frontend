@@ -66,9 +66,9 @@ export class CreateMainRaceComponent implements OnInit {
       circuits: this.askAi.getMlPickableCircuitsForMainRace()
     }).subscribe({
       next: ({ drivers, constructors, circuits }) => {
-        this.pickableDrivers = drivers || [];
-        this.pickableConstructors = constructors || [];
-        this.pickableCircuits = circuits || [];
+        this.pickableDrivers = drivers.sort((a, b) => a.givenName.localeCompare(b.givenName)) || [];
+        this.pickableConstructors = constructors.sort((a, b) => a.name.localeCompare(b.name)) || [];
+        this.pickableCircuits = circuits.sort((a, b) => a.circuitName.localeCompare(b.circuitName)) || [];
         if (this.entriesControl.length === 0) this.addEntry();
         this.loading = false;
       },

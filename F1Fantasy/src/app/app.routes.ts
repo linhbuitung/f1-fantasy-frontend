@@ -217,7 +217,46 @@ export const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  }
+  },
+  {
+    path: 'statistic',
+    loadComponent: async () => {
+      return import('./shared/statistic-container/statistic-container.component').then(
+        (m) => m.StatisticContainerComponent
+      );
+    },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'drivers'
+      },
+      {
+        path: 'drivers',
+        loadComponent: async () => {
+          return import('./routing/statistic/driver-statistic/driver-statistic.component').then(
+            (m) => m.DriverStatisticComponent
+          );
+        }
+      },
+      {
+        path: 'constructors',
+        loadComponent: async () => {
+          return import('./routing/statistic/constructor-statistic/constructor-statistic.component').then(
+            (m) => m.ConstructorStatisticComponent
+          );
+        }
+      },
+      {
+        path: 'players',
+        loadComponent: async () => {
+          return import('./routing/statistic/player-statistic/player-statistic.component').then(
+            (m) => m.PlayerStatisticComponent
+          );
+        }
+      }
+    ]
+  },
 ]
 
 // export const routes: Routes = [
