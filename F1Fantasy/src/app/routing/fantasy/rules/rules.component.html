@@ -1,3 +1,116 @@
 <app-content-container>
-  <p>rules works!</p>
+
+  <h1>WooF1 Fantasy Game Rules</h1>
+
+  <h2>1. Team Composition</h2>
+  <ul>
+    <li>Each player selects <strong>5 drivers</strong> and <strong>2 constructors</strong>.</li>
+    <li>Total team value must not exceed <strong>$100</strong>.</li>
+    <li>Driver and constructor prices may change over time.</li>
+  </ul>
+
+  <h2>2. Transfer Rules</h2>
+  <ul>
+    <li>Each race week allows <strong>2 free transfers</strong>.</li>
+    <li>Additional transfers incur a <strong>10-point deduction</strong> per extra transfer.</li>
+    <li>Transfers are locked <strong>1 hour before qualifying</strong>.</li>
+  </ul>
+
+  <h3>Transfer Penalty Table</h3>
+  <table>
+    <tr><th>Exceeding Transfers</th><th>Deduction</th></tr>
+    <tr><td>1 extra transfer</td><td>-10 points</td></tr>
+    <tr><td>2 extra transfers</td><td>-20 points</td></tr>
+    <tr><td>3 extra transfers</td><td>-30 points</td></tr>
+  </table>
+
+  <h2>3. Scoring System</h2>
+
+  <h3>Driver Grid Start Position</h3>
+  <table>
+    <tr><th>Position</th><th>Points</th></tr>
+    <tr><td>1st (Pole)</td><td>10</td></tr>
+    <tr><td>2nd</td><td>9</td></tr>
+    <tr><td>3rd</td><td>8</td></tr>
+    <tr><td>4th</td><td>7</td></tr>
+    <tr><td>5th</td><td>6</td></tr>
+    <tr><td>6th</td><td>5</td></tr>
+    <tr><td>7th</td><td>4</td></tr>
+    <tr><td>8th</td><td>3</td></tr>
+    <tr><td>9th</td><td>2</td></tr>
+    <tr><td>10th</td><td>1</td></tr>
+    <tr><td>11th and below</td><td>0</td></tr>
+  </table>
+
+  <h3>Driver Final Race Position</h3>
+  <table>
+    <tr><th>Position</th><th>Points</th></tr>
+    <tr><td>1st</td><td>25</td></tr>
+    <tr><td>2nd</td><td>18</td></tr>
+    <tr><td>3rd</td><td>15</td></tr>
+    <tr><td>4th</td><td>12</td></tr>
+    <tr><td>5th</td><td>10</td></tr>
+    <tr><td>6th</td><td>8</td></tr>
+    <tr><td>7th</td><td>6</td></tr>
+    <tr><td>8th</td><td>4</td></tr>
+    <tr><td>9th</td><td>2</td></tr>
+    <tr><td>10th</td><td>1</td></tr>
+    <tr><td>11th and below</td><td>0</td></tr>
+    <tr><td>DNF (Accident, Disqualified, Withdrew)</td><td>-25</td></tr>
+  </table>
+
+  <h3>Driver Additional Points</h3>
+  <table>
+    <tr><th>Event</th><th>Points</th></tr>
+    <tr><td>Each position gained</td><td>+1</td></tr>
+    <tr><td>Each position lost</td><td>-1</td></tr>
+    <tr><td>Fastest lap</td><td>+3</td></tr>
+  </table>
+
+  <h3>Constructor Performance</h3>
+  <table>
+    <tr><th>Result</th><th>Points</th></tr>
+    <tr><td>Neither driver in top 10</td><td>-10</td></tr>
+    <tr><td>One driver in top 10</td><td>+10</td></tr>
+    <tr><td>Both drivers in top 10</td><td>+15</td></tr>
+    <tr><td>One driver in top 3</td><td>+20</td></tr>
+    <tr><td>Both drivers in top 3</td><td>+30</td></tr>
+  </table>
+
+  <h3>Captain Bonus</h3>
+  <ul>
+    <li>One driver per race can be selected as <strong>Captain</strong>.</li>
+    <li>All points (positive or negative) for the captain are <strong>doubled</strong>.</li>
+  </ul>
+
+  <h2>4. Powerups</h2>
+  <ul>
+    <li>Only one powerup can be used per race.</li>
+    <li>Each powerup can be used once per season.</li>
+  </ul>
+
+  <h3>Available Powerups</h3>
+  <table>
+    <tr><th>Powerup</th><th>Effect</th></tr>
+    <tr><td>DRS Enabled</td><td>Double points for one chosen driver</td></tr>
+    <tr><td>Free Transfer Week</td><td>Negates penalty for extra transfers</td></tr>
+    <tr><td>Escapist</td><td>Negates negative points from drivers</td></tr>
+  </table>
+
+  <h2>5. League System</h2>
+  <ul>
+    <li><strong>Private Leagues</strong>: Created by users, invite-only, max 5 per user.</li>
+    <li><strong>Public Leagues</strong>: Created by admins, open to all.</li>
+    <li>Leaderboards show total points and race-specific rankings.</li>
+  </ul>
+
+  <h2>6. AI Predictions</h2>
+  <ul>
+    <li>Earn AI usage by logging in daily (1 use per 14 consecutive days).</li>
+    <li>Use AI to predict qualifying grid or race results.</li>
+    <li>AI uses historical data from <strong>jolpica-f1 API</strong>.</li>
+  </ul>
+
+  <p class="note">Note: All rules are subject to change by admins. Please check this page regularly for updates.</p>
+
 </app-content-container>
