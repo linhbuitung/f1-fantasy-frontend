@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { LeagueService } from '../../../../core/services/leagues/league.service';
 import { LeagueGetDto } from '../../../../core/services/leagues/dtos/league.get.dto';
 import { LeagueSearchResultDto } from '../../../../core/services/leagues/dtos/league-search-result.dto';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ContentContainerComponent } from '../../../../shared/content-container/content-container.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -34,7 +34,7 @@ export class LeagueFindComponent implements OnInit {
     private authService: AuthService
   ) {
     this.searchForm = this.fb.group({
-      query: ['', [Validators.required, Validators.minLength(2)]]
+      query: ['']
     });
   }
 
@@ -66,7 +66,7 @@ export class LeagueFindComponent implements OnInit {
           this.loading = false;
         },
         error: () => {
-          this.error = 'Failed to search leagues. Please try again.';
+          this.error = 'Failed to onSearch leagues. Please try again.';
           this.loading = false;
         }
       });

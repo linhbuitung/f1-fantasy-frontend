@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import {profileOwnerGuard} from './core/guards/profile-owner.guard';
 import {authGuard} from './core/guards/auth.guard';
 import {leagueOwnerGuard} from './core/guards/league-owner.guard';
+import {adminGuard} from './core/guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -259,12 +260,74 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [authGuard, adminGuard],
     loadComponent: async () => {
       return import('./shared/admin-container/admin-container.component').then(
         (m) => m.AdminContainerComponent
       );
     },
     children: [
+      {
+        path: 'imgs',
+        loadComponent: async () => {
+          return import('./routing/admin/imgs-update/update-img-sidebar/update-img-sidebar.component').then(
+            (m) => m.UpdateImgSidebarComponent
+          );
+        },
+        children: [
+          {
+            path: 'drivers',
+            loadComponent: async () => {
+              return import('./routing/admin/imgs-update/driver-img-manager/driver-img-manager.component').then(m => m.DriverImgManagerComponent);
+            }
+          },
+          {
+            path: 'circuits',
+            loadComponent: async () => {
+              return import('./routing/admin/imgs-update/circuit-img-manager/circuit-img-manager.component').then(m => m.CircuitImgManagerComponent);
+            }
+          },
+          {
+            path: 'constructors',
+            loadComponent: async () => {
+              return import('./routing/admin/imgs-update/constructor-img-manager/constructor-img-manager.component').then(m => m.ConstructorImgManagerComponent);
+            }
+          },
+          {
+            path: 'powerups',
+            loadComponent: async () => {
+              return import('./routing/admin/imgs-update/powerup-img-manager/powerup-img-manager.component').then(m => m.PowerupImgManagerComponent);
+            }
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'drivers'
+          }
+        ]
+      },
+      {
+        path: 'public-league',
+        loadComponent: async () => {
+          return import('./routing/admin/public-league/public-league-sidebar/public-league-sidebar.component').then(
+            (m) => m.PublicLeagueSidebarComponent
+          );
+        },
+        children: [
+          {
+            path: 'manage',
+            loadComponent: async () => {
+              return import('./routing/admin/public-league/public-league-manager/public-league-manager.component').then(m => m.PublicLeagueManagerComponent);
+            }
+          },
+          {
+            path: 'create',
+            loadComponent: async () => {
+              return import('./routing/admin/public-league/public-league-create/public-league-create.component').then(m => m.PublicLeagueCreateComponent);
+            }
+          }
+        ]
+      },
     ]
   },
 ]
