@@ -77,15 +77,28 @@
 }
 
 .btn-danger {
-  background: var(--f1-danger, #dc3545);
+  background: var(--f1-primary-red, #dc3545);
   color: var(--f1-white);
-  border: 2px solid var(--f1-danger, #dc3545);
+  border: 2px solid var(--f1-primary-red, #dc3545);
 }
 .btn-danger:hover,
 .btn-danger:focus {
   background: var(--f1-dark-red, #b52a37);
   color: var(--f1-white);
   border-color: var(--f1-dark-red, #b52a37);
+}
+
+.btn-success {
+  background: var(--f1-light-red, #28a745);
+  color: var(--f1-white);
+  border: 2px solid var(--f1-light-red, #28a745);
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  background: var(--f1-dark-red, #218838);
+  color: var(--f1-white);
+  border-color: var(--f1-dark-red, #218838);
 }
 
 .btn-outline-secondary {

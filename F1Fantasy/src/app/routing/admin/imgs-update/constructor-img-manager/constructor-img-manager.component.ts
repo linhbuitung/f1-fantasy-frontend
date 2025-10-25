@@ -6,7 +6,7 @@ import { ConstructorService } from '../../../../core/services/static-data/constr
 import { AdminService } from '../../../../core/services/admin/admin.service';
 import { ConstructorGetDto, ConstructorSearchResultDto } from '../../../../core/services/static-data/dtos/constructor.get.dto';
 import { finalize } from 'rxjs/operators';
-import { ImgUpdateDto } from '../../../../core/services/admin/dtos/img-update.dto';
+import { ImgUpdateDto } from '../../../../core/services/admin/dtos/img.update.dto';
 import { environment } from '../../../../../environments/environment';
 
 @Component({

@@ -3,13 +3,18 @@ import {HttpClient} from '@angular/common/http';
 import {DriverGetDto} from '../static-data/dtos/driver.get.dto';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
-import {ImgUpdateDto} from './dtos/img-update.dto';
+import {ImgUpdateDto} from './dtos/img.update.dto';
 import {ConstructorGetDto} from '../static-data/dtos/constructor.get.dto';
 import {CircuitGetDto} from '../static-data/dtos/circuit.get.dto';
 import {PowerupGetDto} from '../static-data/dtos/powerup.get.dto';
 import {LeagueCreateDto} from '../leagues/dtos/league.create.dto';
 import {LeagueGetDto} from '../leagues/dtos/league.get.dto';
 import {LeagueUpdateDto} from '../leagues/dtos/league.update.dto';
+import {SeasonGetDto} from './dtos/season.get.dto';
+import {PickableItemUpdateDto} from './dtos/pickable-item.update.dto';
+import {PickableItemGetDto} from '../static-data/dtos/pickable-items.get.dto';
+import {ApplicationUserForAdminUpdateDto} from './dtos/user-admin.update.dto';
+import {ApplicationUserForAdminGetDto} from './dtos/user-admin.get.dto';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
@@ -82,5 +87,43 @@ export class AdminService {
       { withCredentials: true }
     );
   }
+
+  StartNewSeason(year: number): Observable<SeasonGetDto> {
+    return this.http.post<SeasonGetDto>(
+      `${environment.API_URL}/admin/season/start/${year}`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  GetActiveSeason(): Observable<SeasonGetDto> {
+    return this.http.get<SeasonGetDto>(
+      `${environment.API_URL}/admin/season/active`,
+      { withCredentials: true }
+    );
+  }
+
+  DeactivateActiveSeason(): Observable<void> {
+    return this.http.post<void>(
+      `${environment.API_URL}/admin/season/active/deactivate`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  updatePickableItems(dto: PickableItemUpdateDto): Observable<PickableItemGetDto> {
+    return this.http.put<PickableItemGetDto>(
+        `${environment.API_URL}/admin/pickable-items`,
+        dto,
+        { withCredentials: true }
+      );
+  }
+  updateUserRoles(userId: number, dto: ApplicationUserForAdminUpdateDto): Observable<ApplicationUserForAdminGetDto> {
+    return this.http.put<ApplicationUserForAdminGetDto>(
+        `${environment.API_URL}/admin/user/${userId}/update-roles`,
+        dto,
+        { withCredentials: true }
+      );
+    }
 
 }

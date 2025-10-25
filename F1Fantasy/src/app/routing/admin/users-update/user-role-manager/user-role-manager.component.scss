@@ -1,40 +1,14 @@
 :host { display:block; width:100%; }
-
-.driver-img-manager { margin-top: 1rem; }
-
+.user-role-manager { margin-top: 1rem; }
 .sidebar-card, .content-card { border-radius: 0.8rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-
-.driver-item {
+.user-item {
   padding: 0.5rem;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background .08s;
 }
-.driver-item:hover { background: rgba(0,0,0,0.03); }
-.driver-item.selected { background: var(--f1-primary-red); color: var(--f1-white); }
-
-.thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 0.35rem; }
-
-.current-img { height: 6rem; object-fit: contain; border-radius: 0.5rem; }
-
-.crop-area { max-width: 420px; }
-.cropped-preview { width: 96px; height: 96px; object-fit: cover; border-radius: 0.3rem; border: 1px solid rgba(0,0,0,0.06); }
-
-.btn-upload{
-  background: var(--f1-light-red);
-  color: var(--f1-white);
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.5rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .12s, box-shadow .12s;
-}
-
-.btn-upload:hover, .btn-upload:focus {
-  background: var(--f1-dark-red);
-  box-shadow: 0 6px 16px rgba(233,30,45,0.08);
-}
+.user-item:hover { background: rgba(0,0,0,0.03); }
+.user-item.selected { background: var(--f1-primary-red); color: var(--f1-white); }
 
 .btn-search{
   background: var(--f1-light-red);
@@ -56,4 +30,36 @@
   background-color: var(--f1-dark-red);
   color: var(--f1-white);
   font-weight: 700;
+}
+
+.btn-save{
+  background: var(--f1-light-red);
+  color: var(--f1-white);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .12s, box-shadow .12s;
+}
+.btn-save:hover, .btn-save:focus {
+  background: var(--f1-dark-red);
+  box-shadow: 0 6px 16px rgba(233,30,45,0.08);
+}
+
+.btn-reset{
+  background: var(--f1-black);
+  color: var(--f1-white);
+  border: solid 2px var(--f1-black);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .12s, box-shadow .12s;
+}
+
+.btn-reset:hover, .btn-cancel:focus {
+  background: var(--f1-white);
+  color: var(--f1-black);
+  box-shadow: 0 6px 16px rgba(233,30,45,0.08);
 }

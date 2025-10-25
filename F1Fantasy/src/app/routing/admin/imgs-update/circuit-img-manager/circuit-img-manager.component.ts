@@ -6,7 +6,7 @@ import { CircuitService } from '../../../../core/services/static-data/circuit.se
 import { AdminService } from '../../../../core/services/admin/admin.service';
 import { CircuitGetDto, CircuitSearchResultDto } from '../../../../core/services/static-data/dtos/circuit.get.dto';
 import { finalize } from 'rxjs/operators';
-import { ImgUpdateDto } from '../../../../core/services/admin/dtos/img-update.dto';
+import { ImgUpdateDto } from '../../../../core/services/admin/dtos/img.update.dto';
 import { environment } from '../../../../../environments/environment';
 
 @Component({

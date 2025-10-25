@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
 import { PowerupService } from '../../../../core/services/static-data/powerup.service';
 import { AdminService } from '../../../../core/services/admin/admin.service';
 import { PowerupGetDto } from '../../../../core/services/static-data/dtos/powerup.get.dto';
 import { finalize } from 'rxjs/operators';
-import { ImgUpdateDto } from '../../../../core/services/admin/dtos/img-update.dto';
+import { ImgUpdateDto } from '../../../../core/services/admin/dtos/img.update.dto';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-powerup-img-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, ImageCropperComponent, NgOptimizedImage],
+  imports: [CommonModule, FormsModule, ImageCropperComponent],
   templateUrl: './powerup-img-manager.component.html',
   styleUrl: './powerup-img-manager.component.scss'
 })

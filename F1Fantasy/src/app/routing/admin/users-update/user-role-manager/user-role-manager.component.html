@@ -1,0 +1,96 @@
+  <div class="user-role-manager">
+    <div class="row gx-4">
+      <aside class="col-lg-4 col-12">
+        <div class="card sidebar-card">
+          <div class="card-header">Find user</div>
+          <div class="card-body">
+            <form [formGroup]="searchForm" (submit)="$event.preventDefault(); onSearch()">
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Search display name (min 2 chars)" formControlName="query" />
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-search btn-sm" type="button" (click)="onSearch()" [disabled]="searching">Search</button>
+              </div>
+            </form>
+
+            <div class="mt-3">
+              <div *ngIf="users?.length === 0" class="text-muted small">No results</div>
+              <div *ngFor="let u of users" class="user-item" [class.selected]="selectedUser?.id === u.id" (click)="selectUser(u)">
+                <div>
+                  <div class="fw-semibold">{{ u.displayName || u.email }}</div>
+                  <div class="small text-muted">{{ u.email }}</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+      <main class="col-lg-8 col-12">
+        <div class="card content-card">
+          <div class="card-header">Manage user roles</div>
+          <div class="card-body">
+            <div *ngIf="!selectedUser" class="text-muted">Select a user from the left to manage roles.</div>
+
+            <div *ngIf="selectedUser">
+              <div class="mb-3">
+                <div class="fw-semibold">{{ selectedUser.displayName || selectedUser.email }}</div>
+                <div class="small text-muted mb-2">Email: {{ selectedUser.email }}</div>
+                <div class="small text-muted mb-2">Current roles: {{ selectedUser.roles?.join(', ') }}</div>
+              </div>
+
+              <div class="mb-3">
+                <div class="fw-semibold mb-2">Roles</div>
+
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="role-player" [checked]="true" disabled />
+                  <label class="form-check-label" for="role-player">Player (default)</label>
+                </div>
+
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="role-admin"
+                         [checked]="rolesState.Admin" (change)="toggleRole('Admin')" [disabled]="selectedIsSuperAdmin" />
+                  <label class="form-check-label" for="role-admin">Admin</label>
+                </div>
+
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="role-super"
+                         [checked]="rolesState.SuperAdmin" (change)="toggleRole('SuperAdmin')" [disabled]="selectedIsSuperAdmin" />
+                  <label class="form-check-label" for="role-super">SuperAdmin</label>
+                </div>
+
+                <div *ngIf="selectedIsSuperAdmin" class="alert alert-warning mt-2">
+                  This user is a SuperAdmin and cannot be modified.
+                </div>
+              </div>
+
+              <div class="d-flex gap-2">
+                <button class="btn btn-save" (click)="confirmSave()" [disabled]="saving || selectedIsSuperAdmin">
+                  {{ saving ? 'Saving...' : 'Save roles' }}
+                </button>
+                <button class="btn btn-reset" (click)="selectUser(selectedUser)">Reset</button>
+              </div>
+
+              <div *ngIf="serverError" class="alert alert-danger mt-3">{{ serverError }}</div>
+              <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <app-confirm-modal
+      [show]="showSaveConfirm"
+      title="Confirm update"
+      [message]="'Update roles for ' + (selectedUser?.displayName || selectedUser?.email) + '?'"
+      confirmIcon="fa-solid fa-clipboard-check"
+      confirmBtnClass="btn-success"
+      confirmText="Update"
+      cancelText="Cancel"
+      (confirm)="save()"
+      (cancel)="showSaveConfirm = false"
+      [loading]="saving"
+    ></app-confirm-modal>
+  </div>

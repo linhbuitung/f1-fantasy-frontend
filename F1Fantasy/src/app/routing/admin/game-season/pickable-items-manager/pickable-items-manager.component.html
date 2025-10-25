@@ -1,1 +1,115 @@
-<p>pickable-items-manager works!</p>
+  <div class="pickable-items-manager">
+    <div class="row gx-4">
+      <aside class="col-lg-4 col-12">
+        <div class="card sidebar-card mb-3">
+          <div class="card-header">Search drivers</div>
+          <div class="card-body">
+            <form [formGroup]="driverSearchForm" (submit)="$event.preventDefault(); searchDrivers()">
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Search drivers (min 2 chars)" formControlName="query" />
+              </div>
+              <div class="d-grid mb-2">
+                <button class="btn btn-search btn-sm" type="button" (click)="searchDrivers()" [disabled]="searchingDrivers">Search</button>
+              </div>
+            </form>
+
+            <div *ngIf="driverResults?.length === 0" class="text-muted small">No results</div>
+            <div *ngFor="let d of driverResults" class="result-item d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <div class="fw-semibold">{{ d.givenName }} {{ d.familyName }}</div>
+                <div class="small text-muted">{{ d.code }} • {{ d.price }}$</div>
+              </div>
+              <div>
+                <button class="btn btn-sm btn-add" (click)="addDriverToPickable(d)" [disabled]="isDriverPickable(d.id)">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card sidebar-card">
+          <div class="card-header">Search constructors</div>
+          <div class="card-body">
+            <form [formGroup]="constructorSearchForm" (submit)="$event.preventDefault(); searchConstructors()">
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Search constructors (min 2 chars)" formControlName="query" />
+              </div>
+              <div class="d-grid mb-2">
+                <button class="btn btn-search btn-sm" type="button" (click)="searchConstructors()" [disabled]="searchingConstructors">Search</button>
+              </div>
+            </form>
+
+            <div *ngIf="constructorResults?.length === 0" class="text-muted small">No results</div>
+            <div *ngFor="let c of constructorResults" class="result-item d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <div class="fw-semibold">{{ c.name }}</div>
+                <div class="small text-muted">{{ c.code }} • {{ c.price }}$</div>
+              </div>
+              <div>
+                <button class="btn btn-sm btn-add" (click)="addConstructorToPickable(c)" [disabled]="isConstructorPickable(c.id)">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="col-lg-8 col-12">
+        <div class="card content-card">
+          <div class="card-header">Pickable items</div>
+          <div class="card-body">
+            <div *ngIf="!pickable" class="text-muted">Loading pickable items…</div>
+
+            <div *ngIf="pickable">
+              <div class="mb-3  pickable-section">
+                <div class="fw-semibold mb-1 pickable-header">Pickable drivers</div>
+                <div *ngIf="(pickable.drivers?.length ?? 0) === 0" class="text-muted small">No pickable drivers</div>
+                <div *ngFor="let d of pickable.drivers" class="d-flex justify-content-between align-items-center mb-2  pickable-item">
+                  <div>
+                    <div class="fw-semibold">{{ d.givenName }} {{ d.familyName }}</div>
+                    <div class="small text-muted">{{ d.code }} • {{ d.price }}$</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-sm btn-remove" (click)="removeDriverFromPickable(d.id)">Remove</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3 pickable-section">
+                <div class="fw-semibold mb-1 pickable-header">Pickable constructors</div>
+                <div *ngIf="(pickable.constructors?.length ?? 0) === 0" class="text-muted small">No pickable constructors</div>
+                <div *ngFor="let c of pickable.constructors" class="d-flex justify-content-between align-items-center mb-2 pickable-item">
+                  <div>
+                    <div class="fw-semibold">{{ c.name }}</div>
+                    <div class="small text-muted">{{ c.code }} • {{ c.price }}$</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-sm btn-remove" (click)="removeConstructorFromPickable(c.id)">Remove</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex gap-2">
+                <button class="btn btn-save" (click)="confirmSave()" [disabled]="saving">Save changes</button>
+                <button class="btn btn-cancel" (click)="loadPickableItems()" [disabled]="loading">Reload</button>
+              </div>
+
+              <div *ngIf="serverError" class="alert alert-danger mt-3">{{ serverError }}</div>
+              <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <app-confirm-modal
+      [show]="showSaveConfirm"
+      title="Confirm save"
+      [message]="'Save updated pickable items? All changes will be applied.'"
+      confirmIcon="fa-solid fa-clipboard-check"
+      confirmBtnClass="btn-success"
+      confirmText="Save"
+      cancelText="Cancel"
+      (confirm)="save()"
+      (cancel)="showSaveConfirm = false"
+      [loading]="saving"
+    ></app-confirm-modal>
+  </div>

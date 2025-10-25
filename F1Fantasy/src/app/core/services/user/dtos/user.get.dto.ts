@@ -1,3 +1,4 @@
+
 export interface UserGetDto {
   id: number;
   displayName: string | null;
@@ -18,3 +19,10 @@ export interface UserGetDto {
 }
 
 export type Role = 'Player' | 'Admin' | 'SuperAdmin';
+
+export interface UserSearchResultDto {
+  items:  UserGetDto[];
+  total: number;
+  pageNum: number;
+  pageSize: number;
+}
