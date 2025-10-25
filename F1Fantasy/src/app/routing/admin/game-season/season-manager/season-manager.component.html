@@ -1,0 +1,64 @@
+<div class="season-manager">
+  <div class="card">
+    <div class="card-header ">
+      <div class="fw-bold">Season Manager</div>
+    </div>
+    <div class="card-body">
+      <div *ngIf="loading" class="text-center mb-3">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+
+      <div *ngIf="serverError" class="alert alert-danger">{{ serverError }}</div>
+      <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+      <div class="mb-3">
+        <div *ngIf="activeSeason; else noSeason">
+          <div class="fw-semibold">Active season: {{ activeSeason.year }}</div>
+          <div class="small text-muted">Id: {{ activeSeason.id }}</div>
+        </div>
+        <ng-template #noSeason>
+          <div class="text-muted">No active season.</div>
+        </ng-template>
+      </div>
+
+      <div *ngIf="isSuperAdmin" class="d-flex gap-2 align-items-center">
+        <div class="input-group" style="max-width:10rem;">
+          <input type="number" class="form-control" [(ngModel)]="startYear" />
+          <button class="btn btn-start-season" type="button" (click)="confirmStart()" [disabled]="loading || !startYear || activeSeason">
+            Start
+          </button>
+        </div>
+
+        <button class="btn btn-deactivate" type="button" (click)="confirmDeactivate()" [disabled]="loading || !activeSeason">
+          Deactivate current
+        </button>
+      </div>
+
+      <div *ngIf="!isSuperAdmin" class="text-muted small mt-2">Only SuperAdmin can start or deactivate seasons.</div>
+    </div>
+  </div>
+</div>
+
+<app-confirm-modal
+  [show]="showStartConfirm"
+  title="Start new season"
+  [message]="'Start season for year ' + startYear + '?'"
+  confirmIcon="fa-solid fa-clipboard-check"
+  confirmBtnClass="btn-success"
+  confirmText="Start"
+  cancelText="Cancel"
+  (confirm)="onConfirmStart()"
+  (cancel)="showStartConfirm = false"
+  [loading]="loading"
+></app-confirm-modal>
+
+<app-confirm-modal
+  [show]="showDeactivateConfirm"
+  title="Deactivate active season"
+  [message]="'Deactivate active season ' + (activeSeason?.year ?? '') + '? This cannot be undone.'"
+  confirmText="Deactivate"
+  cancelText="Cancel"
+  (confirm)="onConfirmDeactivate()"
+  (cancel)="showDeactivateConfirm = false"
+  [loading]="loading"
+></app-confirm-modal>

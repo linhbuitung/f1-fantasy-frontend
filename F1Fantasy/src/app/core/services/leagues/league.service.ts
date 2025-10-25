@@ -58,6 +58,7 @@ export class LeagueService {
     );
   }
 
+
   handleJoinRequest(ownerId: number, leagueId: number, dto: JoinRequestUpdateDto): Observable<JoinRequestGetDto> {
     return this.http.put<JoinRequestGetDto>(
       `${environment.API_URL}/user/${ownerId}/league/${leagueId}/handle-join-request`,
@@ -73,14 +74,40 @@ export class LeagueService {
     );
   }
 
-  SearchLeagues(query: string, pageNum: number = 1, pageSize: number = 10): Observable<LeagueSearchResultDto> {
-    const params = new HttpParams()
-      .set('query', query)
-      .set('pageNum', pageNum)
-      .set('pageSize', pageSize);
+  SearchLeagues(query?: string, pageNum: number = 1, pageSize: number = 10): Observable<LeagueSearchResultDto> {
+    var params: HttpParams;
+    if (query) {
+      params = new HttpParams()
+        .set('query', query)
+        .set('pageNum', pageNum)
+        .set('pageSize', pageSize);
+    } else{
+      params = new HttpParams()
+        .set('pageNum', pageNum)
+        .set('pageSize', pageSize);
+    }
 
     return this.http.get<LeagueSearchResultDto>(
-      `${environment.API_URL}/league/full-text-search`,
+      `${environment.API_URL}/league/search`,
+      { params, withCredentials: true }
+    );
+  }
+
+  SearchPublicLeagues(query?: string, pageNum: number = 1, pageSize: number = 10): Observable<LeagueSearchResultDto> {
+    var params: HttpParams;
+    if (query) {
+      params = new HttpParams()
+        .set('query', query)
+        .set('pageNum', pageNum)
+        .set('pageSize', pageSize);
+    } else{
+      params = new HttpParams()
+        .set('pageNum', pageNum)
+        .set('pageSize', pageSize);
+    }
+
+    return this.http.get<LeagueSearchResultDto>(
+      `${environment.API_URL}/league/public/search`,
       { params, withCredentials: true }
     );
   }

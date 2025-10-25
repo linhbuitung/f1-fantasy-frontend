@@ -69,7 +69,6 @@ export class DriverStatisticComponent implements OnInit {
         )
       )
     );
-    console.log(this.loading);
 
     // ensure subscription happens before emitting initial value
     this.loading = true;
@@ -84,8 +83,6 @@ export class DriverStatisticComponent implements OnInit {
   }
 
   private loadMetric(k: MetricKey): Observable<DriverStatisticGetDto[]> {
-    console.log('load metric', k);
-
     switch (k) {
       case 'total':
         return this.svc.getDriversWithTotalFantasyPointsInCurrentSeason() as Observable<DriverWithTotalFantasyPointScoredGetDto[]>;

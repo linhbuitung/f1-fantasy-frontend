@@ -1,4 +1,5 @@
-﻿export interface DriverGetDto {
+﻿
+export interface DriverGetDto {
   id: number;
   givenName: string;
   familyName: string;
@@ -7,4 +8,11 @@
   code: string;
   price: number;
   imgUrl?: string;
+}
+
+export interface DriverSearchResultDto {
+  items:  DriverGetDto[];
+  total: number;
+  pageNum: number;
+  pageSize: number;
 }

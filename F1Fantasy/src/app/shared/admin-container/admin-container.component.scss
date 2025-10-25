@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.admin-container {
+  width: 100%;
+
+  .admin-switch {
+    display: inline-flex;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    box-shadow: none;
+  }
+
+  .btn-switch {
+    min-width: 10rem;
+    padding: 0.6rem 1rem;
+    font-weight: 700;
+    color: var(--f1-white);
+    background: var(--f1-dark-red);
+    border: none;
+  }
+
+  .btn-switch.active {
+    background: var(--f1-light-red );
+  }
+
+  @media (max-width: 800px) {
+    .btn-switch { min-width: 7rem; font-size: 0.95rem; }
+    .card { margin: 0.5rem; }
+  }
+}

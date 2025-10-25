@@ -1,0 +1,83 @@
+<div class="driver-img-manager">
+  <div class="row gx-4">
+    <aside class="col-lg-4 col-12">
+      <div class="card sidebar-card">
+        <div class="card-header">Find driver</div>
+        <div class="card-body">
+          <form  [formGroup]="searchForm" (submit)="$event.preventDefault(); onSearch()">
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Search by name or code" formControlName="query" />
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-search btn-sm" type="button" (click)="onSearch()">Search</button>
+            </div>
+          </form>
+
+          <div class="mt-3">
+            <div *ngIf="drivers?.length === 0" class="text-muted small">No results</div>
+            <div *ngFor="let d of drivers" class="driver-item" [class.selected]="selectedDriver?.id === d.id" (click)="selectDriver(d)">
+              <div class="d-flex gap-2 align-items-center">
+                <img *ngIf="d.imgUrl; else def" [src]="d.imgUrl" alt="{{ d.givenName }}" class="thumb" />
+                <ng-template #def><img src="assets/driver-icon.svg" alt="driver" class="thumb" /></ng-template>
+                <div>
+                  <div class="fw-semibold">{{ d.givenName }} {{ d.familyName }}</div>
+                  <div class="small text-muted">{{ d.code }} • {{ d.price }}$</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="col-lg-8 col-12">
+      <div class="card content-card">
+        <div class="card-header">Update driver image</div>
+        <div class="card-body">
+          <div *ngIf="!selectedDriver" class="text-muted">Select a driver from the left to start.</div>
+
+          <div *ngIf="selectedDriver">
+            <div class="d-flex gap-3 mb-3 align-items-start">
+              <div>
+                <div class="fw-semibold mb-1">{{ selectedDriver.givenName }} {{ selectedDriver.familyName }}</div>
+                <div class="small text-muted mb-2">Code: {{ selectedDriver.code }}</div>
+                <img *ngIf="selectedDriver.imgUrl" [src]="selectedDriver.imgUrl" alt="current" class="current-img mb-2" />
+              </div>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+              <label class="form-label">Choose image (jpg/jpeg/png, max 5 MB)</label>
+              <input type="file" accept=".jpg,.jpeg,.png" (change)="onFileChange($event)" />
+            </div>
+
+            <div *ngIf="imageBase64" class="crop-area mb-3">
+              <image-cropper
+                [imageBase64]="imageBase64"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="1"
+                [resizeToWidth]="2048"
+                [imageQuality]="1"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+              ></image-cropper>
+              <div *ngIf="croppedDataUrl" class="mt-2">
+                <div class="fw-semibold small">Cropped preview</div>
+                <img [src]="croppedDataUrl" class="cropped-preview" alt="cropped preview" />
+              </div>
+            </div>
+
+            <div class="mt-3 d-flex gap-2">
+              <button class="btn btn-upload" (click)="upload()" [disabled]="uploading">
+                {{ uploading ? 'Uploading...' : 'Upload cropped image' }}
+              </button>
+              <button class="btn btn-outline-secondary" (click)="selectDriver(selectedDriver)">Reset</button>
+            </div>
+
+            <div *ngIf="serverError" class="alert alert-danger mt-3">{{ serverError }}</div>
+            <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

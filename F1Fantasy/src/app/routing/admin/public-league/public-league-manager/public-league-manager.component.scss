@@ -1,0 +1,92 @@
+:host { display:block; width:100%; }
+
+.public-league-manager{
+  margin-top: 1rem;
+}
+.card-header{
+  background-color: var(--f1-dark-red);
+  color: var(--f1-white);
+  font-weight: 700;
+}
+
+.btn-edit{
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid var(--f1-light-red);
+  color: var(--f1-white);
+  background: var(--f1-light-red);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn-edit:hover,
+.btn-edit:focus {
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  border-color: var(--f1-dark-red);
+}
+
+.btn-save{
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid var(--f1-primary-red);
+  color: var(--f1-white);
+  background: var(--f1-primary-red);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-save:hover,
+.btn-save:focus {
+  background: var(--f1-dark-red);
+  color: var(--f1-white);
+  border-color: var(--f1-dark-red);
+}
+
+.btn-search{
+  background: var(--f1-light-red);
+  color: var(--f1-white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .12s, box-shadow .12s;
+}
+
+.btn-search:hover, .btn-search:focus {
+  background: var(--f1-dark-red);
+  box-shadow: 0 6px 16px rgba(233,30,45,0.08);
+}
+
+.btn-delete {
+  border: 2px solid var(--f1-danger, #dc3545);
+  color: var(--f1-danger, #dc3545);
+  background: var(--f1-white);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  min-width: 120px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-delete:hover,
+.btn-delete:focus {
+  background: var(--f1-danger, #dc3545);
+  color: var(--f1-white);
+  border-color: var(--f1-danger, #dc3545);
+}
+
+.close-btn{
+  border: 2px solid var(--f1-black, #dc3545);
+  color: var(--f1-black, #dc3545);
+  background: var(--f1-white);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  min-width: 120px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  background: var(--f1-black, #000000);
+  color: var(--f1-white);
+  border-color: var(--f1-black, #000000);
+}

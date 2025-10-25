@@ -1,0 +1,53 @@
+:host { display:block; width:100%; }
+
+.public-league-sidebar { margin-top: 1rem; }
+
+.card-header{
+  background-color: var(--f1-dark-red);
+  color: var(--f1-white);
+  font-weight: 700;
+}
+.sidebar-card {
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.55rem;
+  color: var(--f1-dark);
+  background: var(--f1-white);
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid transparent;
+  transition: background .12s, transform .06s, box-shadow .12s;
+}
+
+.sidebar-link:hover,
+.sidebar-link:focus {
+  background: rgba(0,0,0,0.03);
+  transform: translateY(-1px);
+}
+
+.sidebar-link.active {
+  background: var(--f1-primary-red);
+  color: var(--f1-white);
+  border-color: var(--f1-primary-red);
+  box-shadow: 0 8px 20px rgba(233,30,45,0.08);
+}
+
+.content-card { border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+
+@media (max-width: 900px) {
+  .sidebar-list { flex-direction: row; gap: 0.5rem; overflow-x: auto; padding: 0.25rem 0; }
+  .sidebar-link { min-width: 10rem; white-space: nowrap; }
+  .sidebar-card { position: static; }
+}

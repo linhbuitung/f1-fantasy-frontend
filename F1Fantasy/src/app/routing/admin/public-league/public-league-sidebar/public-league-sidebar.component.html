@@ -1,0 +1,41 @@
+<div class="public-league-sidebar">
+  <div class="row gx-4 gy-4">
+    <!-- Left: Sidebar -->
+    <aside class="col-lg-3 col-12">
+      <nav class="card sidebar-card" aria-label="Update images navigation">
+        <div class="card-header text-white">Manage images</div>
+        <div class="card-body p-2">
+          <div class="sidebar-list" role="navigation" aria-label="Image manager sections">
+            <a
+              *ngFor="let item of nav"
+              class="sidebar-link"
+              routerLink="./{{item.path}}"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >{{ item.label }}</a
+            >
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Right: Router-driven content area -->
+    <main class="col-lg-9 col-12">
+      <div class="card content-card">
+        <div class="card-header">
+          <div class="fw-bold">Manage leagues</div>
+        </div>
+
+        <div class="card-body">
+          <!-- child components are rendered here by router -->
+          <router-outlet></router-outlet>
+
+          <!-- fallback placeholder when child not present (should be rare because ngOnInit redirects) -->
+          <div class="text-muted small mt-3" *ngIf="false">
+            Select a section on the left to manage leagues.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

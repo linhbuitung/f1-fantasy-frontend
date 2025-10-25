@@ -1,3 +1,4 @@
+
 export interface UserGetDto {
   id: number;
   displayName: string | null;
@@ -14,4 +15,14 @@ export interface UserGetDto {
   driverName: string | null;
   countryId: string | null;
   countryName: string | null;
+  roles: Role[];
+}
+
+export type Role = 'Player' | 'Admin' | 'SuperAdmin';
+
+export interface UserSearchResultDto {
+  items:  UserGetDto[];
+  total: number;
+  pageNum: number;
+  pageSize: number;
 }
