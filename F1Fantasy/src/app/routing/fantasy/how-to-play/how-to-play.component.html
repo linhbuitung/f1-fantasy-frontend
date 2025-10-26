@@ -34,7 +34,7 @@
               <ul>
                 <li>Balance stars with value picks - don’t spend all budget on one driver. Aim for 2 premium, 2 mid, 1 wildcard.</li>
                 <li>Monitor driver price trends before buying; early momentum often increases price.</li>
-                <li>Choose a captain each race based on weekend form (practice/qualifying). Prefer captains who consistently finish races.</li>
+                <li>Choose a captain each race based on weekend form (in practice!). Prefer captains who consistently finish races.</li>
               </ul>
               <div class="small text-muted">For exact limits and price rules see the <a [routerLink]="['/fantasy/rules']" fragment="team">Rules</a> page.</div>
             </div>
@@ -44,16 +44,16 @@
               <ul>
                 <li>Join a mix of players in leagues to compete head-to-head strategy.</li>
                 <li>In private leagues, mirror popular picks only when you need safe points, surprise picks can make a difference.</li>
-                <li>Create leagues with custom rules for more competitive play (use private leagues for experiments).</li>
+                <li>Create private leagues to play with your friends.</li>
               </ul>
             </div>
 
             <div *ngIf="selectedSection === 'transfers'">
               <h3>Transfer tactics</h3>
               <ul>
-                <li>Use your free transfers accordingly, ot every race needs a transfer.</li>
+                <li>Use your free transfers accordingly, not every race needs a transfer.</li>
                 <li>When making multiple transfers, compare expected points vs penalty: sometimes a -10 is worth a +25 gain.</li>
-                <li>Set transfers before the lock deadline; check qualifying results early to spot breakout drivers.</li>
+                <li>Set transfers before the lock deadline; check practice results to spot breakout drivers.</li>
               </ul>
               <div class="small text-muted">Full penalty rules and locking times on the <a [routerLink]="['/fantasy/rules']" fragment="transfers">Rules</a> page.</div>
             </div>
@@ -92,10 +92,12 @@
               <ul>
                 <li>Use AI predictions as a secondary signal - combine with your research (weather, practice times).</li>
                 <li>Earn AI uses by daily logins and use them strategically during injury or qualifying surprises.</li>
+                <li>For each 3 days of consecutive login, you will receive a credit to use the AI.</li>
               </ul>
               <div class="small text-muted">AI rules and quotas on the <a [routerLink]="['/fantasy/rules']" fragment="ai">Rules</a> page.</div>
             </div>
 
+            <p class="note mt-3">Note: These are all thought of the developers, so they won't be 100% correct.</p>
             <p class="note mt-3">Pro tip: plan transfers around the calendar - use powerups and transfers on big double-header events to maximize gains.</p>
           </div>
         </article>
