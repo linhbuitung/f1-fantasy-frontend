@@ -52,6 +52,7 @@
               <h3>Transfer rules</h3>
               <ul>
                 <li>Each race week allows <strong>2 free transfers</strong>.</li>
+                <li>A transfer is counted when you <strong>remove</strong> a driver or a constructor out of your lineup.</li>
                 <li>Additional transfers incur <strong>10 points</strong> deduction per extra transfer.</li>
                 <li>Transfers lock <strong>1 day before qualifying</strong>.</li>
               </ul>
@@ -184,7 +185,7 @@
                 <table class="table table-sm mb-0">
                   <thead><tr><th>Powerup</th><th>Effect</th></tr></thead>
                   <tbody>
-                  <tr><td>DRS Enabled</td><td>Double points for one chosen driver</td></tr>
+                  <tr><td>DRS Enabled</td><td>Double points for the best driver in the race</td></tr>
                   <tr><td>Free Transfer Week</td><td>Negates penalty for extra transfers</td></tr>
                   <tr><td>Escapist</td><td>Negates negative points from drivers</td></tr>
                   </tbody>
@@ -197,7 +198,7 @@
               <h3>League system</h3>
               <ul>
                 <li><strong>Private leagues</strong>: created by users, others will have to send join requests.</li>
-                <li><strong>Public leagues</strong>: Open to all.</li>
+                <li><strong>Public leagues</strong>: open to all.</li>
                 <li>Manage teams and view league leaderboards from the Leagues area.</li>
               </ul>
             </div>
@@ -205,10 +206,11 @@
             <!-- AI -->
             <div *ngIf="selectedSection === 'ai'">
               <h3>AI predictions</h3>
-              <p>Earn AI usage by logging in daily for 7 days consecutively. Use AI to predict qualifying grid or race results. AI is trained historical data from 1981 until now, with source: <strong>jolpica-f1 API</strong>.</p>
+              <p>Earn AI usage by logging in daily for 3 days consecutively. Use AI to predict qualifying grid or race results. AI is trained historical data from 1981 until now, with source: <strong>jolpica-f1 API</strong>.</p>
             </div>
 
             <p class="note mt-3">Note: Admins can update rules. Check this page for changes.</p>
+            <p class="note mt-3">Note: If there is a new driver for a race mid season, in most cases the driver will not be pickable until the race finish</p>
           </div>
         </article>
       </main>

@@ -19,6 +19,8 @@ export class AuthService {
   private userProfile = new BehaviorSubject<UserGetDto | null>(null);
   userProfile$ = this.userProfile.asObservable();
 
+  private readySubject = new BehaviorSubject<boolean>(false);
+  ready$ = this.readySubject.asObservable();
 
   setLoggedIn(status: boolean) {
     this.loggedIn.next(status);
@@ -90,6 +92,9 @@ export class AuthService {
         error: () => {
           this.userProfile.next(null);
           this.setLoggedIn(false);
+        },
+        complete: () => {
+          this.readySubject.next(true);
         }
       });
   }
@@ -104,6 +109,9 @@ export class AuthService {
         error: () => {
           this.userProfile.next(null);
           this.setLoggedIn(false);
+        },
+        complete: () => {
+          this.readySubject.next(true);
         }
       });
   }
