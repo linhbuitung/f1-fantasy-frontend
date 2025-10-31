@@ -19,6 +19,8 @@
             </ul>
           </div>
         </nav>
+        <p class="note mt-3">Note: These are all thought of the developers, so they won't be 100% correct.</p>
+
       </aside>
 
       <!-- Main content: show the clicked section -->
@@ -56,6 +58,7 @@
                 <li>Set transfers before the lock deadline; check practice results to spot breakout drivers.</li>
               </ul>
               <div class="small text-muted">Full penalty rules and locking times on the <a [routerLink]="['/fantasy/rules']" fragment="transfers">Rules</a> page.</div>
+              <p class="note mt-3">Pro tip: plan transfers around the calendar - use powerups and transfers on big double-header events to maximize gains.</p>
             </div>
 
             <div *ngIf="selectedSection === 'powerups'">
@@ -97,10 +100,10 @@
               <div class="small text-muted">AI rules and quotas on the <a [routerLink]="['/fantasy/rules']" fragment="ai">Rules</a> page.</div>
             </div>
 
-            <p class="note mt-3">Note: These are all thought of the developers, so they won't be 100% correct.</p>
-            <p class="note mt-3">Pro tip: plan transfers around the calendar - use powerups and transfers on big double-header events to maximize gains.</p>
           </div>
+
         </article>
+
       </main>
     </div>
   </div>

@@ -21,7 +21,7 @@
               Drivers selected: {{ lineup?.drivers?.length || 0 }}/5
             </div>
             <div class="info-chip bg-black text-white">
-              Budget left: {{ lineupLimit - lineupValue | number:'1.2-2' }}$
+              Budget left: ${{ lineupLimit - lineupValue | number:'1.2-2' }}
             </div>
             <div class="info-chip bg-black text-white">
               <ng-container *ngIf="overTransferCount === 0; else overTransfer">
@@ -51,7 +51,7 @@
                     </ng-template>
                   </div>
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
-                  <span class="driver-price">{{ driver.price }}$</span>
+                  <span class="driver-price">${{ driver.price }}</span>
                   <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
                   <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver, $event)"  [disabled]="isRaceLocked">Remove</button>
                   <button
@@ -82,7 +82,7 @@
                     </ng-template>
                   </div>
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
-                  <span class="driver-price">{{ driver.price }}$</span>
+                  <span class="driver-price">${{ driver.price }}</span>
                   <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
                   <button class="btn btn-remove btn-sm" (click)="onRemoveDriver(driver, $event)"  [disabled]="isRaceLocked">Remove</button>
                   <button
@@ -115,7 +115,7 @@
                     </ng-template>
                   </div>
                   <span class="constructor-name">{{ constructor.name }}</span>
-                  <span class="constructor-price">{{ constructor.price }}$</span>
+                  <span class="constructor-price">${{ constructor.price }}</span>
                   <button class="btn btn-remove btn-sm" (click)="onRemoveConstructor(constructor, $event)"  [disabled]="isRaceLocked">Remove</button>
                 </ng-container>
                 <ng-template #unpickedConstructor>
@@ -159,7 +159,7 @@
                     </ng-template>
                   </div>
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
-                  <span class="driver-price">{{ driver.price }}$</span>
+                  <span class="driver-price">${{ driver.price }}</span>
                   <button class="btn pick-btn btn-outline-primary btn-sm mt-1"
                           (click)="onPickDriver(driver, $event)"
                           [disabled]="isDriverLineupFull">Pick</button>
@@ -180,7 +180,7 @@
                     </ng-template>
                   </div>
                   <span class="constructor-name">{{ constructor.name }}</span>
-                  <span class="constructor-price">{{ constructor.price }}$</span>
+                  <span class="constructor-price">${{ constructor.price }}</span>
                   <button class="btn pick-btn btn-outline-primary btn-sm mt-1"
                     (click)="onPickConstructor(constructor, $event)"
                           [disabled]="isConstructorLineupFull">Pick</button>

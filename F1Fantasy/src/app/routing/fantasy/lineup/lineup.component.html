@@ -29,7 +29,7 @@
                     <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
                   </div>
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
-                  <span class="driver-price">{{ driver.price }}$</span>
+                  <span class="driver-price">${{ driver.price }}</span>
                 </ng-container>
                 <ng-template #unpickedDriver>
                   <div class="avatar driver-avatar">
@@ -53,7 +53,7 @@
                     <span *ngIf="driver.isCaptain" class="driver-captain">C</span>
                   </div>
                   <span class="driver-name">{{ driver.givenName }} {{ driver.familyName }}</span>
-                  <span class="driver-price">{{ driver.price }}$</span>
+                  <span class="driver-price">${{ driver.price }}</span>
                 </ng-container>
                 <ng-template #unpickedDriver>
                   <div class="avatar driver-avatar">
@@ -78,7 +78,7 @@
                     </ng-template>
                   </div>
                   <span class="constructor-name">{{ constructor.name }}</span>
-                  <span class="constructor-price">{{ constructor.price }}$</span>
+                  <span class="constructor-price">${{ constructor.price }}</span>
                 </ng-container>
                 <ng-template #unpickedConstructor>
                   <div class="avatar constructor-avatar">
@@ -139,12 +139,12 @@
               <div class="panel-row">Gameweek transfers: {{ lineup?.transfersMade }}</div>
               <hr class="panel-divider" />
               <div class="panel-row">
-                Lineup value: {{ lineupValue }}$
+                Lineup value: ${{ lineupValue }}
               </div>
               <div *ngIf="lineupValue > lineupLimit" class="alert alert-warning mt-2">
                 Current lineup crossed the limit ({{ lineupLimit }}$) and will not gain any point for next Race.
               </div>
-              <div class="panel-row">In the bank: {{ lineupLimit - lineupValue }}$</div>
+              <div class="panel-row">In the bank: ${{ lineupLimit - lineupValue }}</div>
             </div>
           </div>
           <!-- Game info panel -->
