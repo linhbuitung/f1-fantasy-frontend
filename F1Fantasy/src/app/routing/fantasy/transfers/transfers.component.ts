@@ -53,9 +53,12 @@ export class TransfersComponent implements OnInit {
               this.updateInitialTransfersMade(data.transfersMade);            },
           });
 
-        this.pickableItemsService.getPickableItems().subscribe({
-          next: (data) => (this.pickableItems = data),
-        });
+          this.pickableItemsService.getPickableItems().subscribe({
+              next: (data) => {
+                // ensure pickable lists are consistently sorted by price (high -> low)
+                  this.pickableItems = this.sortedPickableByPrice(data);
+              },
+            });
       }
     });
   }
@@ -63,6 +66,13 @@ export class TransfersComponent implements OnInit {
   updateInitialTransfersMade(transfers: number) {
     this.transfersMade = transfers;
   }
+
+  private sortedPickableByPrice(p: PickableItemGetDto): PickableItemGetDto {
+        return {
+            drivers: (p.drivers || []).slice().sort((a, b) => (b.price ?? 0) - (a.price ?? 0)),
+            constructors: (p.constructors || []).slice().sort((a, b) => (b.price ?? 0) - (a.price ?? 0))
+        };
+      }
 
 
   updateTransfersMade() {
