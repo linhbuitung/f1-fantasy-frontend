@@ -44,11 +44,11 @@
                 <div class="d-flex align-items-center gap-3">
                   <img *ngIf="d.imgUrl; else defaultDriver" [src]="d.imgUrl" alt="{{ d.givenName }}" class="team-img" />
                   <ng-template #defaultDriver>
-                    <img src="assets/driver-icon.svg" alt="Driver" class="team-img" />
+                    <img ngSrc="assets/driver-icon.svg" alt="Driver" class="team-img" height="16" width="16"/>
                   </ng-template>
                   <div>
                     <div class="fw-semibold">{{ d.givenName }} {{ d.familyName }}</div>
-                    <div class="small text-muted">${{ d.code }} • {{ d.price }}</div>
+                    <div class="small text-muted">{{ d.code }} • {{ d.price }}</div>
                   </div>
                 </div>
                 <div class="text-end metric-value">

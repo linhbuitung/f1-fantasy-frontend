@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { GeneralSeasonStatisticDto } from './dtos/general-season-statistic.get.dto';
 import {UserGeneralSeasonStatisticDto} from './dtos/user-general-season-statistic.get.dto';
 import { TeamOfTheRaceDto } from './dtos/team-of-the-race.get.dto';
-import { RaceDto } from './dtos/race.get.dto';
+import { RaceGetDto } from './dtos/race.get.dto';
 
 @Injectable({ providedIn: 'root' })
 export class StatisticService {
@@ -33,15 +33,15 @@ export class StatisticService {
     );
   }
 
-  getCurrentRace(): Observable<RaceDto> {
-    return this.http.get<RaceDto>(
+  getCurrentRace(): Observable<RaceGetDto> {
+    return this.http.get<RaceGetDto>(
       `${environment.API_URL}/core/race/current`,
       { withCredentials: true }
     );
   }
 
-  getLatestRace(): Observable<RaceDto> {
-    return this.http.get<RaceDto>(
+  getLatestRace(): Observable<RaceGetDto> {
+    return this.http.get<RaceGetDto>(
       `${environment.API_URL}/core/race/latest`,
       { withCredentials: true }
     );

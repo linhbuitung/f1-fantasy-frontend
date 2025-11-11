@@ -8,7 +8,7 @@ import {
 } from '../../../core/services/statistic/dtos/user-general-season-statistic.get.dto';
 import {AuthService} from '../../../core/services/auth/auth.service';
 import {TeamOfTheRaceDto} from '../../../core/services/statistic/dtos/team-of-the-race.get.dto';
-import { RaceDto } from '../../../core/services/statistic/dtos/race.get.dto';
+import { RaceGetDto } from '../../../core/services/statistic/dtos/race.get.dto';
 
 @Component({
   selector: 'app-status',
@@ -23,8 +23,8 @@ export class StatusComponent implements OnInit {
   userStats: UserGeneralSeasonStatisticDto | null = null;
   currentUserId: number | null = null;
   teamOfWeek: TeamOfTheRaceDto | null = null;
-  currentRace: RaceDto | null = null;
-  latestRace: RaceDto | null = null;
+  currentRace: RaceGetDto | null = null;
+  latestRace: RaceGetDto | null = null;
   noActiveSeason = false;
 
   constructor(

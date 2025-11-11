@@ -45,7 +45,7 @@
                 <div class="d-flex align-items-center gap-3">
                   <img *ngIf="c.imgUrl; else defaultConstructor" [src]="c.imgUrl" [alt]="c.name" class="team-img" />
                   <ng-template #defaultConstructor>
-                    <img src="assets/steering-wheel.svg" alt="Constructor" class="team-img" />
+                    <img ngSrc="assets/steering-wheel.svg" alt="Constructor" class="team-img" height="67" width="67"/>
                   </ng-template>
                   <div>
                     <div class="fw-semibold">{{ c.name }}</div>

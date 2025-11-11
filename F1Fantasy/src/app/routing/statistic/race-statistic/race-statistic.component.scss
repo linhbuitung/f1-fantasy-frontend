@@ -1,0 +1,137 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.race-statistics {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Card visuals consistent with other statistic pages */
+.card, .sidebar-card, .content-card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid var(--f1-grey);
+  overflow: hidden;
+}
+
+.selection-header {
+  background-color: var(--f1-dark-red);
+  font-weight: 700;
+  color: var(--f1-white);
+}
+
+/* Left menu */
+.left-menu {
+  padding-left: 0;
+  margin: 0;
+}
+
+.menu-item {
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  color: var(--f1-black);
+  background: transparent;
+  transition: background 0.12s ease, color 0.12s;
+  margin-bottom: 0.45rem;
+}
+
+.menu-item:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+.menu-item.active {
+  background: var(--f1-primary-red);
+  color: var(--f1-white);
+  font-weight: 700;
+}
+
+/* Calculated badge */
+.calculated-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.35rem;
+  background: green;
+  color: var(--f1-white);
+  font-weight: 700;
+}
+
+.uncalculated-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.35rem;
+  background: black;
+  color: var(--f1-white);
+  font-weight: 700;
+}
+
+/* Content details */
+.race-header .race-meta {
+  font-size: 0.9rem;
+  color: var(--f1-black);
+}
+
+.circuit-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.circuit-img {
+  width: 6.5rem;
+  height: 5.5rem;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  background: var(--f1-grey);
+}
+
+/* Stats list */
+.stat-row {
+  padding: 0.75rem;
+  border-radius: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--f1-white);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.stat-row .left {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.team-img {
+  width: 3.6rem;
+  height: 3.6rem;
+  object-fit: cover;
+  border-radius: 0.35rem;
+  background: var(--f1-grey);
+}
+
+.metric-value {
+  min-width: 7rem;
+  text-align: right;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .race-statistics { padding: 0 0.5rem; }
+
+  .circuit-row { flex-direction: column; align-items: flex-start; }
+
+  .circuit-img { width: 100%; height: auto; max-height: 8rem; }
+
+  .stat-row { flex-direction: column; align-items: flex-start; }
+
+  .metric-value { align-self: flex-end; }
+}
