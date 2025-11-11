@@ -10,7 +10,7 @@ import {StatisticService} from '../../../core/services/statistic/statistic.servi
 import {
   UserGeneralSeasonStatisticDto
 } from '../../../core/services/statistic/dtos/user-general-season-statistic.get.dto';
-import {RaceDto} from '../../../core/services/statistic/dtos/race.get.dto';
+import {RaceGetDto} from '../../../core/services/statistic/dtos/race.get.dto';
 import {PowerupForUserDto} from '../../../core/services/core-gameplay/dtos/powerup-for-user.get.dto';
 
 @Component({
@@ -24,7 +24,7 @@ import {PowerupForUserDto} from '../../../core/services/core-gameplay/dtos/power
 export class LineupComponent implements OnInit {
   lineup: FantasyLineupDto | null = null;
   latestFinishedLineup: FantasyLineupDto | null = null;
-  currentRace: RaceDto | null = null;
+  currentRace: RaceGetDto | null = null;
   currentUserId: number | null = null;
   lineupValue: number = 0;
   lineupLimit: number = environment.LINEUP_PRICE_LIMIT;

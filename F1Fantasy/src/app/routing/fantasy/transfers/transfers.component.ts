@@ -4,7 +4,7 @@ import { PickableItemGetDto } from '../../../core/services/static-data/dtos/pick
 import { FantasyLineupService } from '../../../core/services/core-gameplay/fantasy-lineup.service';
 import { FantasyLineupDto } from '../../../core/services/core-gameplay/dtos/fantay-lineup.get.dto';
 import { StatisticService } from '../../../core/services/statistic/statistic.service';
-import { RaceDto } from '../../../core/services/statistic/dtos/race.get.dto';
+import { RaceGetDto } from '../../../core/services/statistic/dtos/race.get.dto';
 import {ContentContainerComponent} from '../../../shared/content-container/content-container.component';
 import {CommonModule, DatePipe, NgIf} from '@angular/common';
 import {AuthService} from '../../../core/services/auth/auth.service';
@@ -19,7 +19,7 @@ import {environment} from '../../../../environments/environment';
 export class TransfersComponent implements OnInit {
   lineup: FantasyLineupDto | null = null;
   lineupToUpdate: FantasyLineupDto | null = null;
-  currentRace: RaceDto | null = null;
+  currentRace: RaceGetDto | null = null;
   pickableItems: PickableItemGetDto | null = null;
   currentUserId: number | null = null;
   lineupLimit: number = environment.LINEUP_PRICE_LIMIT;

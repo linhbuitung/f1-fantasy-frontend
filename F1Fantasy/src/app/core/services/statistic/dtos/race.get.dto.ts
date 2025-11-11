@@ -1,6 +1,6 @@
 import { CircuitDto } from './circuit.get.dto';
 
-export interface RaceDto {
+export interface RaceGetDto {
   id: number;
   raceName: string;
   round: number;

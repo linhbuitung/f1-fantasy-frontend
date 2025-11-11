@@ -233,6 +233,14 @@ export const routes: Routes = [
         redirectTo: 'drivers'
       },
       {
+        path: 'races',
+        loadComponent: async () => {
+          return import('./routing/statistic/race-statistic/race-statistic.component').then(
+            (m) => m.RaceStatisticComponent
+          );
+        }
+      },
+      {
         path: 'drivers',
         loadComponent: async () => {
           return import('./routing/statistic/driver-statistic/driver-statistic.component').then(

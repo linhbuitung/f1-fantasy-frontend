@@ -1,0 +1,109 @@
+<div class="race-statistics">
+  <div class="row gx-4 gy-4">
+    <!-- Left: races list -->
+    <div class="col-lg-4 col-12">
+      <div class="card mb-3">
+        <div class="card-header selection-header text-white">Races (current year)</div>
+        <div class="card-body">
+          <ul class="list-unstyled left-menu">
+            <li *ngIf="loadingRaces" class="text-muted small">Loading races…</li>
+            <li *ngIf="!loadingRaces && races.length === 0" class="text-muted small">No races</li>
+
+            <li *ngFor="let r of races"
+                (click)="selectRace(r.id)"
+                [class.active]="selectedRaceStat?.id === r.id"
+                class="menu-item">
+              <div class="d-flex justify-content-between align-items-center w-100">
+                <div>
+                  <div class="fw-semibold">{{ r.round }} - {{ r.raceName }}</div>
+                  <div class="small text-muted">{{ r.raceDate | date:'d/M/yyyy' }}</div>
+                </div>
+                <div class="text-end">
+                  <span *ngIf="r.calculated" class="calculated-badge">Calculated</span>
+                  <span *ngIf="!r.calculated" class="uncalculated-badge">Uncalculated</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: selected race details -->
+    <div class="col-lg-8 col-12">
+      <div class="card">
+        <div class="card-header bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="fw-semibold">
+              {{ selectedRaceStat ? (selectedRaceStat.raceName + ' • Round ' + selectedRaceStat.round) : 'Race statistic' }}
+            </div>
+            <span *ngIf="selectedRaceStat?.calculated" class="calculated-badge">Calculated</span>
+            <span *ngIf="!selectedRaceStat?.calculated" class="uncalculated-badge">Uncalculated</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div *ngIf="loadingStat" class="text-muted mb-2">Loading statistic…</div>
+          <div *ngIf="serverError" class="alert alert-danger">{{ serverError }}</div>
+
+          <div *ngIf="selectedRaceStat">
+            <div class="race-header mb-3">
+              <div class="race-meta">{{ selectedRaceStat.raceDate | date:'d/M/yyyy' }} - Deadline: {{ selectedRaceStat.deadlineDate | date:'d/M/yyyy' }}</div>
+              <div class="circuit-row">
+                <img *ngIf="selectedRaceStat.circuit?.imgUrl; else defCircuit" [src]="selectedRaceStat.circuit.imgUrl" alt="{{ selectedRaceStat.circuit.circuitName }}" class="circuit-img" />
+                <ng-template #defCircuit>
+                  <img ngSrc="assets/circuit.svg" alt="Circuit" class="circuit-img" height="800" width="800"/>
+                </ng-template>
+                <div>
+                  <div class="fw-semibold">{{ selectedRaceStat.circuit.circuitName }}</div>
+                  <div class="small text-muted">{{ selectedRaceStat.circuit.code }} • {{ selectedRaceStat.circuit.country }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-section">
+              <div class="fw-semibold mb-2">Drivers</div>
+              <div *ngIf="(selectedRaceStat.driversStatistics?.length ?? 0) === 0" class="text-muted small">No driver stats</div>
+
+              <div *ngFor="let d of selectedRaceStat.driversStatistics" class="stat-row d-flex align-items-center justify-content-between mb-2">
+                <div class="d-flex align-items-center gap-3 left">
+                  <img *ngIf="d.imgUrl; else defD" [src]="d.imgUrl" class="team-img" alt="{{ d.givenName }}" />
+                  <ng-template #defD>
+                    <img ngSrc="assets/driver-icon.svg" class="team-img" alt="Driver" height="16" width="16"/>
+                  </ng-template>
+                  <div>
+                    <div class="fw-semibold">{{ d.givenName }} {{ d.familyName }}</div>
+                    <div class="small text-muted">{{ d.constructorName }}</div>
+                  </div>
+                </div>
+                <div class="text-end metric-value">
+                  <div>{{ d.pointsGained }} pts</div>
+                  <div class="small text-muted">Final Position: {{ d.position ?? '-' }} • Grid: {{ d.grid ?? '-' }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-section mt-3">
+              <div class="fw-semibold mb-2">Constructors</div>
+              <div *ngIf="(selectedRaceStat.constructorsStatistics?.length ?? 0) === 0" class="text-muted small">No constructor stats</div>
+
+              <div *ngFor="let c of selectedRaceStat.constructorsStatistics" class="stat-row d-flex align-items-center justify-content-between mb-2">
+                <div class="d-flex align-items-center gap-3 left">
+                  <img *ngIf="c.imgUrl; else defC" [src]="c.imgUrl" class="team-img" alt="{{ c.name }}" />
+                  <ng-template #defC><img ngSrc="assets/steering-wheel.svg" class="team-img" alt="Constructor"
+                                          height="67" width="67"/></ng-template>
+                  <div>
+                    <div class="fw-semibold">{{ c.name }}</div>
+                  </div>
+                </div>
+                <div class="text-end metric-value">{{ c.pointsGained }} pts</div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!selectedRaceStat && !loadingStat && !serverError" class="text-muted">Select a race from the left to view statistics.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

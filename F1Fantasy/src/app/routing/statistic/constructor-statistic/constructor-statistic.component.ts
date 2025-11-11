@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { ConstructorStatisticService } from '../../../core/services/statistic/constructor-statistic.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, catchError, tap, finalize } from 'rxjs/operators';
@@ -17,7 +17,7 @@ type MetricKey = 'total' | 'average' | 'selection' | 'podiums' | 'top10';
 @Component({
   selector: 'app-constructor-statistic',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './constructor-statistic.component.html',
   styleUrl: './constructor-statistic.component.scss'
 })
