@@ -56,7 +56,7 @@
 
                 <!-- bind computed style; use ngStyle so we can switch to fixed viewport coords -->
                 <div class="notif-dropdown" *ngIf="showNotif" [ngStyle]="notifDropdownStyle">
-                  <app-notification-list></app-notification-list>
+                  <app-notification-list (close)="showNotif = false"></app-notification-list>
                 </div>
               </div>
               <button class="btn btn-outline-danger user-btn" [routerLink]="['/profile', profile.id]">

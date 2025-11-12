@@ -79,6 +79,15 @@
   font-size: 0.95rem;
 }
 
+.btn-close-mobile {
+  display: none;
+  border: none;
+  background: transparent;
+  color: var(--f1-dark);
+  font-size: 1.05rem;
+  padding: 0.25rem 0.4rem;
+}
+
 /* responsive */
 @media (max-width: 420px) {
   .notifications-panel {
@@ -88,4 +97,14 @@
   }
   .notifications-header { padding: 0.5rem; }
   .notifications-list { padding: 0.4rem; }
+  .btn-close-mobile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+  }
+
+  .notifications-panel .empty {
+    padding: 1rem;
+  }
 }

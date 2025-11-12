@@ -5,29 +5,63 @@
 
 .statistics-container {
   width: 100%;
+}
+.stats-switch {
+  display: inline-flex;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  box-shadow: none;
+}
 
-  .stats-switch {
-    display: inline-flex;
-    border-radius: 0.6rem;
-    overflow: hidden;
-    box-shadow: none;
+.btn-switch {
+  min-width: 10rem;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  color: var(--f1-white);
+  background: var(--f1-dark-red);
+  border: none;
+}
+
+.btn-switch.active {
+  background: var(--f1-light-red );
+}
+
+@media (max-width: 800px) {
+  .btn-switch { min-width: 7rem; font-size: 0.95rem; }
+  .card { margin: 0.5rem; }
+}
+
+
+.stats-switch-mobile {
+  display: none;
+}
+
+/* Small screens: hide button group, show native select for compact UI */
+@media (max-width: 800px) {
+  .stats-switch { display: none; }
+  .stats-switch-mobile {
+    display: block;
+    width: 100%;
   }
 
-  .btn-switch {
-    min-width: 10rem;
-    padding: 0.6rem 1rem;
-    font-weight: 700;
-    color: var(--f1-white);
-    background: var(--f1-dark-red);
-    border: none;
+  .stats-switch-mobile .form-select {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.95rem;
+    border-radius: 0.45rem;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--f1-white);
   }
+}
 
-  .btn-switch.active {
-    background: var(--f1-light-red );
-  }
-
-  @media (max-width: 800px) {
-    .btn-switch { min-width: 7rem; font-size: 0.95rem; }
-    .card { margin: 0.5rem; }
-  }
+/* utility: visually-hidden (if not defined globally) */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
