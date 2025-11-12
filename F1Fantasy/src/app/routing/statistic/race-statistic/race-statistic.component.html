@@ -62,10 +62,47 @@
             </div>
 
             <div class="stats-section">
-              <div class="fw-semibold mb-2">Drivers</div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="fw-semibold">Drivers</div>
+
+                <!-- Responsive sort controls: desktop buttons  mobile select -->
+                <div class="sort-controls-wrapper" role="group" aria-label="Sort drivers">
+                  <!-- Desktop buttons (visible >= md) -->
+                  <div class="sort-controls-desktop" role="toolbar" aria-label="Sort drivers (desktop)">
+                    <button type="button"
+                       class="btn btn-sort"
+                       [class.active]="sortKey === 'points'"
+                       (click)="setSort('points')"
+                       [attr.aria-pressed]="sortKey === 'points'">Fantasy Points</button>
+                    <button type="button"
+                       class="btn btn-sort"
+                       [class.active]="sortKey === 'final'"
+                       (click)="setSort('final')"
+                       [attr.aria-pressed]="sortKey === 'final'">Final Position</button>
+                    <button type="button"
+                       class="btn btn-sort"
+                       [class.active]="sortKey === 'grid'"
+                       (click)="setSort('grid')"
+                       [attr.aria-pressed]="sortKey === 'grid'">Grid</button>
+                  </div>
+
+                  <!-- Mobile select (visible < md) -->
+                  <div class="sort-controls-mobile">
+                    <label class="visually-hidden" for="driver-sort-select">Sort drivers</label>
+                    <select id="driver-sort-select"
+                       class="form-select form-select-sm"
+                       [value]="sortKey"
+                       (change)="setSort($any($event.target).value)">
+                        <option value="final">Final Position</option>
+                        <option value="points">Fantasy Points</option>
+                        <option value="grid">Grid</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
               <div *ngIf="(selectedRaceStat.driversStatistics?.length ?? 0) === 0" class="text-muted small">No driver stats</div>
 
-              <div *ngFor="let d of selectedRaceStat.driversStatistics" class="stat-row d-flex align-items-center justify-content-between mb-2">
+              <div *ngFor="let d of driversSorted; trackBy: trackById" class="stat-row d-flex align-items-center justify-content-between mb-2">
                 <div class="d-flex align-items-center gap-3 left">
                   <img *ngIf="d.imgUrl; else defD" [src]="d.imgUrl" class="team-img" alt="{{ d.givenName }}" />
                   <ng-template #defD>

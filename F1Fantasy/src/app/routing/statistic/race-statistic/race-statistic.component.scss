@@ -123,6 +123,83 @@
   font-weight: 700;
 }
 
+.sort-controls {
+  display: inline-flex;
+}
+
+.btn-sort {
+  width: 8rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: transparent;
+  color: var(--f1-black);
+}
+
+.btn-sort:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+.btn-sort.active {
+  background: var(--f1-primary-red);
+  color: var(--f1-white);
+  border-color: var(--f1-primary-red);
+  font-weight: 700;
+}
+
+/* Responsive wrapper: show desktop buttons on larger screens, native select on small screens */
+.sort-controls-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Desktop buttons visible by default */
+.sort-controls-desktop {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+/* Mobile select hidden by default */
+.sort-controls-mobile {
+  display: none;
+}
+
+/* Small screens: hide buttons; show select */
+@media (max-width: 720px) {
+  .sort-controls-desktop { display: none; }
+  .sort-controls-mobile { display: block; width: 140px; }
+
+  .btn-sort {
+    width: auto;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  /* Make select visually consistent */
+  .sort-controls-mobile .form-select {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.95rem;
+    border-radius: 0.45rem;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--f1-white);
+  }
+}
+
+/* Utility: visually-hidden for accessibility (if not present globally) */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .race-statistics { padding: 0 0.5rem; }
