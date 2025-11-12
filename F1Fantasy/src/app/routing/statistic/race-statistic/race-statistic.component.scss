@@ -85,7 +85,6 @@
 }
 
 .circuit-img {
-  width: 6.5rem;
   height: 5.5rem;
   object-fit: contain;
   border-radius: 0.5rem;
@@ -208,7 +207,30 @@
 
   .circuit-img { width: 100%; height: auto; max-height: 8rem; }
 
-  .stat-row { flex-direction: column; align-items: flex-start; }
+  .stat-row { flex-direction: column; align-items: flex-start !important; }
 
   .metric-value { align-self: flex-end; }
+}
+
+.dnf-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.12rem 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  border-radius: 0.35rem;
+  font-weight: 700;
+  color: var(--f1-white);
+  background: #e74c3c; /* clear danger red — consistent readable contrast */
+  border: 1px solid rgba(0,0,0,0.06);
+  vertical-align: middle;
+}
+
+/* Slight adjustment for small screens */
+@media (max-width: 720px) {
+  .dnf-badge {
+    margin-left: 0.4rem;
+    font-size: 0.78rem;
+    padding: 0.18rem 0.5rem;
+  }
 }

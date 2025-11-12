@@ -62,7 +62,7 @@
             </div>
 
             <div class="stats-section">
-              <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex justify-content-between  mb-2">
                 <div class="fw-semibold">Drivers</div>
 
                 <!-- Responsive sort controls: desktop buttons  mobile select -->
@@ -103,13 +103,16 @@
               <div *ngIf="(selectedRaceStat.driversStatistics?.length ?? 0) === 0" class="text-muted small">No driver stats</div>
 
               <div *ngFor="let d of driversSorted; trackBy: trackById" class="stat-row d-flex align-items-center justify-content-between mb-2">
-                <div class="d-flex align-items-center gap-3 left">
+                <div class="d-flex gap-3 left">
                   <img *ngIf="d.imgUrl; else defD" [src]="d.imgUrl" class="team-img" alt="{{ d.givenName }}" />
                   <ng-template #defD>
                     <img ngSrc="assets/driver-icon.svg" class="team-img" alt="Driver" height="16" width="16"/>
                   </ng-template>
                   <div>
-                    <div class="fw-semibold">{{ d.givenName }} {{ d.familyName }}</div>
+                    <div class="fw-semibold">
+                      {{ d.givenName }} {{ d.familyName }}
+                      <span *ngIf="!d.finished" class="dnf-badge" title="Did not finish">DNF</span>
+                    </div>
                     <div class="small text-muted">{{ d.constructorName }}</div>
                   </div>
                 </div>
@@ -125,7 +128,7 @@
               <div *ngIf="(selectedRaceStat.constructorsStatistics?.length ?? 0) === 0" class="text-muted small">No constructor stats</div>
 
               <div *ngFor="let c of selectedRaceStat.constructorsStatistics" class="stat-row d-flex align-items-center justify-content-between mb-2">
-                <div class="d-flex align-items-center gap-3 left">
+                <div class="d-flex gap-3 left">
                   <img *ngIf="c.imgUrl; else defC" [src]="c.imgUrl" class="team-img" alt="{{ c.name }}" />
                   <ng-template #defC><img ngSrc="assets/steering-wheel.svg" class="team-img" alt="Constructor"
                                           height="67" width="67"/></ng-template>
