@@ -1,13 +1,23 @@
 <app-content-container>
   <div class="statistics-container">
-    <div class="text-white d-flex justify-content-between align-items-center">
-      <div class="fw-bold">Statistics</div>
+    <div class=" d-flex justify-content-end align-items-center">
       <div class="btn-group stats-switch" role="group" aria-label="Statistics type">
         <a routerLink="./drivers" routerLinkActive="active" class="btn btn-switch">Drivers</a>
         <a routerLink="./constructors" routerLinkActive="active" class="btn btn-switch">Constructors</a>
         <a routerLink="./players" routerLinkActive="active" class="btn btn-switch">Players</a>
         <a routerLink="./races" routerLinkActive="active" class="btn btn-switch">Past Race Results</a>
       </div>
+    </div>
+
+    <!-- Mobile / small screens: compact selector -->
+    <div class="stats-switch-mobile">
+      <label class="visually-hidden" for="stats-switch-select">Statistics</label>
+      <select id="stats-switch-select" class="form-select form-select-sm" (change)="onSwitch($any($event.target).value)">
+        <option value="drivers" [selected]="getActive() === 'drivers'">Drivers</option>
+        <option value="constructors" [selected]="getActive() === 'constructors'">Constructors</option>
+        <option value="players" [selected]="getActive() === 'players'">Players</option>
+        <option value="races" [selected]="getActive() === 'races'">Past Race Results</option>
+      </select>
     </div>
 
     <div>
