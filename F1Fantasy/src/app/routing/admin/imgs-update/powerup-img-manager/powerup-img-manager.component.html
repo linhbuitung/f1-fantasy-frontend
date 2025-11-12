@@ -8,7 +8,7 @@
             <div *ngFor="let p of powerups" class="powerup-item" [class.selected]="selectedPowerup?.id === p.id" (click)="selectPowerup(p)">
               <div class="d-flex gap-2 align-items-center">
                 <img *ngIf="p.imgUrl; else def" [src]="p.imgUrl" [alt]="p.type" class="thumb" />
-                <ng-template #def><img src="assets/powerup.svg" alt="powerup" class="thumb" /></ng-template>
+                <ng-template #def><img ngSrc="assets/powerup.svg" alt="powerup" class="thumb" /></ng-template>
                 <div>
                   <div class="fw-semibold">{{ p.type }}</div>
                   <div class="small text-muted">{{ p.description }}</div>

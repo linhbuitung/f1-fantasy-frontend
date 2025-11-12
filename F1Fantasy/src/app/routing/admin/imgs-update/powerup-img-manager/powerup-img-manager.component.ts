@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
 import { PowerupService } from '../../../../core/services/static-data/powerup.service';
@@ -12,7 +12,7 @@ import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-powerup-img-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, ImageCropperComponent],
+  imports: [CommonModule, FormsModule, ImageCropperComponent, NgOptimizedImage],
   templateUrl: './powerup-img-manager.component.html',
   styleUrl: './powerup-img-manager.component.scss'
 })

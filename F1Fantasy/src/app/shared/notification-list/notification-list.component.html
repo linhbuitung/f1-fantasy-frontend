@@ -8,6 +8,11 @@
           <span class="spinner-border spinner-border-sm"></span>
         </ng-container>
       </button>
+
+      <!-- mobile close button (visible on small screens) -->
+      <button class="btn btn-close-mobile" type="button" aria-label="Close notifications" (click)="close.emit()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
   </div>
 

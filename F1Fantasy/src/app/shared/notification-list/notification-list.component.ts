@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CommonModule, DatePipe, NgIf} from '@angular/common';
 import { NotificationService } from '../../core/services/notification/notification.service';
 import { NotificationGetDto } from '../../core/services/notification/dtos/notification.get.dto';
@@ -15,6 +15,7 @@ import {environment} from '../../../environments/environment';
   styleUrl: './notification-list.component.scss'
 })
 export class NotificationListComponent implements OnInit, OnDestroy {
+  @Output() close = new EventEmitter<void>();
   notifications$!: Observable<NotificationGetDto[]>;
   unreadCount$!: Observable<number>;
   currentUserId: number | null = null;
