@@ -376,4 +376,17 @@ export const routes: Routes = [
       },
     ]
   },
+  {
+    path: 'not-found',
+    pathMatch: 'full',
+    loadComponent: async () => {
+      return import('./routing/page-not-found/page-not-found.component').then(
+        (m) => m.PageNotFoundComponent
+      );
+    },
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found'
+  }
 ]

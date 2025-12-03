@@ -5,6 +5,7 @@ import { LoginDto } from './dtos/login.dtos';
 import { RegisterDto } from './dtos/register.dtos';
 import {BehaviorSubject, tap} from 'rxjs';
 import {UserGetDto} from '../user/dtos/user.get.dto';
+import {finalize} from 'rxjs/operators';
 
 
 @Injectable({ providedIn: 'root' })
@@ -79,22 +80,23 @@ export class AuthService {
   }
 
   loadProfile() {
-    // Only fetch if it's logged in and userProfile is null
-    if(!this.loggedIn.value) {
-      return;
-    }
-    this.http.get<UserGetDto>(`${environment.API_URL}/user/me`, { withCredentials: true })
-      .subscribe({
-        next: (profile) => {
-          this.userProfile.next(profile)
+    // Always attempt to fetch profile to restore session (no early return)
+    this.http
+      .get<UserGetDto>(`${environment.API_URL}/user/me`, { withCredentials: true })
+      .pipe(
+        tap((profile) => {
+          this.userProfile.next(profile);
           this.setLoggedIn(true);
-        },
+        }),
+        finalize(() => {
+          // Ensure ready is emitted whether request succeeds or fails
+          this.readySubject.next(true);
+        })
+      )
+      .subscribe({
         error: () => {
           this.userProfile.next(null);
           this.setLoggedIn(false);
-        },
-        complete: () => {
-          this.readySubject.next(true);
         }
       });
   }
