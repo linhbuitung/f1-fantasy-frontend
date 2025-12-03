@@ -86,7 +86,8 @@
 
 .circuit-img {
   height: 5.5rem;
-  object-fit: contain;
+  max-width: 11rem;
+  object-fit: cover;
   border-radius: 0.5rem;
   background: var(--f1-grey);
 }
