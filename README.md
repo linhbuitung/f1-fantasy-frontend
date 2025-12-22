@@ -32,7 +32,7 @@
 
 ---
 
-## 🚀 Installation
+## Installation
 
 1. Clone the repository:
 ```bash
@@ -47,7 +47,7 @@ npm install
 
 ---
 
-## 🏃 Running the Application
+## Running the Application
 
 ### Development Server
 
@@ -96,7 +96,7 @@ This project is developed as part of a Bachelor's thesis for educational purpose
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - F1 data provided by [Jolpica F1 API](https://github.com/jolpica/jolpica-f1/)
 - Inspired by official F1 Fantasy game
