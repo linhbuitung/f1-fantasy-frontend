@@ -44,7 +44,7 @@
                 <div class="d-flex align-items-center gap-3">
                   <img *ngIf="d.imgUrl; else defaultDriver" [src]="d.imgUrl" alt="{{ d.givenName }}" class="team-img" />
                   <ng-template #defaultDriver>
-                    <img ngSrc="assets/driver-icon.svg" alt="Driver" class="team-img" height="16" width="16"/>
+                    <img ngSrc="assets/driver-icon.svg" alt="Driver" class="team-img" height="50" width="50"/>
                   </ng-template>
                   <div>
                     <div class="fw-semibold">{{ d.givenName }} {{ d.familyName }}</div>

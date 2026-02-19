@@ -61,7 +61,7 @@ export class RaceStatisticComponent implements OnInit {
       }
 
   private loadRacesForCurrentYear(): void {
-    const year = new Date().getFullYear();
+    const year = 2025; // fixed year instead of new Date().getFullYear()
     this.loadingRaces = true;
     this.serverError = null;
     this.raceStatisticService.getRacesByYear(year).subscribe({
