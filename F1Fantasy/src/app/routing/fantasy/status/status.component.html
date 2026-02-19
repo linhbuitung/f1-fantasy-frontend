@@ -85,17 +85,23 @@
             <div class="col-12">
               <div class="season-card bg-grey">
                 <div class="season-title">Your season stats</div>
-                <div class="season-points">{{ userStats?.totalPointsGained ?? 'Loading...' }} pts</div>
+                @if(userStats != null)
+                {
+                  <div class="season-points">{{ userStats?.totalPointsGained ?? 'Loading...' }} pts</div>
+                }
               </div>
             </div>
             <div class="col-12">
               <div class="season-card bg-black text-white">
                 <div class="season-title">Your best race week</div>
-                <div class="best-week-row">
-                  <span>{{ userStats?.bestRaceWeek?.raceName ?? '-' }}</span>
-                  <span>{{ userStats?.bestRaceWeek?.raceDate | date:'d/M/yyyy' }}</span>
-                </div>
-                <div class="season-points">{{ userStats?.bestRaceWeek?.totalAmount ?? '-' }} pts</div>
+                @if(userStats?.bestRaceWeek != null)
+                  {
+                    <div class="best-week-row">
+                      <span>{{ userStats?.bestRaceWeek?.raceName ?? '-' }}</span>
+                      <span>{{ userStats?.bestRaceWeek?.raceDate | date:'d/M/yyyy' }}</span>
+                    </div>
+                    <div class="season-points">{{ userStats?.bestRaceWeek?.totalAmount ?? '-' }} pts</div>
+                  }
               </div>
   <!--            <div class="season-footer">-->
   <!--              Free transfers: {{ seasonStats.freeTransfers }} &nbsp; Additional: {{ seasonStats.additionalTransfers }}-->
